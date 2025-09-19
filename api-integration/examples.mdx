@@ -1,0 +1,54 @@
+---
+title: 'Examples'
+description: 'Example requests for Uservox CRM APIs'
+---
+
+## Single Lead (Create & Init)
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/initiate" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -d '{
+    "lead": {
+      "name": "Alex Rider",
+      "email": "alex@example.com",
+      "projectId": "<Your Project Id>",
+      "processId": "<Lead Process Id>",
+      "metadata": {"source": "website"}
+    },
+    "init": true
+  }'
+```
+
+## Single Lead (Existing)
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/initiate" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"leadId": "507f1f77bcf86cd799439013"}'
+```
+
+## Bulk Create
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/bulk/initiate" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "leads": [
+      {"firstName": "John", "email": "john@example.com", "projectId": "<Project>", "processId": "<Process>"},
+      {"firstName": "Jane", "email": "jane@example.com", "projectId": "<Project>", "processId": "<Process>"}
+    ]
+  }'
+```
+
+## Bulk Process Existing
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/bulk/initiate" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"leadIds": ["507f1f77bcf86cd799439013", "507f1f77bcf86cd799439014"]}'
+```

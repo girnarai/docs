@@ -1,0 +1,97 @@
+---
+title: 'Initiate Single Lead'
+description: 'Create or process a single lead via the API'
+---
+
+## Endpoint
+
+```
+POST /api/v1/leads/initiate
+```
+
+Initiates a single lead by either creating a new lead or processing an existing lead.
+
+## Request Body
+
+Provide either a `leadId` for existing leads or a `lead` object for new leads.
+
+```jsonc
+{
+  "init": "boolean", // Optional: whether to initialize the lead as soon as it's inserted
+  "lead": {            // Optional: only for creating a new lead
+    "firstName": "string", // Required if name not provided
+    "lastName": "string",  // Optional
+    "name": "string",      // Required if firstName not provided
+    "email": "string",     // Required if phone not provided
+    "phone": "string",     // Required if email not provided
+    "projectId": "string", // Required: from your project settings
+    "processId": "string", // Required: from process details page
+    "referenceId": "string", // Optional: unique identifier from source system
+    "metadata": {           // Optional: additional custom fields
+      "key": "value"
+    }
+  },
+  "leadId": "string" // Optional: ID of an existing lead
+}
+```
+
+## Response
+
+```json
+{
+  "_id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "phone": "string",
+  "projectId": "string",
+  "processId": "string",
+  "referenceId": "string",
+  "currentState": "string",
+  "metadata": {},
+  "createdAt": "string",
+  "updatedAt": "string"
+}
+```
+
+## Error Responses
+
+- 400 Bad Request: When neither `leadId` nor `lead` object is provided
+- 404 Not Found: When `leadId` is invalid
+- 500 Internal Server Error: For server-side errors
+
+## Example cURL
+
+Create a new lead without immediately initializing it:
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/initiate" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -d '{
+    "lead": {
+      "firstName": "Saurabh",
+      "phone": "8888833333",
+      "projectId": "<Your Project Id>",
+      "processId": "<Lead Process Id>",
+      "metadata": {
+        "dealer": "Triveni Motors",
+        "city": "New Delhi",
+        "make": "Kia",
+        "model": "Seltos"
+      }
+    },
+    "init": false
+  }'
+```
+
+Process an existing lead by ID:
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/initiate" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "leadId": "507f1f77bcf86cd799439013"
+  }'
+```

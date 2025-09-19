@@ -1,0 +1,100 @@
+---
+title: 'Bulk Lead Initiation'
+description: 'Initiate multiple leads in a single request'
+---
+
+## Endpoint
+
+```
+POST /api/v1/leads/bulk/initiate
+```
+
+Initiates multiple leads in a single request.
+
+## Request Body
+
+```jsonc
+{
+  "leadIds": ["string"], // Optional: array of existing lead IDs
+  "leads": [              // Optional: array of new lead objects
+    {
+      "firstName": "string",
+      "lastName": "string",
+      "name": "string",
+      "email": "string",
+      "phone": "string",
+      "projectId": "string",
+      "processId": "string",
+      "referenceId": "string",
+      "metadata": {}
+    }
+  ]
+}
+```
+
+## Response
+
+```json
+{
+  "success": [
+    {
+      "_id": "string",
+      "firstName": "string"
+      // ... other lead fields
+    }
+  ],
+  "errors": [
+    {
+      "leadId": "string", // or full lead object for new leads
+      "error": "error message"
+    }
+  ]
+}
+```
+
+## Error Responses
+
+- 400 Bad Request: When neither `leadIds` nor `leads` array is provided
+- 500 Internal Server Error: For server-side errors
+
+## Example cURL
+
+Bulk create new leads:
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/bulk/initiate" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "leads": [
+      {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "projectId": "<Your Project Id>",
+        "processId": "<Lead Process Id>"
+      },
+      {
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "email": "jane.smith@example.com",
+        "projectId": "<Your Project Id>",
+        "processId": "<Lead Process Id>"
+      }
+    ]
+  }'
+```
+
+Bulk process existing leads:
+
+```bash
+curl -X POST "https://crm.uservox.ai/api/v1/leads/bulk/initiate" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "leadIds": [
+      "507f1f77bcf86cd799439013",
+      "507f1f77bcf86cd799439014"
+    ]
+  }'
+```

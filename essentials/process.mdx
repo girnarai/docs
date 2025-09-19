@@ -1,0 +1,31 @@
+---
+title: 'Process'
+description: 'How a lead goes through a process'
+---
+
+## Overview
+
+A Process defines how Uservox engages a lead from first touch to outcome. It orchestrates attempts, timing, and next steps.
+
+## Typical Flow
+
+1. Enrollment
+   - Lead is added to a Process (manually, via API, or via CRM integration)
+2. Attempt Strategy
+   - Configure call attempts per day, retry intervals, and call windows
+3. Conversation Handling
+   - Agent follows your conversation flow (greeting, qualification, FAQs)
+   - Outcomes: qualified, not interested, voicemail, callback requested, no answer
+4. Post-Call Actions
+   - Log summary, transcript, sentiment, and key fields
+   - Update CRM records and statuses
+   - Schedule follow-ups if needed
+5. Exit Criteria
+   - Success (qualified/booked) or Disqualified
+   - Max attempts reached or manual removal
+
+## Tips
+
+- Align outcomes with CRM stages
+- Set local-time windows to boost pickup rates
+- Keep retry counts reasonable to avoid spam labeling

@@ -1,0 +1,34 @@
+---
+title: 'Field Validations'
+description: 'Required and optional fields, rules, and notes for lead initiation'
+---
+
+## Required Fields
+
+- firstName or name: At least one must be provided
+- email or phone: At least one must be provided
+- projectId: Obtain from your Project’s Settings page
+- processId: From the details page of your Process in Uservox
+
+## Optional Fields
+
+- lastName: string
+- referenceId: string (must be unique within project and process)
+- metadata: object (key-value pairs for additional data)
+
+## Field Rules
+
+- email: Must be unique across the project, lowercase, and properly formatted
+- phone: Should be properly formatted (E.164 recommended)
+- projectId: Must reference a valid project
+- processId: Must reference a valid process within the project
+- referenceId: If provided, must be unique within the same project and process combination
+- name: If provided, may be split into `firstName` and `lastName`
+
+## Notes
+
+- Either `leadId` or `lead` object must be provided for single lead initiation
+- Either `leadIds` or `leads` array must be provided for bulk lead initiation
+- Bulk requests return both successful and failed operations
+- All timestamps are ISO 8601 format
+- Responses include the lead's current state after initialization

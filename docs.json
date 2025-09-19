@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Uservox Docs",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -17,19 +17,29 @@
             "group": "Get Started",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "quickstart"
             ]
           },
           {
             "group": "Essentials",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "essentials/agents",
+              "essentials/leads",
+              "essentials/process",
+              "essentials/call-quality-analysis",
+              "essentials/pulse-usage"
+            ]
+          },
+          {
+            "group": "API Integration",
+            "pages": [
+              "api-integration/overview",
+              "api-integration/authentication",
+              "api-integration/project-details",
+              "api-integration/leads-initiate",
+              "api-integration/leads-bulk-initiate",
+              "api-integration/field-validations",
+              "api-integration/examples"
             ]
           }
         ]
@@ -58,26 +68,21 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Uservox",
+          "href": "https://uservox.ai",
+          "icon": "globe"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Dashboard",
+          "href": "https://app.uservox.ai",
+          "icon": "rectangle-terminal"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "https://uservox.ai/home/images/logo/logo_dark_lg.png",
+    "dark": "https://uservox.ai/home/images/logo/logo_dark_lg.png"
   },
   "navbar": {
     "links": [
@@ -89,7 +94,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://app.uservox.ai"
     }
   },
   "footer": {

@@ -1,0 +1,40 @@
+---
+title: 'Leads'
+description: 'How to insert leads and what operations you can do on them'
+---
+
+## Adding Leads
+
+You can add leads to Uservox in multiple ways:
+
+- Dashboard: Upload CSV or add individual leads
+- API: Create or update leads programmatically
+- Integrations: Sync leads from your CRM
+
+Minimum recommended fields:
+
+- name, phone, timezone
+- optional: email, company, notes, campaign tags
+
+## Operations on Leads
+
+From the Dashboard:
+
+- View and search: Filter by status, outcome, tags
+- Update details: Edit contact info or custom fields
+- Tagging: Organize leads by campaign, source, or segments
+- Assign to Agent/Process: Enroll into a calling workflow
+- Pause/Resume: Temporarily remove from dialing attempts
+- Delete: Remove a lead from the system
+
+From the API:
+
+- Create, update, upsert by external_id
+- Attach metadata fields for routing/qualification
+- Trigger outbound calls or workflows
+
+## Best Practices
+
+- Normalize phone numbers in E.164 format
+- Provide timezone for optimal call windows
+- Use external_id to keep your CRM and Uservox in sync

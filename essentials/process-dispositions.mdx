@@ -1,16 +1,15 @@
 ---
 title: "Process Dispositions"
-description: "A Disposition represents the final outcome or status of a call handled by the voice agent. It helps categorize the result of every interaction — whether successful, unsuccessful, or neutral — for tracking performance, analytics, and follow-up actions.
-Examples include: Retail, Lost - Not Purchased, Lost to Co-dealer, Wrong Number, Inconclusive, No Connect, Callback Later/Busy, Voicemail, etc."
+description: "A Disposition represents the final outcome or status of a call handled by the voice agent. It helps categorize the result of every interaction — whether successful, unsuccessful, or neutral — for tracking performance, analytics, and follow-up actions. Examples include: Retail, Lost - Not Purchased, Lost to Co-dealer, Wrong Number, Inconclusive, No Connect, Callback Later/Busy, Voicemail, etc."
 ---
 
 Each disposition has three key attributes:
 
 - **Disposition Name** – A short descriptive title for the call outcome.
 - **Type** – The classification of the result:
-  - _Success_ – Call achieved its goal (e.g., booking, confirmation).
-  - _Failure_ – The call ended with a negative outcome (e.g., user declined, wrong number).
-  - _Neutral_ – The call outcome was inconclusive or pending (e.g., voicemail, no connect).
+  - _Success_ – Call achieved its goal (e.g., booking, confirmation) and will not be called again.
+  - _Failure_ – The call ended with a negative outcome (e.g., user declined, wrong number) and will not be called again.
+  - _Neutral_ – The call outcome was inconclusive or pending (e.g., voicemail, no connect) and will be called again via AI Bot.
 - **Prompt/Description** – A detailed note guiding when to use that disposition, helping agents or AI systems mark calls consistently.
 
 ![Screenshotfrom2025 10 1412 33 36 Pn](/images/Screenshotfrom2025-10-1412-33-36.png)

@@ -8,9 +8,12 @@ description: "UserVox lets you build intelligent voice AI agents that can talk n
 To start building an agent:
 
 1. Go to **Agents** in the left menu.
-2. Click **“Create New Agent.”**
-3. Enter the **Agent Name** and **Description**.
-4. Click **Save** — this opens the agent’s configuration dashboard.
+2. Click **“Duplicate an existing Agent.”**
+
+![Screenshotfrom2025 10 2502 41 39 Pn](/images/Screenshotfrom2025-10-2502-41-39.png)
+
+1. Enter the **Agent Name** and **Description**.
+2. Click **Save** — this opens the agent’s configuration dashboard.
 
 Once created, you’ll see multiple tabs such as **Details**, **Try**, **Steps**, **Tools**, **Prompts**, **Capture**, and **Test Questions**.
 
@@ -41,7 +44,7 @@ You can structure it into clear sections such as:
 
 Use placeholders like `{{sirOrMam}}`, `{{city}}`, or `{{hindi_model}}` for dynamic personalization.
 
-📘 **Figure 1:** _Agent prompt and guideline setup interface._
+![Screenshotfrom2025 10 2500 28 46 Pn](/images/Screenshotfrom2025-10-2500-28-46.png)
 
 ---
 
@@ -65,25 +68,43 @@ You can also:
 - Enable **Initiate Conversation** for outbound tests
 - Adjust **Search Depth** for response variability
 
-📘 **Figure 2:** _Model, voice, and language setup for an agent._
+![Screenshotfrom2025 10 2502 07 26 Pn](/images/Screenshotfrom2025-10-2502-07-26.png)
 
 ---
 
 ## 4. Adding Agent Tools (Function Calls)
 
-The **Tools** tab allows your agent to connect with APIs or backend functions for real-time data retrieval.
+Tools allow your AI agent to **fetch data from APIs or perform external actions** — like checking a model price or scheduling a test drive.
 
-Typical tools include:
+1. Go to the **Tools** tab in your agent.
 
-- `getMakeDealerInCity` – Fetches available dealers in a city
-- `getMakeDealerInPincode` – Looks up dealers by PIN code
-- `getModelPrice` – Retrieves car pricing details
-- `getModelFeatures` – Lists car features
-- `endCall` – Terminates the interaction gracefully
+![Screenshotfrom2025 10 2500 29 15 Pn](/images/Screenshotfrom2025-10-2500-29-15.png)
 
-Click **“Add Tool”** → enter the tool name and logic → then **Save Tools**.
+1. Click **Add Tool**.
+2. Enter a **Tool Description** (e.g., _Get model price by name_).
+3. Click **\+ Add Parameter** if your API requires input values (like `city` or `model`).
+4. Under **Actions**, click **\+ Add Action**, then configure the webhook:
+   - **Action Type:** Select `Webhook`.
+   - **Variable Name:** Choose where the API response should be stored (e.g., `result`).
+   - **URL:** Paste the full API endpoint (e.g., `https://api.elitevw.in/getModelPrice`).
+   - **Method:** Choose `GET` or `POST`.
+   - **Cacheable:** Enable if the response doesn’t change frequently.
+   - Add any **URL Parameters** and **Headers** required by your API.
+5. Click **Save Tool** to finish.
 
-📘 **Figure 3:** _Adding API integrations or tool functions._
+![Screenshotfrom2025 10 2502 43 44 Pn](/images/Screenshotfrom2025-10-2502-43-44.png)
+
+---
+
+#### Example
+
+| Setting       | Example Value                                |
+| :------------ | :------------------------------------------- |
+| Description   | Get dealer by city                           |
+| URL           | `https://api.elitevw.in/getMakeDealerInCity` |
+| Method        | GET                                          |
+| URL Parameter | `city = {{city}}`                            |
+| Variable Name | `dealerList`                                 |
 
 ---
 
@@ -107,7 +128,7 @@ To add new fields:
 2. Give it a name and a short description.
 3. Click **Save**.
 
-📘 **Figure 4:** _Configuring AI variable extraction from conversations._
+![Screenshotfrom2025 10 2500 29 19 Pn](/images/Screenshotfrom2025-10-2500-29-19.png)
 
 ---
 
@@ -130,7 +151,7 @@ Example test variables:
 - `city`: Bangalore
 - `hindi_name`: Vinayak
 
-📘 **Figure 5:** _Agent simulation with predefined input variables._
+![Screenshotfrom2025 10 2500 29 04 Pn](/images/Screenshotfrom2025-10-2500-29-04.png)
 
 ---
 

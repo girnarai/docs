@@ -1,5 +1,146 @@
 ---
-title: 'New file'
-description: 'Description of your new file.'
+title: "Creating and Editing an Agent in UserVox"
+description: "UserVox lets you build intelligent voice AI agents that can talk naturally, follow sales or support workflows, and extract structured data from conversations. This guide explains how to create, configure, test, and refine an agent step by step."
 ---
 
+## 1. Creating a New Agent
+
+To start building an agent:
+
+1. Go to **Agents** in the left menu.
+2. Click **“Create New Agent.”**
+3. Enter the **Agent Name** and **Description**.
+4. Click **Save** — this opens the agent’s configuration dashboard.
+
+Once created, you’ll see multiple tabs such as **Details**, **Try**, **Steps**, **Tools**, **Prompts**, **Capture**, and **Test Questions**.
+
+---
+
+## 2. Adding the Prompt (Agent Guideline)
+
+Navigate to the **Details** tab to define the agent’s **Prompt** — the set of conversation rules or scripts that guide how your AI speaks.
+
+**Purpose:**\
+This is where you write _who the agent is_, _what it should say_, and _how it should respond_.
+
+**Example:**
+
+```
+Hello, I am Pooja calling from Elite फॉक्सवैगन. How are you today?
+
+If the user responds positively:
+“I’m calling today just to verify if our sales consultant has been able to get in touch with you regarding your interest.”
+```
+
+You can structure it into clear sections such as:
+
+1. Greeting
+2. Verification
+3. Follow-up Questions
+4. Closing
+
+Use placeholders like `{{sirOrMam}}`, `{{city}}`, or `{{hindi_model}}` for dynamic personalization.
+
+📘 **Figure 1:** _Agent prompt and guideline setup interface._
+
+---
+
+## 3. Choosing LLM, TTS, and STT Models
+
+Go to the **Advanced Settings** section to set up the agent’s voice and language model configurations.
+
+You can select:
+
+| Setting                        | Description                                     | Example                         |
+| :----------------------------- | :---------------------------------------------- | :------------------------------ |
+| **Realtime Model (LLM)**       | The AI brain that processes logic and responses | `Gemini 2.0`                    |
+| **TTS Model (Text-to-Speech)** | Converts text into natural-sounding voice       | `ElevenLabs`                    |
+| **STT Model (Speech-to-Text)** | Converts user’s speech into text                | Select from dropdown            |
+| **Voice**                      | Choose a preferred tone or voice profile        | `Lokesh`                        |
+| **Languages**                  | Add multiple supported languages                | `Hindi (India)`, `English (US)` |
+
+You can also:
+
+- Assign a **PIN** to test on a phone number
+- Enable **Initiate Conversation** for outbound tests
+- Adjust **Search Depth** for response variability
+
+📘 **Figure 2:** _Model, voice, and language setup for an agent._
+
+---
+
+## 4. Adding Agent Tools (Function Calls)
+
+The **Tools** tab allows your agent to connect with APIs or backend functions for real-time data retrieval.
+
+Typical tools include:
+
+- `getMakeDealerInCity` – Fetches available dealers in a city
+- `getMakeDealerInPincode` – Looks up dealers by PIN code
+- `getModelPrice` – Retrieves car pricing details
+- `getModelFeatures` – Lists car features
+- `endCall` – Terminates the interaction gracefully
+
+Click **“Add Tool”** → enter the tool name and logic → then **Save Tools**.
+
+📘 **Figure 3:** _Adding API integrations or tool functions._
+
+---
+
+## 5. Capturing Variables from Conversations
+
+In the **Capture** tab, you can define structured data points that the AI automatically extracts from the user’s speech or responses.
+
+**Examples of captured variables:**
+
+| Variable        | Purpose                                |
+| :-------------- | :------------------------------------- |
+| `timeToBuy`     | When the user plans to make a purchase |
+| `model`         | Car model user is interested in        |
+| `budget`        | Mentioned price range                  |
+| `callbackDate`  | Date for follow-up call                |
+| `testdriveTime` | Scheduled time for test drive          |
+
+To add new fields:
+
+1. Click **Add Variable**.
+2. Give it a name and a short description.
+3. Click **Save**.
+
+📘 **Figure 4:** _Configuring AI variable extraction from conversations._
+
+---
+
+## 6. Trying the Agent in the Simulator
+
+In the **Try** tab, you can test how your agent performs before deployment.
+
+Steps:
+
+1. Click **Start** to begin the simulated call.
+2. Optionally enable **Voice Override** to test custom speech.
+3. Review the conversation flow in the **Conversation Window**.
+4. Adjust **Sample Input Variables** (like name, city, model, make) to test different cases.
+
+Example test variables:
+
+- `hindi_make`: फॉक्सवैगन
+- `hindi_model`: Taigun
+- `sirOrMam`: Sir
+- `city`: Bangalore
+- `hindi_name`: Vinayak
+
+📘 **Figure 5:** _Agent simulation with predefined input variables._
+
+---
+
+## 7. Editing and Updating Agents
+
+Once your agent is live, you can revisit any tab to make changes:
+
+- Refine prompt logic or tone.
+- Update TTS, STT, or LLM settings.
+- Add new captured variables or tools.
+- Rerun tests using the Try simulator.
+
+Changes take effect immediately after saving, allowing for continuous iteration and improvement.

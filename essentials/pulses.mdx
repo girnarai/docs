@@ -1,0 +1,61 @@
+---
+title: "Pulse or Connected Minutes"
+description: "A Connected Pulse represents the total duration of connected calls on UserVox. Each pulse equals one minute of connected talk time, rounded up to the next full minute — for example, 0–59 seconds count as 1 pulse, 60–119 seconds as 2 pulses, and so on. It helps track the actual usage of connected call minutes by your voice agents."
+---
+
+### What is a Connected Pulse?
+
+A **Connected Pulse** represents the total connected call duration used by your voice agents on the UserVox platform.\
+It measures how much talk-time was consumed during successful connections with customers.
+
+- Each pulse equals **1 minute of connected call duration.**
+- The count rounds up to the next full minute:
+  - **0–59 seconds → 1 pulse**
+  - **60–119 seconds → 2 pulses**
+  - and so on.
+
+So, for example:
+
+| Call Duration | Pulses Used |
+| :------------ | :---------- |
+| 45 seconds    | 1           |
+| 1 min 10 sec  | 2           |
+| 2 min 20 sec  | 3           |
+
+### How to Check Connected Pulses in UserVox
+
+You can track total pulses used per month or week directly from the **UserVox dashboard**:
+
+#### **Option 1: Account Settings → Pulses**
+
+1. Click your profile (top right corner).
+2. Select **Account Settings**.
+
+![Screenshotfrom2025 10 3100 29 01 Pn](/images/Screenshotfrom2025-10-3100-29-01.png)
+
+1. From the left sidebar, go to **Pulses**.
+2. You’ll see the **Monthly Pulses Used** section.
+   - Example: _October 2025 – 101,228 pulses_\
+     This means 101,228 minutes of connected talk-time were consumed in October.
+
+![Screenshotfrom2025 10 3100 29 18 Pn](/images/Screenshotfrom2025-10-3100-29-18.png)
+
+#### **Option 2: Pulses Dashboard**
+
+1. From the profile dropdown, click **Pulses Dashboard**.
+2. You’ll get a more detailed, date-wise or project-wise pulse usage breakdown.
+3. Each pulse count here reflects only **connected** calls — attempts that were answered and reached the user.
+
+### Relation Between Attempts, Connections, and Pulses
+
+| Metric              | Meaning                                                                        |
+| :------------------ | :----------------------------------------------------------------------------- |
+| **Total Attempts**  | All outbound call attempts (connected + missed + unreachable).                 |
+| **Total Connected** | Calls where the user actually picked up.                                       |
+| **Total Pulses**    | The total talk-time consumed for all connected calls (in minutes, rounded up). |
+
+So for instance:
+
+- **132,079 attempts** → all calls made.
+- **45,083 connected** → actual successful connections.
+- **101,228 pulses** → total talk minutes used for those 45,083 connections.

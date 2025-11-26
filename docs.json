@@ -27,7 +27,8 @@
               "essentials/leads",
               "essentials/process",
               "essentials/call-quality-analysis",
-              "essentials/pulse-usage"
+              "essentials/pulse-usage",
+              "essentials/test-conversation"
             ]
           },
           {

@@ -1,0 +1,67 @@
+---
+title: 'WhatsApp Events'
+description: 'Handling interactive WhatsApp responses in your process'
+---
+
+## Overview
+
+WhatsApp Events allow your process to react to interactive responses from users, such as button clicks, list selections, or other out-of-process interactions. Unlike standard text replies, these events carry a specific payload (e.g., a button ID) that can be used to trigger precise transitions in your workflow.
+
+## How It Works
+
+1.  **Event Reception**: When a user interacts with a WhatsApp message (e.g., clicks a "Yes" button), a webhook is received by the system.
+2.  **Activity Creation**: The system creates a `whatsapp_event` activity for the lead.
+3.  **Data Update**: If the event payload contains data (JSON), it is automatically merged into the lead's `learnedData`.
+4.  **State Evaluation**: The process state machine evaluates the event against the lead's **current state**.
+
+## Configuration
+
+To handle a WhatsApp event, you must define **Disposition Transitions** on the node where the lead is currently located.
+
+### 1. Define Dispositions
+
+Ensure that the dispositions corresponding to your button IDs are defined in your process.
+
+*   **Disposition Name**: Must match the `id` of the button payload.
+*   **Type**: Typically `Success` or `Neutral`.
+
+### 2. Configure Node Transitions
+
+On the node where the WhatsApp message was sent (or the node where the lead is waiting):
+
+1.  Open the **Node Editor**.
+2.  Go to the **Dispositions** or **Next Step** section.
+3.  Add a transition rule:
+    *   **Disposition**: Select the disposition matching your button ID (e.g., `Yes_Confirm`).
+    *   **Next Node**: Select the node to transition to when this button is clicked.
+
+### Example Scenario
+
+**Scenario**: You send a message asking "Are you interested?" with two buttons: "Yes" (ID: `YES`) and "No" (ID: `NO`).
+
+1.  **Send Message Node**: This node sends the WhatsApp template.
+2.  **Wait State**: The lead remains in this node (or a subsequent wait node).
+3.  **Transitions**:
+    *   If `YES` is received -> Transition to "Schedule Call" node.
+    *   If `NO` is received -> Transition to "Mark Not Interested" node.
+
+## Payload Handling
+
+If your button payload is a JSON string, the system parses it and updates the lead's data.
+
+**Example Payload:**
+```json
+{
+  "id": "SCHEDULE_NEXT_WEEK",
+  "preferred_day": "Monday",
+  "time_slot": "10:00 AM"
+}
+```
+
+*   **Disposition**: `SCHEDULE_NEXT_WEEK`
+*   **Learned Data**: `preferred_day` and `time_slot` will be added to the lead's `learnedData`, making them available for future nodes or API calls.
+
+## Technical Details
+
+*   **Activity Type**: `whatsapp_event`
+*   **Evaluation Logic**: The system looks for a transition matching the `disposition` (payload ID) on the `currentState` node.

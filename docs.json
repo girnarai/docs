@@ -48,6 +48,8 @@
               "essentials/dashboard",
               "essentials/uservox-analytics",
               "essentials/leads",
+              "essentials/whatsapp-events",
+              "essentials/call-quality-analysis",
               "essentials/pulse-usage"
             ]
           },

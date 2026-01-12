@@ -23,17 +23,41 @@
           {
             "group": "Essentials",
             "pages": [
-              "essentials/agents",
               "essentials/leads",
-              "essentials/process",
               "essentials/call-quality-analysis",
-              "essentials/pulse-usage",
-              "essentials/test-conversation"
+              "essentials/pulse-usage"
+            ]
+          },
+          {
+            "group": "Agent",
+            "pages": [
+              "essentials/agents",
+              "essentials/create-edit-agent",
+              "essentials/test-conversation",
+              "essentials/human-call-quality-analysis"
+            ]
+          },
+          {
+            "group": "Process",
+            "pages": [
+              "essentials/process",
+              "essentials/create-edit-process",
+              "essentials/process-analytics",
+              "essentials/process-dispositions",
+              "essentials/dashboard",
+              "essentials/upload-test-lead"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "essentials/pulses"
             ]
           },
           {
             "group": "API Integration",
             "pages": [
+              "essentials/api-integration",
               "api-integration/overview",
               "api-integration/authentication",
               "api-integration/project-details",
@@ -42,6 +66,10 @@
               "api-integration/field-validations",
               "api-integration/examples"
             ]
+          },
+          {
+            "group": "FAQs",
+            "pages": []
           }
         ]
       },

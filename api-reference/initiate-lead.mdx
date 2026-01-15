@@ -1,0 +1,114 @@
+---
+title: "Initiate Lead"
+api: "POST /leads/initiate"
+description: "Create or validate a lead and optionally start initialization for calling"
+---
+
+<Warning>
+  **Rate Limits:**
+  - Request Rate: ~100 requests per 5 seconds per project
+  - Duplicate Detection: More than 5 duplicate submissions in 60 seconds will block the API key for 60 minutes
+</Warning>
+
+## Body Parameters
+
+<ParamField body="leadId" type="string">
+  Existing lead ID to validate (required if `lead` not provided)
+</ParamField>
+
+<ParamField body="lead" type="object">
+  New lead object (required if `leadId` not provided)
+  
+  <Expandable title="Lead Object Properties">
+    <ParamField body="projectId" type="string" required>
+      MongoDB ObjectId of the project
+    </ParamField>
+    
+    <ParamField body="processId" type="string" required>
+      MongoDB ObjectId of the process
+    </ParamField>
+    
+    <ParamField body="phone" type="string">
+      Phone number (required if email not provided)
+    </ParamField>
+    
+    <ParamField body="email" type="string">
+      Email address (required if phone not provided)
+    </ParamField>
+    
+    <ParamField body="name" type="string">
+      Full name (required if firstName not provided)
+    </ParamField>
+    
+    <ParamField body="firstName" type="string">
+      First name (required if name not provided)
+    </ParamField>
+    
+    <ParamField body="lastName" type="string">
+      Last name
+    </ParamField>
+    
+    <ParamField body="referenceId" type="string">
+      External reference ID for tracking
+    </ParamField>
+    
+    <ParamField body="metadata" type="object">
+      Additional metadata
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="init" type="boolean" default="true">
+  Whether to initialize the lead for calling
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="_id" type="string">
+  MongoDB ObjectId of the lead
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Lead's name
+</ResponseField>
+
+<ResponseField name="phone" type="string">
+  Phone number
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address
+</ResponseField>
+
+<ResponseField name="projectId" type="string">
+  Project ID
+</ResponseField>
+
+<ResponseField name="processId" type="string">
+  Process ID
+</ResponseField>
+
+<ResponseField name="referenceId" type="string">
+  External reference ID
+</ResponseField>
+
+<ResponseField name="currentState" type="string">
+  Current state of the lead
+</ResponseField>
+
+<ResponseField name="metadata" type="object">
+  Lead metadata
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  ISO 8601 timestamp of creation
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string">
+  ISO 8601 timestamp of last update
+</ResponseField>
+

@@ -1,0 +1,80 @@
+---
+title: "Query Leads"
+api: "GET /leads/query"
+description: "Query multiple leads with optional filters and pagination"
+---
+
+## Query Parameters
+
+<ParamField query="projectId" type="string" required>
+  MongoDB ObjectId of the project
+</ParamField>
+
+<ParamField query="processId" type="string">
+  Filter by process ID
+</ParamField>
+
+<ParamField query="referenceId" type="string">
+  Filter by reference ID
+</ParamField>
+
+<ParamField query="phone" type="string">
+  Filter by phone number
+</ParamField>
+
+<ParamField query="email" type="string">
+  Filter by email address
+</ParamField>
+
+<ParamField query="currentState" type="string">
+  Filter by current state
+</ParamField>
+
+<ParamField query="lastDisposition" type="string">
+  Filter by last disposition
+</ParamField>
+
+<ParamField query="limit" type="number" default="10">
+  Maximum number of results (max: 100)
+</ParamField>
+
+<ParamField query="skip" type="number" default="0">
+  Number of results to skip for pagination
+</ParamField>
+
+<ParamField query="includeActivities" type="boolean" default="true">
+  Include activities in response
+</ParamField>
+
+<ParamField query="masked" type="boolean" default="false">
+  Mask phone numbers
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  Array of lead objects
+</ResponseField>
+
+<ResponseField name="pagination" type="object">
+  Pagination information
+  
+  <Expandable title="Pagination Properties">
+    <ResponseField name="total" type="number">
+      Total number of leads matching the query
+    </ResponseField>
+    
+    <ResponseField name="limit" type="number">
+      Number of results per page
+    </ResponseField>
+    
+    <ResponseField name="skip" type="number">
+      Number of results skipped
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+

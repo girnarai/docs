@@ -1,0 +1,100 @@
+---
+title: "Update Lead"
+api: "POST /leads/update"
+description: "Update a lead's metadata and optionally transition to a new state"
+---
+
+## Body Parameters
+
+<ParamField body="leadId" type="string">
+  MongoDB ObjectId of the lead (required if not using referenceId)
+</ParamField>
+
+<ParamField body="referenceId" type="string">
+  External reference ID (requires projectId and processId)
+</ParamField>
+
+<ParamField body="projectId" type="string">
+  Required when using referenceId
+</ParamField>
+
+<ParamField body="processId" type="string">
+  Required when using referenceId
+</ParamField>
+
+<ParamField body="metadata" type="object">
+  Metadata object to merge with existing metadata
+</ParamField>
+
+<ParamField body="name" type="string">
+  Update the lead's name
+</ParamField>
+
+<ParamField body="targetState" type="string">
+  Target state to transition the lead to (e.g., "interested", "lost", "followup_2")
+</ParamField>
+
+<ParamField body="disposition" type="string">
+  Disposition reason (used with targetState "interested" or "lost")
+</ParamField>
+
+<ParamField body="userId" type="string">
+  User ID for audit logging
+</ParamField>
+
+<Note>
+  If `metadata` is not provided, all other fields (except leadId, referenceId, projectId, processId, targetState, name, disposition, userId) will be merged into metadata.
+</Note>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="lead" type="object">
+  The updated lead object
+  
+  <Expandable title="Lead Properties">
+    <ResponseField name="_id" type="string">
+      MongoDB ObjectId of the lead
+    </ResponseField>
+    
+    <ResponseField name="name" type="string">
+      Lead's name
+    </ResponseField>
+    
+    <ResponseField name="phone" type="string">
+      Phone number
+    </ResponseField>
+    
+    <ResponseField name="email" type="string">
+      Email address
+    </ResponseField>
+    
+    <ResponseField name="projectId" type="string">
+      Project ID
+    </ResponseField>
+    
+    <ResponseField name="processId" type="string">
+      Process ID
+    </ResponseField>
+    
+    <ResponseField name="currentState" type="string">
+      Current state of the lead
+    </ResponseField>
+    
+    <ResponseField name="metadata" type="object">
+      Lead metadata
+    </ResponseField>
+    
+    <ResponseField name="createdAt" type="string">
+      ISO 8601 timestamp of creation
+    </ResponseField>
+    
+    <ResponseField name="updatedAt" type="string">
+      ISO 8601 timestamp of last update
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+

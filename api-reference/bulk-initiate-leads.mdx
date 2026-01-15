@@ -1,0 +1,93 @@
+---
+title: "Bulk Initiate Leads"
+api: "POST /leads/bulk/initiate"
+description: "Create or validate multiple leads in a single request and optionally start initialization"
+---
+
+<Warning>
+  **Rate Limits:**
+  - Request Rate: ~100 requests per 5 seconds per project
+  - Maximum Leads: 1000 leads per request
+</Warning>
+
+## Body Parameters
+
+<ParamField body="leadIds" type="string[]">
+  Array of existing lead IDs (required if `leads` not provided)
+</ParamField>
+
+<ParamField body="leads" type="object[]">
+  Array of new lead objects (required if `leadIds` not provided)
+  
+  <Expandable title="Lead Object Properties">
+    <ParamField body="projectId" type="string" required>
+      MongoDB ObjectId of the project
+    </ParamField>
+    
+    <ParamField body="processId" type="string" required>
+      MongoDB ObjectId of the process
+    </ParamField>
+    
+    <ParamField body="phone" type="string">
+      Phone number (required if email not provided)
+    </ParamField>
+    
+    <ParamField body="email" type="string">
+      Email address (required if phone not provided)
+    </ParamField>
+    
+    <ParamField body="name" type="string">
+      Full name (required if firstName not provided)
+    </ParamField>
+    
+    <ParamField body="firstName" type="string">
+      First name (required if name not provided)
+    </ParamField>
+    
+    <ParamField body="lastName" type="string">
+      Last name
+    </ParamField>
+    
+    <ParamField body="referenceId" type="string">
+      External reference ID
+    </ParamField>
+    
+    <ParamField body="metadata" type="object">
+      Additional metadata
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="init" type="boolean" default="true">
+  Whether to initialize leads for calling
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="v" type="string">
+  API version. Use `"1.2"` for simplified response format
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="array">
+  Array of successfully created/validated leads
+</ResponseField>
+
+<ResponseField name="errors" type="array">
+  Array of errors for leads that failed validation
+  
+  <Expandable title="Error Object Properties">
+    <ResponseField name="data" type="object">
+      The lead data that failed (default format)
+    </ResponseField>
+    
+    <ResponseField name="referenceId" type="string">
+      Reference ID of failed lead (v1.2 format)
+    </ResponseField>
+    
+    <ResponseField name="error" type="string">
+      Error message
+    </ResponseField>
+  </Expandable>
+</ResponseField>

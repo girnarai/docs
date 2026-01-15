@@ -1,0 +1,92 @@
+---
+title: "Get Lead"
+api: "GET /leads/get"
+description: "Retrieve a single lead with all its activities"
+---
+
+## Query Parameters
+
+<ParamField query="leadId" type="string">
+  MongoDB ObjectId of the lead (required if not using referenceId)
+</ParamField>
+
+<ParamField query="referenceId" type="string">
+  External reference ID (requires projectId and processId)
+</ParamField>
+
+<ParamField query="projectId" type="string">
+  Required when using referenceId
+</ParamField>
+
+<ParamField query="processId" type="string">
+  Required when using referenceId
+</ParamField>
+
+<ParamField query="masked" type="boolean" default="false">
+  If `true`, masks phone number (all but last 4 digits)
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  The lead object with activities
+  
+  <Expandable title="Lead Properties">
+    <ResponseField name="_id" type="string">
+      MongoDB ObjectId of the lead
+    </ResponseField>
+    
+    <ResponseField name="name" type="string">
+      Lead's name
+    </ResponseField>
+    
+    <ResponseField name="phone" type="string">
+      Phone number
+    </ResponseField>
+    
+    <ResponseField name="email" type="string">
+      Email address
+    </ResponseField>
+    
+    <ResponseField name="projectId" type="string">
+      Project ID
+    </ResponseField>
+    
+    <ResponseField name="processId" type="string">
+      Process ID
+    </ResponseField>
+    
+    <ResponseField name="referenceId" type="string">
+      External reference ID
+    </ResponseField>
+    
+    <ResponseField name="currentState" type="string">
+      Current state of the lead
+    </ResponseField>
+    
+    <ResponseField name="lastDisposition" type="string">
+      Last disposition
+    </ResponseField>
+    
+    <ResponseField name="metadata" type="object">
+      Lead metadata
+    </ResponseField>
+    
+    <ResponseField name="createdAt" type="string">
+      ISO 8601 timestamp of creation
+    </ResponseField>
+    
+    <ResponseField name="updatedAt" type="string">
+      ISO 8601 timestamp of last update
+    </ResponseField>
+    
+    <ResponseField name="activities" type="array">
+      Array of activity objects
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+

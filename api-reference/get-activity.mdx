@@ -1,0 +1,66 @@
+---
+title: "Get Activity by ID"
+api: "GET /leads/activity/get"
+description: "Retrieve a single activity by its ID"
+---
+
+## Query Parameters
+
+<ParamField query="activityId" type="string" required>
+  The MongoDB ObjectId of the activity to retrieve
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  The activity object
+  
+  <Expandable title="Activity Properties">
+    <ResponseField name="_id" type="string">
+      The MongoDB ObjectId of the activity
+    </ResponseField>
+    
+    <ResponseField name="lead" type="string">
+      The MongoDB ObjectId of the associated lead
+    </ResponseField>
+    
+    <ResponseField name="type" type="string">
+      Type of activity (e.g., "call")
+    </ResponseField>
+    
+    <ResponseField name="status" type="string">
+      Status of the activity (e.g., "success")
+    </ResponseField>
+    
+    <ResponseField name="result" type="object">
+      Activity result details
+      
+      <Expandable title="Result Properties">
+        <ResponseField name="callStatus" type="string">
+          Status of the call (e.g., "completed")
+        </ResponseField>
+        
+        <ResponseField name="duration" type="number">
+          Duration in seconds
+        </ResponseField>
+        
+        <ResponseField name="conversationId" type="string">
+          Conversation identifier
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+    
+    <ResponseField name="createdAt" type="string">
+      ISO 8601 timestamp of creation
+    </ResponseField>
+    
+    <ResponseField name="completedAt" type="string">
+      ISO 8601 timestamp of completion
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+

@@ -1,0 +1,32 @@
+/* Fix select dropdown options visibility in dark mode */
+select option {
+  background-color: var(--background-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Alternative fix for select dropdowns in dark mode */
+.dark select option {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+/* Fix for API playground select inputs */
+#api-playground-input select option {
+  background-color: var(--background-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Ensure select dropdowns are visible in dark mode */
+select {
+  color-scheme: dark;
+}
+
+.dark select {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+.dark select option {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}

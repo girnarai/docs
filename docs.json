@@ -8,6 +8,14 @@
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
+  "api": {
+    "mdx": {
+      "server": "https://crm.uservox.ai/api/v1",
+      "auth": {
+        "method": "bearer"
+      }
+    }
+  },
   "navigation": {
     "tabs": [
       {
@@ -84,12 +92,19 @@
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Leads",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/initiate-lead",
+              "api-reference/bulk-initiate-leads",
+              "api-reference/update-lead",
+              "api-reference/get-lead",
+              "api-reference/query-leads"
+            ]
+          },
+          {
+            "group": "Activities",
+            "pages": [
+              "api-reference/get-activity"
             ]
           }
         ]

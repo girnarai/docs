@@ -1,8 +1,103 @@
 ---
-title: 'API Overview'
-description: 'Overview of the Uservox API'
+title: 'API Reference'
+description: 'Comprehensive API documentation for Vox CRM Lead Management'
 ---
 
 ## Introduction
 
-This is a placeholder for the API overview. Add your API introduction, authentication, and base URL details here.
+Welcome to the Vox CRM API documentation. This API provides comprehensive lead management capabilities including creating, updating, querying leads, and tracking activities.
+
+## Base URL
+
+All API endpoints are relative to the base URL:
+
+```
+https://crm.uservox.ai/api/v1
+```
+
+## Authentication
+
+All API requests require authentication using a Bearer token in the `Authorization` header:
+
+```bash
+Authorization: Bearer YOUR_API_TOKEN
+```
+
+<Warning>
+  Keep your API tokens secure and never share them publicly. Tokens are project-specific and must match the projectId in your requests.
+</Warning>
+
+## Getting Started
+
+Before using the API, you'll need to obtain the following credentials:
+
+### 1. Get Your API Token and Project ID
+
+To get your API token and project ID, visit the [Account Settings](https://app.uservox.ai/account-settings) page.
+
+<img className="block dark:hidden" src="/images/projectId_key_light.png" alt="How to get API Token" />
+<img className="hidden dark:block" src="/images/projectId_key_dark.png" alt="How to get API Token" />
+
+### 2. Get Your Process ID
+
+To get your Process ID, navigate to the [Processes](https://app.uservox.ai/processes) page and select your desired process.
+
+<img className="block dark:hidden" src="/images/processId_light.png" alt="How to get Process ID" />
+<img className="hidden dark:block" src="/images/processId_dark.png" alt="How to get Process ID" />
+
+## Available Endpoints
+
+### Leads Management
+
+<CardGroup cols={2}>
+  <Card title="Initiate Lead" icon="plus" href="/api-reference/initiate-lead">
+    Create or validate a lead for calling
+  </Card>
+  <Card title="Bulk Initiate Leads" icon="layer-group" href="/api-reference/bulk-initiate-leads">
+    Create or validate multiple leads at once
+  </Card>
+  <Card title="Update Lead" icon="pen-to-square" href="/api-reference/update-lead">
+    Update lead metadata and transition states
+  </Card>
+  <Card title="Get Lead" icon="user" href="/api-reference/get-lead">
+    Retrieve a single lead with all its activities
+  </Card>
+  <Card title="Query Leads" icon="users" href="/api-reference/query-leads">
+    Query multiple leads with filters and pagination
+  </Card>
+</CardGroup>
+
+### Activities
+
+<Card title="Get Activity" icon="clock" href="/api-reference/get-activity">
+  Retrieve a single activity by its ID
+</Card>
+
+## Rate Limits
+
+- **Standard Endpoints**: Standard rate limiting applies
+- **Initiate Endpoints**: ~100 requests per 5 seconds per project
+- **Bulk Operations**: Maximum 1000 leads per request
+- **Duplicate Detection**: More than 5 duplicate submissions in 60 seconds will block the API key for 60 minutes
+
+## Response Codes
+
+| Code | Description |
+|------|-------------|
+| `200` | Success |
+| `400` | Bad Request - Invalid parameters or validation error |
+| `403` | Forbidden - Authentication or authorization error |
+| `404` | Not Found - Resource doesn't exist |
+| `429` | Too Many Requests - Rate limit exceeded |
+| `500` | Internal Server Error - Server-side error |
+
+## Data Validation
+
+- Phone numbers are validated for patterns (e.g., repeating digits)
+- Duplicate detection prevents multiple calls to the same number
+- Required fields vary by endpoint - check individual documentation
+- Use the `masked` parameter to mask phone numbers in responses
+
+## Support
+
+For additional support or questions, contact: support@heroteck.com

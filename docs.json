@@ -104,6 +104,7 @@
           {
             "group": "Activities",
             "pages": [
+              "api-reference/activity-payloads",
               "api-reference/get-activity"
             ]
           }

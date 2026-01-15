@@ -1,0 +1,279 @@
+---
+title: "Activity Payloads"
+description: "Example webhook payloads for different activity states"
+---
+
+Activity payloads are sent via webhooks when activities are completed. Below are examples of payloads for different connection states.
+
+<Tabs>
+  <Tab title="Not Connected State">
+    This payload is sent when a call attempt is made but the contact is not reached (e.g., busy, no answer).
+
+    ```json
+    {
+      "action_type": "update",
+      "activityId": "69647xxxxxxxxxxxx3b0727a",
+      "leadId": "69610xxxxxxxxxxxx5990420",
+      "lastActivityId": "69647xxxxxxxxxxxx3b0725d",
+      "processId": "6932exxxxxxxxxxxxac2f00d",
+      "referenceId": "AB123456789",
+      "timestamp": 1768193759048,
+      "activity": {
+        "type": "call",
+        "status": "success",
+        "fromState": "make_first_call",
+        "toState": "schedule_second_call",
+        "scheduledAt": 1768193400000,
+        "result": {
+          "success": true,
+          "type": "call",
+          "leadId": "69610xxxxxxxxxxxx5990420",
+          "projectId": "681dbxxxxxxxxxxxx1645120",
+          "activityId": "69647xxxxxxxxxxxx3b0727a",
+          "referenceId": "AB123456789",
+          "flowId": "6953dxxxxxxxxxxxx815c424",
+          "channelId": 5,
+          "hasTransfer": false,
+          "telephonyType": "provider",
+          "input": {
+            "make_call": "yes",
+            "circle": "GJ",
+            "sirOrMam": "Sir",
+            "hindi_name": "सर",
+            "lastStateTransition": "2026-01-12T04:49:42.276Z",
+            "scheduledTime": 1768193400000,
+            "schedulingMethod": "standard",
+            "called": true,
+            "connected": true,
+            "priorSummary": "Lead Details: Contacting John Doe.\nActivities:\n- schedule:  on 10:19 AM (Mon, Jan 12, 2026).\n- call: Agent attempted to reach the customer but no conversation took place because the line was busy. No information was collected, no callback was scheduled, and the call attempt ended without engagement.",
+            "name": "John Doe",
+            "leadId": "69610xxxxxxxxxxxx5990420",
+            "projectId": "681dbxxxxxxxxxxxx1645120",
+            "referenceId": "AB123456789",
+            "currentDate": "January 12, 2026",
+            "currentDayTime": "Monday 10:24"
+          },
+          "wsId": 13,
+          "callRequest": {},
+          "providerCallId": "xxxxxxxxxxxxxxxx",
+          "callMetadata": {},
+          "status": "completed",
+          "analysis": {
+            "success": false,
+            "disposition": "Attempted",
+            "dispositionType": "neutral",
+            "summary": "Agent called the lead but no conversation took place because the contact was busy. Call did not progress and no information was collected or confirmed. No callback time was scheduled.",
+            "timestamp": 1768193758848
+          },
+          "callStatus": "busy",
+          "nextState": "schedule_second_call"
+        }
+      },
+      "leadSummary": "Lead Details: Contacting John Doe.\nActivities:\n- call: Agent called the lead but no conversation took place because the contact was busy. Call did not progress and no information was collected or confirmed. No callback time was scheduled.",
+      "leadDisposition": "Attempted"
+    }
+    ```
+
+    ### Key Fields for Not Connected State
+
+    - **callStatus**: `"busy"` - Indicates the call was not connected
+    - **analysis.success**: `false` - No successful conversation
+    - **analysis.disposition**: `"Attempted"` - Call was attempted but not completed
+    - **connected**: `true` in input but call didn't result in conversation
+    - **conversation**: Not present in the payload
+
+  </Tab>
+
+  <Tab title="Connected State">
+    This payload is sent when a call is successfully connected and a conversation takes place.
+
+    ```json
+    {
+      "action_type": "update",
+      "activityId": "6966179xxxxxxxxxxaf8ef",
+      "leadId": "6966163xxxxxxxxxxff92",
+      "lastActivityId": "6966179xxxxxxxxxxaf8ce",
+      "processId": "6932eb3xxxxxxxxxxf00d",
+      "referenceId": "AB123456789",
+      "timestamp": 1768299801851,
+      "activity": {
+        "type": "call",
+        "status": "success",
+        "fromState": "make_second_call_application_pending",
+        "toState": "interested",
+        "scheduledAt": 1768298400000,
+        "metadata": {
+          "attemptLogId": "6966190xxxxxxxxxxe20b",
+          "attemptNumber": 2,
+          "isConnected": true
+        },
+        "result": {
+          "success": true,
+          "type": "call",
+          "leadId": "6966163xxxxxxxxxxff92",
+          "projectId": "681db2dxxxxxxxxxxxx120",
+          "activityId": "6966179xxxxxxxxxxaf8ef",
+          "referenceId": "AB123456789",
+          "flowId": "6953d4fxxxxxxxxxxc425",
+          "channelId": 43,
+          "hasTransfer": false,
+          "telephonyType": "provider",
+          "input": {
+            "make_call": "yes",
+            "circle": "GJ",
+            "sirOrMam": "Sir",
+            "lastStateTransition": "2026-01-13T09:59:50.851Z",
+            "scheduledTime": 1768298400000,
+            "schedulingMethod": "standard",
+            "called": true,
+            "connected": true,
+            "priorSummary": "Lead Details: Contacting John Doe.\nActivities:\n- schedule:  on 03:29 PM (Tue, Jan 13, 2026).\n- call: The call began with the agent greeting the customer named John Doe, but no further conversation or meaningful exchange took place. on 03:24 PM (Tue, Jan 13, 2026).\n- schedule:  on 03:24 PM (Tue, Jan 13, 2026).\n",
+            "name": "John Doe",
+            "leadId": "6966163xxxxxxxxxxff92",
+            "projectId": "681db2dxxxxxxxxxxxx120",
+            "referenceId": "AB123456789",
+            "currentDate": "January 13, 2026",
+            "currentDayTime": "Tuesday 15:34"
+          },
+          "wsId": 91,
+          "callRequest": {},
+          "providerCallId": "xxxxxxxxxxxxxxxx",
+          "callMetadata": {},
+          "conversationId": "69661xxxxxxxxxxxx3a9c68a",
+          "status": "completed",
+          "conversation": {
+            "projectId": "681db2dxxxxxxxxxxxx120",
+            "flowId": "6953d4fxxxxxxxxxxc424",
+            "streamId": "af2efddxxxxxxxxxxfec4988af1a1d",
+            "callSid": "5dc0bccxxxxxxxxxxd3ba93d55041a1d",
+            "phoneHash": "ad636d6xxxxxxxxxxea3a8735ab57a41638342f28391f49654e8db2dbed9f91",
+            "leadId": "6966163xxxxxxxxxxff92",
+            "messages": [
+              {
+                "role": "assistant",
+                "content": "हैलो John ji",
+                "timestamp": 1768298667228
+              },
+              {
+                "role": "user",
+                "content": "बोलिए।",
+                "timestamp": 1768298669508
+              }
+            ],
+            "toolCalls": [
+              {
+                "tool_call_id": "call_hoHEbliU29OQwgx3",
+                "name": "scheduleExpertCallback",
+                "arguments": {
+                  "callbackDate": "13/01/2026",
+                  "callbackTime": "18:00"
+                },
+                "response": {
+                  "success": true,
+                  "callbackDate": "13/01/2026",
+                  "callbackTime": "18:00"
+                },
+                "utteranceId": "9",
+                "timestamp": 1768298750067
+              },
+              {
+                "tool_call_id": "call_z1EKhAjZLxOLk80h",
+                "name": "endCall",
+                "arguments": {
+                  "endCall": true
+                },
+                "response": {
+                  "success": true,
+                  "endCall": true
+                },
+                "utteranceId": "9",
+                "timestamp": 1768298752570
+              }
+            ],
+            "createdAt": "2026-01-13T10:04:27.229Z",
+            "updatedAt": "2026-01-13T10:06:02.584Z",
+            "reconciled": true,
+            "turnCount": 15
+          },
+          "variables": {
+            "flowId": "6953d4fxxxxxxxxxxc424",
+            "projectId": "681db2dxxxxxxxxxxxx120",
+            "streamId": "af2efddxxxxxxxxxxfec4988af1a1d",
+            "createdAt": "2026-01-13T10:04:27.190Z",
+            "timestamp": "2026-01-13T10:04:27.191Z",
+            "updatedAt": "2026-01-13T10:06:05.641Z",
+            "variables": {
+              "make_call": "yes",
+              "circle": "GJ",
+              "sirOrMam": "Sir",
+              "lastStateTransition": "2026-01-13T09:59:50.851Z",
+              "scheduledTime": 1768298400000,
+              "schedulingMethod": "standard",
+              "called": true,
+              "connected": true,
+              "priorSummary": "Lead Details: Contacting John Doe.\nActivities:\n- schedule:  on 03:29 PM (Tue, Jan 13, 2026).\n- call: The call began with the agent greeting the customer named John Doe, but no further conversation or meaningful exchange took place. on 03:24 PM (Tue, Jan 13, 2026).\n- schedule:  on 03:24 PM (Tue, Jan 13, 2026).\n",
+              "leadId": "6966163xxxxxxxxxxff92",
+              "projectId": "681db2dxxxxxxxxxxxx120",
+              "referenceId": "AB123456789",
+              "currentDate": "January 13, 2026",
+              "currentDayTime": "Tuesday 15:36",
+              "call_sid": "5dc0bccxxxxxxxxxxd3ba93d55041a1d",
+              "stream_id": "af2efddxxxxxxxxxxfec4988af1a1d",
+              "flowId": "6953d4fxxxxxxxxxxc425",
+              "currentGreeting": "Good Afternoon",
+              "isEvening": "",
+              "inferredLanguage": "hi",
+              "scheduleExpertCallback": null,
+              "callbackDate": "13/01/2026",
+              "callbackTime": "18:00",
+              "endCall": null,
+              "Urgency": "Very Urgent",
+              "Followup_time": "13/01/2026 18:00",
+              "Summary_points": "Urgency : Very Urgent, Followup_time : 13/01/2026 18:00",
+              "expertCallbackRequested": true
+            }
+          },
+          "analysis": {
+            "success": true,
+            "disposition": "Interested",
+            "dispositionType": "positive",
+            "summary": "Customer requested an expert callback scheduled for 13/01/2026 at 18:00. Urgency level: Very Urgent.",
+            "timestamp": 1768299801234
+          },
+          "callStatus": "completed",
+          "nextState": "interested"
+        }
+      },
+      "leadSummary": "Lead Details: Contacting John Doe.\nActivities:\n- call: Customer requested an expert callback scheduled for 13/01/2026 at 18:00. Urgency level: Very Urgent.",
+      "leadDisposition": "Interested"
+    }
+    ```
+
+    ### Key Fields for Connected State
+
+    - **callStatus**: `"completed"` - Call was successfully completed
+    - **analysis.success**: `true` - Successful conversation
+    - **analysis.disposition**: `"Interested"` - Positive outcome
+    - **metadata.isConnected**: `true` - Confirms connection
+    - **conversation**: Contains full conversation details including:
+      - `messages`: Array of conversation messages
+      - `toolCalls`: Actions taken during the call (e.g., scheduling callbacks)
+      - `turnCount`: Number of conversation turns
+    - **variables**: Contains all extracted information and conversation state
+
+  </Tab>
+</Tabs>
+
+## Common Fields
+
+- **action_type**: Type of webhook action (e.g., "create", "update")
+- **activityId**: Unique identifier for the activity
+- **leadId**: Unique identifier for the lead
+- **referenceId**: Your custom reference identifier
+- **timestamp**: Unix timestamp in milliseconds
+- **activity.type**: Type of activity (e.g., "call")
+- **activity.status**: Overall status of the activity
+- **activity.fromState**: Previous state in the process flow
+- **activity.toState**: New state after the activity
+- **leadSummary**: Human-readable summary of the lead's activities
+- **leadDisposition**: Current disposition of the lead

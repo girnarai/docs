@@ -51,7 +51,8 @@
           {
             "group": "Settings",
             "pages": [
-              "essentials/pulses"
+              "essentials/pulses",
+              "settings/add-user"
             ]
           },
           {

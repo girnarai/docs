@@ -27,6 +27,10 @@ description: "Create or validate multiple leads in a single request and optional
     <ParamField body="processId" type="string" required>
       MongoDB ObjectId of the process
     </ParamField>
+
+    <ParamField body="groupId" type="string">
+      Optional ID to group leads for analytics
+    </ParamField>
     
     <ParamField body="phone" type="string">
       Phone number (required if email not provided)

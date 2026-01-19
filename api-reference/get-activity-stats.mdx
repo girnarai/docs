@@ -1,0 +1,85 @@
+---
+title: "Get Activity Stats"
+api: "POST https://api.uservox.ai/api/v1/analytics/customer/stats"
+description: "Retrieve activity analytics statistics within a specified time range."
+---
+
+## Body Parameters
+
+<ParamField body="start" type="number" required>
+  Start timestamp (ms) for the analytics period.
+</ParamField>
+
+<ParamField body="end" type="number" required>
+  End timestamp (ms) for the analytics period.
+</ParamField>
+
+<ParamField body="processId" type="string">
+  Optional ID to segment stats by process.
+</ParamField>
+
+<ParamField body="groupId" type="string">
+  Optional ID to segment stats by group.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  The analytics statistics data.
+
+  <Expandable title="Analytics Properties">
+    <ResponseField name="attempts" type="object">
+      Call attempts analytics. Structure includes `total` count and `data` time-series array.
+      <Expandable title="Structure">
+        <ResponseField name="total" type="number">Total count</ResponseField>
+        <ResponseField name="data" type="array">
+          Array of `{time: number, value: number}` objects. `time` is a Unix epoch timestamp (ms).
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="connected" type="object">
+      Connected calls analytics. Same structure as `attempts`.
+      <Expandable title="Structure">
+        <ResponseField name="total" type="number">Total count</ResponseField>
+        <ResponseField name="data" type="array">
+          Array of `{time: number, value: number}` objects. `time` is a Unix epoch timestamp (ms).
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="incoming" type="object">
+      Incoming calls analytics. Same structure as `attempts`.
+      <Expandable title="Structure">
+        <ResponseField name="total" type="number">Total count</ResponseField>
+        <ResponseField name="data" type="array">
+          Array of `{time: number, value: number}` objects. `time` is a Unix epoch timestamp (ms).
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="meaningfullyHandled" type="object">
+      Meaningfully handled calls analytics. Same structure as `attempts`.
+      <Expandable title="Structure">
+        <ResponseField name="total" type="number">Total count</ResponseField>
+        <ResponseField name="data" type="array">
+          Array of `{time: number, value: number}` objects. `time` is a Unix epoch timestamp (ms).
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="interested" type="object">
+      Interested calls analytics. Same structure as `attempts`.
+      <Expandable title="Structure">
+        <ResponseField name="total" type="number">Total count</ResponseField>
+        <ResponseField name="data" type="array">
+          Array of `{time: number, value: number}` objects. `time` is a Unix epoch timestamp (ms).
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>

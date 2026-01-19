@@ -107,6 +107,12 @@
               "api-reference/activity-payloads",
               "api-reference/get-activity"
             ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "api-reference/get-activity-stats"
+            ]
           }
         ]
       }

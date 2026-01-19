@@ -132,7 +132,34 @@ To add new fields:
 
 ---
 
-## 6. Trying the Agent in the Simulator
+## 6. Using Lead Metadata
+
+You can personalize the conversation using metadata associated with the lead.
+
+**Example:**
+
+If you have inserted a lead with the following structure:
+
+```json
+{
+  "name": "Vinayak",
+  "phone": "+919999999999",
+  "metadata": {
+    "make": "Tata",
+    "model": "Harrier"
+  }
+}
+```
+
+You can use these metadata fields in your agent's prompt using variable notation:
+
+> "User is interested in **{{make}}** and **{{model}}** of a car."
+
+The agent will dynamically replace these variables with "Tata" and "Harrier" during the call.
+
+---
+
+## 7. Trying the Agent in the Simulator
 
 In the **Try** tab, you can test how your agent performs before deployment.
 
@@ -155,7 +182,7 @@ Example test variables:
 
 ---
 
-## 7. Editing and Updating Agents
+## 8. Editing and Updating Agents
 
 Once your agent is live, you can revisit any tab to make changes:
 

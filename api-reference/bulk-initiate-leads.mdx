@@ -95,3 +95,65 @@ description: "Create or validate multiple leads in a single request and optional
     </ResponseField>
   </Expandable>
 </ResponseField>
+
+## Error Responses
+
+- **400 Bad Request**
+  - **Missing body / wrong type**
+    - Returned when neither `leadIds` nor `leads` is provided, or when the value is not an array.
+    - Examples:
+      - `{ "error": "Either leadIds or leads array is required" }`
+      - `{ "error": "Input must be an array" }`
+  - **Too many leads**
+    - Returned when the number of items exceeds the maximum per request.
+    - Example: `{ "error": "Maximum of 1000 leads allowed per request" }` (limit may be overridden by config).
+  - **Per-lead validation errors / bad leads**
+    - Individual leads that fail validation (duplicate, bad phone, etc.) are reported in the `errors` array.
+    - Typical messages include:
+      - `"A call attempt has already been made to this phone number for this project"`
+      - `"Phone number contains repeating digits pattern"`
+      - `"already exists for this project and process"`
+    - **These indicate bad/invalid leads. Do not retry these specific leads via this API.**
+    - Recommended behavior:
+      - Mark those leads as invalid in your system.
+      - Fix the underlying data (phone number, process, etc.) before attempting again as new leads.
+
+- **403 Forbidden**
+  - Returned when some leads have missing or invalid `projectId` relative to the authenticated project.
+  - Example:
+    ```json
+    {
+      "error": "Some leads have missing or invalid projectId",
+      "invalidLeads": [
+        { "data": { ... }, "error": "missing projectId" },
+        { "data": { ... }, "error": "projectId does not match authenticated project" }
+      ]
+    }
+    ```
+  - Also returned when the target project is inactive or not found.
+
+- **404 Not Found**
+  - Returned when a `processId` in the `leads` array does not exist.
+  - Example: `{ "error": "Process not found for lead with processId: <id>" }`
+
+- **429 Too Many Requests**
+  - Bulk initiate uses the same project-level rate limiting and duplicate protection as the single-lead initiate API.
+  - If you continuously send duplicate or bad data, your API key may be temporarily blocked.
+  - **Do not keep retrying the same bad leads**, as this can cause more 429s and longer blocks.
+
+- **500 Internal Server Error**
+  - Unexpected server-side error.
+  - Safe to retry with exponential backoff **only** for 5xx responses (not for 4xx).
+
+## Retry Guidance
+
+- **Do not retry bad leads**
+  - Any per-lead validation/duplicate errors returned in the `errors` array should be treated as permanent failures for those payloads.
+  - Re-sending the same bad lead can:
+    - Trigger duplicate-protection limits.
+    - Lead to `429` blocks for your API key.
+- **When to retry**
+  - It is acceptable to implement retries (with backoff) for:
+    - Network errors.
+    - 5xx responses (`500` and other server errors).
+  - Do **not** automatically retry on 4xx responses; fix the request or underlying data instead.

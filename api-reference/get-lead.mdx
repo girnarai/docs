@@ -4,6 +4,12 @@ api: "GET /leads/get"
 description: "Retrieve a single lead with all its activities"
 ---
 
+<Warning>
+  **Rate Limits:**
+  - Request Rate: ~100 requests per 5 seconds per project (same as other lead APIs).
+  - Heavy use of this endpoint (especially with `masked=false`) can be expensive; cache results when possible.
+</Warning>
+
 ## Query Parameters
 
 <ParamField query="leadId" type="string">
@@ -90,3 +96,42 @@ description: "Retrieve a single lead with all its activities"
   </Expandable>
 </ResponseField>
 
+## Error Responses
+
+- **400 Bad Request**
+  - **Missing identifier**
+    - Returned when neither `leadId` nor `referenceId` is provided.
+    - Example:
+      ```json
+      {
+        "success": false,
+        "error": "Either leadId or referenceId is required"
+      }
+      ```
+  - **Missing projectId/processId with referenceId**
+    - Returned when `referenceId` is provided without both `projectId` and `processId`.
+    - Example:
+      ```json
+      {
+        "success": false,
+        "error": "projectId and processId are required when using referenceId"
+      }
+      ```
+
+- **404 Not Found**
+  - Returned when no lead matches the provided identifiers.
+  - Examples:
+    ```json
+    { "success": false, "error": "Lead with ID <leadId> not found" }
+    { "success": false, "error": "Lead with referenceId <referenceId> not found" }
+    ```
+
+- **429 Too Many Requests**
+  - Returned when project-level rate limits are exceeded for this endpoint.
+  - Recommended behavior:
+    - Back off and retry later with exponential backoff.
+    - Avoid hot-loop polling; cache results on your side when possible.
+
+- **500 Internal Server Error**
+  - Unexpected server-side error.
+  - Safe to retry with backoff; if it persists, contact support with request details.

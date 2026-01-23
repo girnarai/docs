@@ -116,3 +116,51 @@ description: "Create or validate a lead and optionally start initialization for 
   ISO 8601 timestamp of last update
 </ResponseField>
 
+## Error Responses
+
+- **400 Bad Request**
+  - **Missing body**
+    - Returned when neither `leadId` nor `lead` is provided.
+    - Example: `{ "error": "Either leadId or lead object is required" }`
+  - **Missing projectId**
+    - Returned when creating a new lead without `lead.projectId`.
+    - Example: `{ "error": "projectId is required in lead object" }`
+  - **Validation errors / bad leads**
+    - Returned when the lead fails validation during creation or duplicate checks.
+    - Typical messages include:
+      - `"A call attempt has already been made to this phone number for this project"`
+      - `"Phone number contains repeating digits pattern"`
+      - `"already exists for this project and process"`
+    - **These indicate a bad/invalid lead. Do not retry these leads via this API.**
+    - Recommended behavior:
+      - Mark the lead as invalid in your system.
+      - Fix the underlying data (phone number, process, etc.) before attempting again as a new lead.
+
+- **403 Forbidden**
+  - Returned when `lead.projectId` does not match the authenticated project for the API key.
+  - Example: `{ "error": "projectId does not match authenticated project" }`
+
+- **429 Too Many Requests**
+  - Returned when duplicate protection blocks the API key due to too many duplicate submissions.
+  - Example response: `{ "success": false, "error": "...temporarily blocked..." }`
+  - **Do not retry the same bad/duplicate leads.**
+  - Recommended behavior:
+    - Stop sending further requests from the offending source.
+    - Investigate and fix the duplication issue before resuming traffic.
+
+- **500 Internal Server Error**
+  - Unexpected server-side error.
+  - Safe to retry with exponential backoff **only** for 5xx responses (not for 4xx).
+
+## Retry Guidance
+
+- **Do not retry bad leads**
+  - Any 400 response with validation/duplicate messages (as above) should be treated as a permanent failure for that payload.
+  - Re-sending the same bad lead can:
+    - Trigger duplicate-protection rate limits.
+    - Lead to `429` blocks for your API key.
+- **When to retry**
+  - It is acceptable to implement retries (with backoff) for:
+    - Network errors.
+    - 5xx responses (`500` and other server errors).
+  - Do **not** automatically retry on 4xx responses; fix the request or underlying data instead.

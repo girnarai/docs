@@ -17,6 +17,20 @@
     }
   },
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Uservox",
+          "icon": "globe",
+          "href": "https://uservox.ai"
+        },
+        {
+          "anchor": "Dashboard",
+          "icon": "rectangle-terminal",
+          "href": "https://app.uservox.ai"
+        }
+      ]
+    },
     "tabs": [
       {
         "tab": "Guides",
@@ -43,6 +57,12 @@
               "essentials/create-edit-agent",
               "essentials/test-conversation",
               "essentials/human-call-quality-analysis"
+            ]
+          },
+          {
+            "group": "Leads",
+            "pages": [
+              "guides/leads/how-to-upload-leads-file"
             ]
           },
           {
@@ -116,21 +136,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Uservox",
-          "href": "https://uservox.ai",
-          "icon": "globe"
-        },
-        {
-          "anchor": "Dashboard",
-          "href": "https://app.uservox.ai",
-          "icon": "rectangle-terminal"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "https://uservox.ai/home/images/logo/logo_dark_lg.png",

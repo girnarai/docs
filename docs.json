@@ -62,6 +62,7 @@
           {
             "group": "Leads",
             "pages": [
+              "guides/leads/how-to-download-interested-leads",
               "guides/leads/how-to-upload-leads-file"
             ]
           },

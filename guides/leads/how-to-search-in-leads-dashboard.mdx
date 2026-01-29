@@ -1,0 +1,203 @@
+---
+title: "How to Run Search in Leads Dashboard"
+description: " "
+---
+
+## Searching Leads by Date and Interested State
+
+This section explains how users can search and narrow down leads using **date-based filters** and then further refine the results to view only **Interested leads** by applying the **State** filter. This approach is commonly used to review recent high-intent leads, monitor pipeline movement, or prepare follow-ups.
+
+## Accessing Lead Search
+
+1. Navigate to **Lead Search**.
+2. Open the **Leads List** view.
+3. Locate the search bar at the top of the page labeled:\
+   _“Start typing text or choose a filter…”_
+
+The search bar supports both free-text search and structured, rule-based filtering.
+
+![Screenshot2026 01 30at12 38 08AM](/images/Screenshot2026-01-30at12.38.08AM.png)
+
+## Applying a Date-Based Filter
+
+Date filters help restrict results to leads that were updated or acted upon within a specific time window.
+
+### Steps
+
+1. Click inside the search bar and open advanced filtering.
+2. From the list of available fields, select a relevant **date field**, such as:
+   - Updated At
+   - Manually Scheduled At
+   - Last State Transition
+3. Choose a comparison condition:
+   - Equals
+   - Before
+   - After
+   - Between
+4. Select the required date or date range.
+
+### Result
+
+Only leads that satisfy the selected date condition will remain visible in the leads list.
+
+## Filtering Leads by Interested State
+
+Once the date range is applied, you can further narrow results to only those leads that are currently marked as _Interested_.
+
+![Screenshot2026 01 30at12 40 29AM](/images/Screenshot2026-01-30at12.40.29AM.png)
+
+### Steps
+
+1. Add a new rule.
+2. Select **State** as the field.
+3. Set the condition to **equals**.
+4. Choose **Interested** from the available states.
+
+### Result
+
+The leads list now shows only those leads that:
+
+- Fall within the selected date range, and
+- Are currently in the _Interested_ state.
+
+## Using Multiple Filters Together
+
+By default, filters are applied using **AND logic**, meaning:
+
+- A lead must satisfy **all applied rules** to appear in the results.
+
+For example:
+
+- Updated At → Between 1 Jan and 31 Jan
+- State → Interested
+
+Only leads that meet **both conditions simultaneously** will be shown.
+
+## Advanced Logic: AND vs OR
+
+- **AND** is used to progressively narrow results.
+- **OR** can be used when leads should match _any one_ of the conditions.
+
+You may also group multiple rules together to create more advanced logical structures when required.
+
+## Clearing or Modifying Filters
+
+- Use **Clear Advanced** to remove all applied filters.
+- Existing rules can be edited individually to refine the search without starting over.
+
+## Summary
+
+Using date filters in combination with the Interested state allows users to focus on:
+
+- Recent leads with high intent
+- Time-bound follow-up lists
+- Performance analysis for specific periods
+
+## Searching Leads Using Fields and Lead Metadata
+
+This section explains how to search leads using **standard lead fields** and **custom lead metadata**, and how multiple filters can be combined to create precise and highly targeted lead searches.
+
+## Understanding Lead Fields vs Lead Metadata
+
+### Lead Fields
+
+![Screenshot2026 01 30at12 38 08AM 1](/images/Screenshot2026-01-30at12.38.08AM-1.png)
+
+Lead fields are system-defined attributes available for all leads. Examples include:
+
+- Name
+- Phone
+- State
+- Disposition
+- Connected
+- Meaningfully Connected
+- Called
+- Process ID
+- Reference ID
+- Updated At
+
+These fields reflect the lead’s lifecycle and interaction history.
+
+### Lead Metadata
+
+Lead metadata consists of additional attributes associated with a lead, often originating from uploads, integrations, or enrichment processes. 
+
+![Screenshot2026 01 30at12 38 50AM](/images/Screenshot2026-01-30at12.38.50AM.png)
+
+Examples include:
+
+- City
+- Dealer
+- Dealer Name
+- Dealer Address
+- Make / Model
+- Hindi Name
+- Hi Make / Hi Model
+- Circle
+- UV Priority
+- Upload ID
+- Sir / Sir or Mam
+
+Metadata enables more contextual and business-specific searches.
+
+## Searching Using Lead Fields
+
+### Steps
+
+1. Click inside the search bar.
+2. From the **Lead Fields** section, select the desired field.
+3. Choose an appropriate condition (for example, equals or contains).
+4. Enter or select the value.
+5. Apply the rule.
+
+The leads list updates immediately based on the applied condition.
+
+## Searching Using Lead Metadata
+
+### Steps
+
+1. Click inside the search bar.
+2. Scroll to the **Metadata** section.
+3. Select the required metadata field.
+4. Choose a condition such as equals or contains.
+5. Enter the value.
+6. Apply the rule.
+
+This allows users to filter leads based on business-specific attributes such as city, model, or dealer information.
+
+## Combining Multiple Filters to Narrow Results
+
+Multiple filters can be applied together to progressively reduce the result set.
+
+### Example Scenarios
+
+- State equals Interested AND City equals Mumbai
+- Model equals Nexon AND Dealer Name contains Auto
+- Hindi Name exists AND UV Priority equals High
+- State equals Interested AND Updated At after a specific date
+
+Each additional filter further narrows the results by requiring the lead to satisfy more conditions.
+
+## Using Groups for Complex Searches
+
+When multiple conditions need to be evaluated together, filters can be grouped. Grouping helps structure complex queries, such as:
+
+- Multiple metadata conditions evaluated together
+- A mix of AND and OR logic across different rule sets
+
+Groups ensure clarity and accuracy in advanced searches.
+
+## Modifying or Clearing Search Criteria
+
+- Individual rules can be edited or removed at any time.
+- Use **Clear Advanced** to reset all applied filters and return to the full leads list.
+
+## Summary
+
+The Lead Search functionality enables users to:
+
+- Search using core lead fields
+- Filter using rich lead metadata
+- Apply multiple filters to narrow results
+- Combine conditions using logical operators
+- Build precise views for sales, operations, or quality review

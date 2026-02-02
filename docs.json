@@ -70,6 +70,7 @@
           {
             "group": "Process",
             "pages": [
+              "guides/process/how-to-add-webhook-to-a-process",
               "essentials/process",
               "essentials/create-edit-process",
               "essentials/process-analytics",

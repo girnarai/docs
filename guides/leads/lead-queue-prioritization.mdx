@@ -1,0 +1,148 @@
+---
+title: "Lead Queue Prioritization"
+description: "How different queue strategies decide which lead gets called next"
+---
+
+## Why Queue Prioritization Matters
+
+When many leads are waiting for calls, the system needs a clear rule for **who gets called next**.
+
+This guide explains three queue strategies that control call order:
+
+- **Default Attempt Priority** – Call leads in a simple waiting line.
+- **Attempt Priority** – Always try brand-new leads first.
+- **Last Attempted Priority** – Finish active leads quickly so they close faster.
+
+Each strategy creates a different experience for how quickly different types of leads are contacted.
+
+### Mixing strategies with percentages
+
+You dont have to pick only one strategy. For each process, you can **mix and match** these three strategies by setting what **share of calls (%)** should use each one.
+
+- The shares for the three strategies must always **add up to 100%**.
+- For example, you might run **80%** of calls using the first-attempt strategy and **20%** using the default attempt order, with **0%** for lead-closure priority.
+
+The screenshot below shows how this configuration looks in the app:
+
+![Queue sorting priority configuration](/images/Screenshot%20from%202026-02-02%2011-59-37.png)
+
+---
+
+## 1. Default Attempt Priority
+
+**Idea:** Treat the queue like a normal waiting line.
+
+Every time a lead becomes ready for an attempt, it is placed at the **back of the queue**. Agents then call leads **from front to back**.
+
+- Leads generally move in the order they arrive or become due.
+- There is **no special preference** for first vs later attempts.
+
+### How it feels in practice
+
+Imagine people standing in a single line at a counter. Whoever is at the front gets served next.
+
+- A new lead becomes ready → it joins the **end** of the line.
+- When an attempt finishes and the next attempt is due, that attempt goes to the **end** as well.
+
+### Visual
+
+![Default Attempt Priority](/images/Default%20Attempt%20Priority.png)
+
+This diagram shows a simple, one-dimensional queue. Leads move forward as attempts are made.
+
+---
+
+## 2. Attempt Priority (First Attempts First)
+
+**Idea:** **New leads get top priority.**
+
+First attempts are treated as **more important** than any later attempt (2nd, 3rd, etc.).
+
+- If a new lead enters the system, its **first attempt jumps ahead** of older leads that are waiting for follow-up attempts.
+- Among all first attempts, we still respect when they arrived.
+
+### How it feels in practice
+
+Think of the queue as having two lanes:
+
+- **Fast lane:** Leads on their **first attempt**.
+- **Normal lane:** Leads on their **2nd, 3rd, or later attempts**.
+
+The system always pulls from the **fast lane first**.
+
+This means:
+
+- Brand-new leads are called **very quickly**.
+- Older leads still get follow-ups, but **only after** new first-attempt leads have been tried.
+
+### When to use this
+
+This strategy is useful when your top priority is to **respond to new inquiries as fast as possible**, even if some older leads wait longer between attempts.
+
+### Visual
+
+![Last Attempted Priority](/images/Last%20Attempted%20Priority.png)
+
+This diagram shows how new leads (first attempts) sit in a high-priority lane ahead of later attempts.
+
+---
+
+## 3. Last Attempted Priority (Lead Closure)
+
+**Idea:** Once you start working on a lead, **finish it quickly**.
+
+Leads that were **attempted recently** are given higher priority for their **next attempt**.
+
+- If a lead was just called, its next attempt is scheduled **sooner in the queue**.
+- New leads may wait a bit longer if another lead is in the middle of a fast sequence of attempts.
+
+### How it feels in practice
+
+Imagine each lead as a short “story” you want to finish:
+
+- When you touch a lead (make an attempt), the system tries to **complete the story** quickly by scheduling the next attempt soon.
+- This creates short bursts of activity on the same lead until it is **clearly closed** (converted, disqualified, or completed).
+
+### Why this helps
+
+- Reduces the number of **half-finished leads** stuck in the middle of a sequence.
+- Moves more leads to a clear outcome faster.
+- Useful when you care about **closure speed** and don’t mind if some brand-new leads wait slightly longer.
+
+### Visual
+
+![Attempt Priority](/images/Attempt%20Priority.png)
+
+This diagram shows leads that were just attempted getting pulled forward again, so they are closed out faster.
+
+---
+
+## Process prioritization with channel weights
+
+On the same screen, below the queue sorting priority, you can also **prioritize processes** using _Process Channel Weights_. This controls how your calling capacity is distributed across different processes or campaigns.
+
+- Each row represents a process or channel.
+- The **Weight (1-20)** value sets how important that process is relative to others.
+- Higher weights receive a **larger share of calls** over time.
+
+This lets you decide not just **how calls are ordered within a process** (via the three queue strategies), but also **how calls are divided across processes** based on your current business priorities.
+
+---
+
+## Choosing the Right Strategy
+
+Here is a quick way to think about which strategy to use:
+
+- **Default Attempt Priority**
+  - Best when you want a **simple and fair** queue.
+  - Everyone moves forward in roughly the order they arrive or become due.
+
+- **Attempt Priority**
+  - Best when **speed-to-first-contact** is your main goal.
+  - New leads are always tried before follow-ups on older leads.
+
+- **Last Attempted Priority**
+  - Best when you want to **close leads quickly** once you start working on them.
+  - Recently attempted leads are pushed forward to get a clear outcome.
+
+You can choose the strategy that best matches your sales or outreach goals, and adjust it as your process evolves.

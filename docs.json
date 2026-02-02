@@ -45,6 +45,7 @@
           {
             "group": "Essentials",
             "pages": [
+              "essentials/dashboard",
               "essentials/leads",
               "essentials/call-quality-analysis",
               "essentials/pulse-usage"
@@ -64,19 +65,19 @@
             "pages": [
               "guides/leads/how-to-search-in-leads-dashboard",
               "guides/leads/how-to-download-interested-leads",
-              "guides/leads/how-to-upload-leads-file"
+              "guides/leads/how-to-upload-leads-file",
+              "essentials/upload-test-lead",
+              "guides/leads/lead-queue-prioritization"
             ]
           },
           {
             "group": "Process",
             "pages": [
-              "guides/process/how-to-add-webhook-to-a-process",
               "essentials/process",
               "essentials/create-edit-process",
               "essentials/process-analytics",
               "essentials/process-dispositions",
-              "essentials/dashboard",
-              "essentials/upload-test-lead"
+              "guides/process/how-to-add-webhook-to-a-process"
             ]
           },
           {

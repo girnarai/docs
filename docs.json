@@ -75,6 +75,7 @@
             "pages": [
               "essentials/process",
               "essentials/create-edit-process",
+              "essentials/call-transfer",
               "essentials/process-analytics",
               "essentials/process-dispositions",
               "guides/process/how-to-add-webhook-to-a-process"

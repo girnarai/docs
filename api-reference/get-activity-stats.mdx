@@ -22,6 +22,14 @@ description: "Retrieve activity analytics statistics within a specified time ran
   Optional ID to segment stats by group.
 </ParamField>
 
+<ParamField body="timezoneOffsetMinutes" type="number">
+  Optional timezone offset in minutes (e.g., 330 for IST) used for unique-lead day buckets.
+</ParamField>
+
+<ParamField body="includeUniqueLeads" type="boolean">
+  Optional flag to include a `unique` block with unique-lead metrics (attempts, connected, interested).
+</ParamField>
+
 ## Response
 
 <ResponseField name="success" type="boolean">
@@ -79,6 +87,15 @@ description: "Retrieve activity analytics statistics within a specified time ran
         <ResponseField name="data" type="array">
           Array of `{time: number, value: number}` objects. `time` is a Unix epoch timestamp (ms).
         </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="unique" type="object">
+      Unique-lead metrics returned only when `includeUniqueLeads` is true.
+      <Expandable title="Structure">
+        <ResponseField name="attempts" type="object">Unique leads attempted. Same structure as `attempts`.</ResponseField>
+        <ResponseField name="connected" type="object">Unique leads connected. Same structure as `attempts`.</ResponseField>
+        <ResponseField name="interested" type="object">Unique leads interested. Same structure as `attempts`.</ResponseField>
       </Expandable>
     </ResponseField>
   </Expandable>

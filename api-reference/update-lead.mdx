@@ -4,6 +4,12 @@ api: "POST /leads/update"
 description: "Update a lead's metadata and optionally transition to a new state"
 ---
 
+## Overview
+
+<Note>
+  **Asynchronous Endpoint**: This endpoint queues the lead update for background processing and responds immediately. The actual outcome of the update will be sent via webhook callbacks configured in your Process.
+</Note>
+
 ## Body Parameters
 
 <ParamField body="leadId" type="string">
@@ -49,52 +55,57 @@ description: "Update a lead's metadata and optionally transition to a new state"
 ## Response
 
 <ResponseField name="success" type="boolean">
-  Indicates if the request was successful
+  Indicates if the update request was successfully queued
 </ResponseField>
 
-<ResponseField name="lead" type="object">
-  The updated lead object
-  
-  <Expandable title="Lead Properties">
-    <ResponseField name="_id" type="string">
-      MongoDB ObjectId of the lead
-    </ResponseField>
-    
-    <ResponseField name="name" type="string">
-      Lead's name
-    </ResponseField>
-    
-    <ResponseField name="phone" type="string">
-      Phone number
-    </ResponseField>
-    
-    <ResponseField name="email" type="string">
-      Email address
-    </ResponseField>
-    
-    <ResponseField name="projectId" type="string">
-      Project ID
-    </ResponseField>
-    
-    <ResponseField name="processId" type="string">
-      Process ID
-    </ResponseField>
-    
-    <ResponseField name="currentState" type="string">
-      Current state of the lead
-    </ResponseField>
-    
-    <ResponseField name="metadata" type="object">
-      Lead metadata
-    </ResponseField>
-    
-    <ResponseField name="createdAt" type="string">
-      ISO 8601 timestamp of creation
-    </ResponseField>
-    
-    <ResponseField name="updatedAt" type="string">
-      ISO 8601 timestamp of last update
-    </ResponseField>
-  </Expandable>
+<ResponseField name="updateId" type="string">
+  The unique ID of the LeadUpdateAttempt tracking record
 </ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message (e.g., "Lead update queued successfully for asynchronous processing")
+</ResponseField>
+
+## Webhook Notifications
+
+Once the asynchronous update job finishes processing, a webhook will be sent to the callback URLs configured in the Lead's Process.
+
+<Tabs>
+  <Tab title="Success Payload">
+    This payload is sent when the lead is successfully updated and transitioned (if requested).
+
+    ```json
+    {
+      "action_type": "update",
+      "updateId": "65e4b2d9f1a2...",
+      "success": true,
+      "error": null,
+      "leadId": "696102a4b8...",
+      "referenceId": "AB123456789",
+      "timestamp": 1768193759048,
+      "data": {
+        "make": "Toyota",
+        "model": "Camry"
+      }
+    }
+    ```
+  </Tab>
+
+  <Tab title="Failure Payload">
+    This payload is sent if the update fails (for example, if a call is currently active for the lead).
+
+    ```json
+    {
+      "action_type": "update",
+      "updateId": "65e4b2d9f1a2...",
+      "success": false,
+      "error": "Lead update is not allowed while a call is in progress for this lead",
+      "leadId": "696102a4b8...",
+      "referenceId": "AB123456789",
+      "timestamp": 1768193759048,
+      "data": null
+    }
+    ```
+  </Tab>
+</Tabs>
 

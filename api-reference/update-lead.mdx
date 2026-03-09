@@ -55,15 +55,11 @@ description: "Update a lead's metadata and optionally transition to a new state"
 ## Response
 
 <ResponseField name="success" type="boolean">
-  Indicates if the update request was successfully queued
-</ResponseField>
-
-<ResponseField name="updateId" type="string">
-  The unique ID of the LeadUpdateAttempt tracking record
+  Indicates if the update request was successfully accepted
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  Confirmation message (e.g., "Lead update queued successfully for asynchronous processing")
+  Confirmation message (e.g., "Lead update initiated")
 </ResponseField>
 
 ## Webhook Notifications

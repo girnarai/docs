@@ -138,6 +138,12 @@
             "pages": [
               "api-reference/get-activity-stats"
             ]
+          },
+          {
+            "group": "Processes",
+            "pages": [
+              "api-reference/list-processes"
+            ]
           }
         ]
       }

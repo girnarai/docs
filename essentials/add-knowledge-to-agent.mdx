@@ -1,0 +1,101 @@
+---
+title: "Adding Knowledge to Your Agent"
+description: "Learn how to add and manage knowledge documents for your AI agents in UserVox. Knowledge documents help your agent access specific information during conversations."
+---
+
+## Overview
+
+Knowledge documents allow you to upload PDF files containing product documentation, policies, FAQs, or any other information that your AI agent should reference during conversations. This helps your agent provide accurate, context-aware responses based on your business's specific knowledge base.
+
+---
+
+## Accessing Knowledge Management
+
+To manage knowledge documents for your agents:
+
+1. Navigate to **Account Settings** from your dashboard.
+2. In the Settings sidebar, click on **Knowledge**.
+
+![Account Settings - Knowledge](/images/knowledge-settings.png)
+
+This will take you to the Knowledge management interface where you can view, add, update, and delete knowledge documents.
+
+---
+
+## Adding a New Knowledge Document
+
+To add a new knowledge document to your account:
+
+1. Click the **Add Knowledge** or **Add Document** button.
+2. The "Add Document Knowledge" dialog will appear with the following fields:
+
+![Add Document Knowledge Dialog](/images/add-knowledge-dialog.png)
+
+### Required Fields
+
+| Field                     | Description                                                          | Example                  |
+| :------------------------ | :------------------------------------------------------------------- | :----------------------- |
+| **Knowledge Name**        | A descriptive name for the knowledge document (required)             | Product Documentation    |
+| **Upload PDF Document**   | Select a PDF file from your computer (required, only PDF supported) | product_catalog.pdf      |
+
+### Optional Fields
+
+| Field           | Description                                          | Example           |
+| :-------------- | :--------------------------------------------------- | :---------------- |
+| **Topic**       | Broad category for organizing knowledge              | Insurance         |
+| **Subtopic**    | More specific categorization within the topic        | Health Insurance  |
+
+3. Fill in the **Knowledge Name** (e.g., "Product Documentation").
+4. Optionally add a **Topic** (e.g., "Insurance") and **Subtopic** (e.g., "Health Insurance") to help organize your knowledge documents.
+5. Click **Click to select a PDF file** to upload your document.
+   - Only PDF files are supported
+   - Ensure the PDF contains well-formatted, readable text
+6. Click **Create Knowledge** to upload and save the document.
+
+---
+
+## Important Notes
+
+- **File Format:** Only PDF files are supported for knowledge documents.
+- **API Endpoint Generation:** The knowledge name you provide will be used to generate the API endpoint for accessing this knowledge.
+- **Organization:** Use Topic and Subtopic fields to organize multiple knowledge documents for easier management.
+- **Agent Access:** Once uploaded, you can reference these knowledge documents in your agent's configuration to enable context-aware responses.
+
+---
+
+## Updating a Knowledge Document
+
+To update an existing knowledge document:
+
+1. Go to **Account Settings** → **Knowledge**.
+2. Find the knowledge document you want to update in the list.
+3. Click on the **Edit** or **Update** button next to the document.
+4. You can modify:
+   - Knowledge Name
+   - Topic
+   - Subtopic
+   - Upload a new PDF file to replace the existing one
+5. Click **Save** or **Update Knowledge** to apply your changes.
+
+---
+
+## Best Practices
+
+- **Descriptive Names:** Use clear, descriptive names for your knowledge documents to make them easy to identify.
+- **Organized Content:** Ensure your PDF documents are well-structured with clear headings and sections.
+- **Regular Updates:** Keep your knowledge documents up to date with the latest product information, policies, or procedures.
+- **Logical Categorization:** Use Topics and Subtopics to create a logical hierarchy for your knowledge base.
+- **File Size:** While there's no strict limit, keep PDF files reasonably sized for faster processing and retrieval.
+
+---
+
+## Using Knowledge in Agent Conversations
+
+Once you've uploaded knowledge documents, you can configure your agent to reference them during conversations. This enables your agent to:
+
+- Answer specific questions about your products or services
+- Provide accurate policy information
+- Reference detailed documentation
+- Maintain consistency across all customer interactions
+
+For more information on configuring agents to use knowledge documents, see [Creating and Editing an Agent](/essentials/create-edit-agent).

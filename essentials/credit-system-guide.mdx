@@ -1,0 +1,206 @@
+---
+title: "credit-system-guide"
+---
+
+## **Uservox Credit System Guide** 
+
+### Overview
+
+The Credit System in Uservox controls how many leads your project can intake and dial. Each lead upload consumes one credit. When your credits are exhausted, lead uploads are blocked until you top up via Razorpay. This guide walks you through every step — from checking your credit balance to uploading leads successfully after payment.
+
+<Callout icon="info" iconType="regular" color="#3B82F6">
+  **What are Lead-Triggered Credits?**
+
+  - Credits are deducted each time a lead is added to your project calling queue.
+  - Credits are only released after a successful Razorpay webhook confirmation — not on payment initiation.
+</Callout>
+
+## Section A: Checking Your Credit Balance
+
+<Steps>
+  <Step title="Navigate to your profile menu from the Dashboard">
+    Log in to your Uservox account. On the Dashboard, click your profile avatar (email icon) at the top-right corner. A dropdown menu will appear with three options: Account Settings, Organization View, and Sign Out.
+  </Step>
+  <Step title="Click Account Settings">
+    <Frame>
+      ![Profile menu](/images/image.png)
+    </Frame>
+  </Step>
+  <Step title="Navigate to Billing">
+    Inside Account Settings, you will see a left-hand Settings panel with multiple tabs. Scroll down and click **Billing**. The main area on the right will load the Project Credits view.
+
+    <Tip>
+      The Billing tab is about halfway down the Settings list — look for the document/billing icon next to it.
+    </Tip>
+  </Step>
+  <Step title="Review Your Credit Overview">
+    <Frame>
+      ![Billing section](/images/image-1.png)
+    </Frame>
+
+    The Project Credits page displays two key sections:
+
+    - **Credit Overview**: Shows your project name, status badge (Healthy / Exhausted), and "Leads effectively available" count.
+    - **Self-Serve Top-Up**: The "Buy leads securely" section where you select quantity and initiate payment via Razorpay.
+      <Frame>
+        ![Image](/images/image-4.png)
+      </Frame>
+  </Step>
+  <Step title="Understand the Insufficient Credits Error">
+    If you attempt to upload leads while your credit balance is at 0, the system will block the upload and display an "Insufficient Lead Credits" error modal showing:
+
+    - Available credits (e.g., 0)
+    - Required credits (e.g., 4 — one per lead row in your file)
+    - Shortage (e.g., 4 — the gap you need to fill)
+      <Frame>
+        ![Image](/images/image-3.png)
+      </Frame>
+
+    <Warning>
+      You cannot partially upload. If you need 4 credits and have 0, the entire upload is blocked. Top up at least the required amount first.
+    </Warning>
+  </Step>
+</Steps>
+
+## Section B: Topping Up Credits via Razorpay
+
+<Steps>
+  <Step title="Fill in your billing profile">
+    Before initiating payment, scroll down to the Billing Account section on the same Billing page. Fill in your billing profile details:
+
+    - Account name — your project or company name
+    - Billing contact name — name of the person responsible for billing
+    - Billing phone — used to pre-fill the Razorpay checkout form
+    - Tax ID / GSTIN — optional; required for GST invoicing
+    - Address fields — Address line 1, Address line 2, City, State, Pincode
+    - Billing recipient emails — one email per line; invoices will be sent here
+
+    Click **Save** after filling in your details.
+
+    <Frame>
+      ![Image](/images/image-5.png)
+    </Frame>
+  </Step>
+  <Step title="Select credit quantity and review payment">
+    In the Self-Serve Top-Up section, select the number of lead credits you wish to purchase (e.g., 5 units at ₹1.00 per credit = ₹5.00 total). Click **Review and pay**.
+
+    A Review Payment modal will appear showing:
+
+    - Credit type: Leads
+    - Units: the quantity you selected
+    - Unit price: price per lead credit
+    - Amount to pay: total amount due
+
+    <Info>
+      When you continue, the server creates a Razorpay order server-side and passes required order details to checkout. Credits are added only after the secure webhook confirms payment — not immediately on payment initiation.
+    </Info>
+
+    Click **Continue to Razorpay** to proceed to the payment gateway.
+
+    <Frame>
+      ![Image](/images/image-6.png)
+    </Frame>
+  </Step>
+  <Step title="Choose your preferred payment method and pay">
+    The Razorpay payment gateway will open in an overlay displaying your price summary (e.g., ₹5) and the phone number pre-filled from your billing profile. Choose your preferred payment method:
+
+    | Payment Method | Details |
+    | --- | --- |
+    | UPI | Scan QR code or choose UPI - Google Pay, PhonePe, Paytm, CRED, etc. |
+    | Cards | Visa, Mastercard, American Express, RuPay |
+    | Netbanking | All major Indian banks supported |
+    | Wallet | Mobikwik, Freecharge, Ola Money, PayZapp and others |
+
+    Complete the payment using your preferred method. Once successful, the Razorpay webhook will automatically notify Uservox to release your credits.
+
+    <Frame>
+      ![Image](/images/image-7.png)
+    </Frame>
+  </Step>
+  <Step title="Verify credits are credited">
+    After a successful payment, go back to **Account Settings \> Billing**. The Credit Overview badge should now show **Healthy**, and the "Leads effectively available" count should reflect your newly purchased credits (e.g., 5).
+
+    Click the **Refresh** button at the top right of the Project Credits section if the balance does not update immediately.
+
+    <Frame>
+      ![Image](/images/image-8.png)
+    </Frame>
+
+    <Check>
+      A "Healthy" badge with a non-zero lead count confirms your credits are active and you can now upload leads. An invoice will also be generated and sent to your billing email automatically.
+    </Check>
+  </Step>
+  <Step title="Access your payment history and download invoices">
+    Still in the Billing section, scroll down to find the **Billing & Invoices** table. This lists all past transactions with the following columns:
+
+    - Invoice — unique invoice ID (e.g., CP-20260407-AZN7)
+    - Period — the billing date
+    - Due — payment due date
+    - Status — paid / sent / pending
+    - Paid request — reference details for the payment
+      <Frame>
+        ![Image](/images/image-9.png)
+      </Frame>
+
+    For each invoice you can:
+
+    - Click **PDF** to download the invoice as a PDF file
+    - Click **View** to see full invoice details on screen
+    - Click **Mark as paid** (admin use) to manually mark an invoice as settled.
+      <Frame>
+        ![Image](/images/image-10.png)
+      </Frame>
+  </Step>
+</Steps>
+
+## Section C: Uploading Leads After Top-Up
+
+<Steps>
+  <Step title="Navigate to Leads and upload a CSV or Excel file">
+    From the left sidebar, click **Leads**. Then click the **Upload Leads** option. On the Upload Leads page:
+
+    - **Select Process** — choose the relevant calling process from the dropdown (e.g., "Testing Process"). This defines how leads will be contacted.
+    - **Download Template** — click this if you need the correct column format for the selected process.
+    - **Upload Leads File** — drag and drop your CSV or Excel file into the upload zone, or click to browse. The system will detect the number of rows (e.g., "~4 rows detected").
+    - **Upload Options** — optionally check "Do not initialize leads" if you want to upload without starting outreach immediately.
+      <Frame>
+        ![Image](/images/image-11.png)
+      </Frame>
+
+    <Tip>
+      Always download the process template first and fill in your lead data to match the required columns exactly. This avoids validation errors at upload time.
+    </Tip>
+  </Step>
+  <Step title="Check how many leads were processed successfully">
+    After clicking **Upload**, the system processes each row in your file and displays a results summary.
+
+    <Frame>
+      ![Image](/images/image-12.png)
+    </Frame>
+
+    | Outcome | Details |
+    | --- | --- |
+    | **Leads Successfully Uploaded** | Green banner. These leads have been added to your project queue and are ready for outbound calling. |
+    | **Leads Failed** | Yellow/amber banner. These rows had validation errors or data issues. Review the error details, fix your file, and re-upload. |
+
+    <Tip>
+      Partial success example: If 3 of 4 leads are uploaded (75% success rate), 3 credits are consumed. The 1 failed lead is not charged. Fix the error in your CSV and re-upload just that row.
+    </Tip>
+  </Step>
+</Steps>
+
+## Quick Reference
+
+| Step | Action | Where / What to look for |
+| --- | --- | --- |
+| 1 | Open Account Settings | Dashboard → Profile avatar (top right) → Account Settings |
+| 2 | Go to Billing | Account Settings → Billing (left Settings panel) |
+| 3 | Check credit balance | Project Credits → Credit Overview card → Status badge & lead count |
+| 4 | Understand error | "Insufficient Lead Credits" modal shows Required vs Available credits |
+| 5 | Fill billing profile | Billing Account section → fill details → Save |
+| 6 | Buy credits | Self-Serve Top-Up → select units → Review and pay |
+| 7 | Complete Razorpay payment | Choose UPI / Card / Netbanking / Wallet → complete transaction |
+| 8 | Confirm credits updated | Billing → Credit Overview → badge turns Healthy → count increases |
+| 9 | View invoices | Billing → Billing & Invoices table → PDF / View / Mark as paid |
+| 10 | Upload leads | Leads → Upload Leads → select process → upload CSV/Excel |
+| 11 | Review upload results | Check green (success) and amber (failed) banners → fix & re-upload if needed |

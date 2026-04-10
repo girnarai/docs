@@ -1,0 +1,119 @@
+---
+title: "How to add a Google Sheet for the Realtime Lead Update"
+---
+
+## Step 1: Connect Your Google Sheet
+
+### UI Reference
+
+<Frame>
+  ![Screenshot 2026 04 07 At 3 29 18 PM](/images/Screenshot-2026-04-07-at-3.29.18-PM.png)
+</Frame>
+
+---
+
+### Steps:
+
+1. Open your Google Sheet
+2. Click **“Share”**
+3. Add:
+   ```text
+   uservox@uservox.iam.gserviceaccount.com
+   ```
+4. Give **Editor access**
+5. Click **Send**\
+
+<Frame>
+  ![Screenshot 2026 04 07 At 5 59 22 PM 1](/images/Screenshot-2026-04-07-at-5.59.22-PM-1.png)
+</Frame>
+
+---
+
+### In UserVox:
+
+- Enter **Integration Name**
+- Paste **Google Sheet URL / ID**
+- Select **Sheet Name**
+- Click **Test Access**\
+
+✅ You should see: **“Sheet access verified!”**
+
+---
+
+## Step 2: Choose Integration Mode
+
+<Frame>
+  ![Screenshot 2026 04 07 At 5 59 29 PM](/images/Screenshot-2026-04-07-at-5.59.29-PM.png)
+</Frame>
+
+### 1. Standard Mode (Bidirectional Sync)
+
+**Best for:** CRM / Active workflows
+
+**Features:**
+
+- Read leads from sheet
+- Update status back
+- Add comments & disposition
+- Push call recordings\
+
+### 2. Write-Only Mode (One-Way Sync)
+
+**Best for:** Reporting / Analytics
+
+**Features:**
+
+- Writes only final outcomes
+- Does not touch source sheet
+- Creates separate reporting sheet\
+
+---
+
+### Configuration:
+
+- Sheet Name Template:
+  ```text
+  Concluded Leads {date}
+  ```
+- Enable **Auto-create daily sheets** if needed
+
+---
+
+## Step 3: Column Mapping
+
+<Frame>
+  ![Screenshot 2026 04 07 At 6 01 48 PM](/images/Screenshot-2026-04-07-at-6.01.48-PM.png)
+</Frame>
+
+- Shows mapping of sheet columns → UserVox variables\
+
+---
+
+### Example Mapping:
+
+| Google Sheet Column | UserVox Variable |
+| :-- | :-- |
+| user\_reason\_for\_not\_interested | user\_reason\_for\_not\_interested |
+| Complaint | Complaint |
+| listingCity | listingCity |
+| summaryPoints | summaryPoints |
+
+---
+
+### Notes:
+
+- Names should match exactly
+- Custom variables are allowed
+  Keep naming consistent\
+
+---
+
+## Step 4: Process Selection
+
+Select where integration applies:
+
+- Calling Campaigns
+- Sales Flows
+- Verification Calls
+- Collections\
+- \

@@ -106,6 +106,12 @@
             ]
           },
           {
+            "group": "Conversations",
+            "pages": [
+              "conversations/feedback"
+            ]
+          },
+          {
             "group": "FAQs",
             "pages": []
           }

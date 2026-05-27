@@ -106,7 +106,7 @@
             ]
           },
           {
-            "group": "Conversations",
+            "group": "conversations",
             "pages": [
               "conversations/feedback"
             ]

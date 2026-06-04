@@ -59,7 +59,8 @@
               "essentials/create-edit-agent",
               "essentials/add-knowledge-to-agent",
               "essentials/test-conversation",
-              "essentials/human-call-quality-analysis"
+              "essentials/human-call-quality-analysis",
+              "essentials/agent-voice-settings"
             ]
           },
           {
@@ -80,7 +81,8 @@
               "essentials/call-transfer",
               "essentials/process-analytics",
               "essentials/process-dispositions",
-              "guides/process/how-to-add-webhook-to-a-process"
+              "guides/process/how-to-add-webhook-to-a-process",
+              "guides/process/conditional-flow"
             ]
           },
           {

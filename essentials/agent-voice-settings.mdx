@@ -1,0 +1,110 @@
+---
+title: 'Voice Settings'
+description: 'Control which voice the agent uses and pair per-voice variables like bot name'
+---
+
+## Overview
+
+Voice Settings let you control which voice the agent uses during conversations. There are two modes:
+
+- **Fixed** — the same voice is used for every conversation
+- **Random** — a different voice is randomly selected for each new conversation
+
+## Where to Find It
+
+**Agent Details page → Advanced section → Voice Settings**
+
+![Voice Settings](/images/voice-settings.png)
+
+## How Voice Selection Works
+
+### Fixed Mode
+
+- If you have configured Voice Variables, the system uses the **first entry** from that list.
+- If Voice Variables is empty, it falls back to the **Voice dropdown** selection.
+
+### Random Mode
+
+- The system randomly picks one voice from your Voice Variables Configuration for each new conversation.
+- At least one entry in Voice Variables Configuration is required.
+
+## Configuration
+
+### Option 1 — Fixed Mode (simple)
+
+1. Select **Fixed** from the Voice Mode dropdown.
+2. Choose a voice from the Voice dropdown.
+3. Save.
+
+### Option 2 — Fixed Mode (with variables)
+
+1. Select **Fixed** from the Voice Mode dropdown.
+2. In the **Voice Variables Configuration** card, click **Edit**.
+3. Click **Add Voice Configuration**.
+4. Select a voice and add any variables (e.g., `botName = "Maya"`).
+5. Save.
+
+> The first entry in Voice Variables takes priority over the Voice dropdown when both are set.
+
+### Option 3 — Random Mode
+
+1. Select **Random** from the Voice Mode dropdown.
+2. In the **Voice Variables Configuration** card, click **Edit**.
+3. Click **Add Voice Configuration** to add multiple voice options.
+4. For each voice, select a voice from the dropdown and optionally add variables (e.g., `botName = "Maya"`).
+5. Save.
+
+## Using Variables in the Agent Prompt
+
+Reference any variable you defined using mustache syntax in your agent prompt:
+
+```
+Hello, I'm {{botName}}.
+```
+
+At runtime this becomes `"Hello, I'm Maya"` (or whichever value matches the selected voice configuration).
+
+## Prompt Example
+
+```
+You are {{botName}}, a female senior sales advisor from Tata Motors. You are calling customers who have shown interest in purchasing a new vehicle.
+```
+
+## Testing Guide
+
+### Test 1 — Fixed Mode
+
+1. Set Voice Mode to **Fixed**.
+2. Add one voice configuration (Voice = "Voice A", `botName = "Maya"`).
+3. Update the agent prompt to include `Hello, I'm {{botName}}`.
+4. Save and start multiple conversations.
+
+**Expected:** All conversations use "Voice A" and the bot says "Hello, I'm Maya".
+
+### Test 2 — Random Mode
+
+1. Set Voice Mode to **Random**.
+2. Add 3 voice configurations with different voices and variables:
+   - Voice A with `botName = "Maya"`
+   - Voice B with `botName = "Alex"`
+   - Voice C with `botName = "Sam"`
+3. Update the agent prompt to include `Hello, I'm {{botName}}`.
+4. Save and start multiple conversations.
+
+**Expected:** Different voices appear across conversations with the corresponding bot name.
+
+### Test 3 — Edit & Cancel
+
+1. Open Voice Variables Configuration and click **Edit**.
+2. Make some changes (add/remove voices or variables).
+3. Click **Cancel**.
+
+**Expected:** Changes are discarded, original configuration remains.
+
+## Notes
+
+- **Priority in Fixed Mode** — Voice Variables (first entry) takes priority over the Voice dropdown.
+- **Variables are optional** — you can configure voices without any variables.
+- **Random Mode requires Voice Variables** — must have at least one voice configuration.
+- **Switch anytime** — change between Fixed and Random mode as needed.
+- **Remember to Save** — always click Save after editing Voice Variables Configuration.

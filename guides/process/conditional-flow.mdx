@@ -1,0 +1,85 @@
+---
+title: 'Conditional Flow'
+description: 'Route a process action to a different agent based on lead data at run time'
+---
+
+## Overview
+
+Conditional Flow lets you pick a different agent (Flow ID) for the same action based on what you know about a lead — without creating separate processes.
+
+> "Use Agent A by default, but if the lead matches these rules, use Agent B instead."
+
+The agent is chosen at the moment the action runs, using the lead's most recent data.
+
+## Where to Find It
+
+**Process editor → any action that has a Flow ID**
+
+![Conditional Flow](/images/conditional-flow.png) (Make Call, Send WhatsApp, Send CD WhatsApp, Send Rampwin WhatsApp, Send Rampwin Webhook)
+
+Below the existing Flow ID dropdown you will see a new section: **Conditional Flow ID** with a **+ Add Conditional** button.
+
+## Setting Up a Rule
+
+Each conditional card has three parts:
+
+| Field | Purpose |
+|---|---|
+| **Description** (optional) | A short label for the rule |
+| **Conditions** | The *if* part — variable + operator + value. AND across cards, OR within the same card. |
+| **Then use this Flow ID** | The *then* part — pick an agent or use a `{{variable}}` |
+
+Use the up/down arrows to reorder rules and the trash icon to delete them.
+
+## How the Agent Is Picked
+
+1. Rules are evaluated **top to bottom**.
+2. The **first rule whose conditions match** is used.
+3. If no rule matches, the **default Flow ID** at the top is used.
+4. To add a guaranteed fallback that is not the default, add a final rule with **no conditions**.
+
+## Things to Remember
+
+- **Order matters** — first match wins.
+- **Default still applies** when no rule matches.
+- The decision is made **at run time**, even for delayed or scheduled actions.
+- **Existing processes are unaffected** until you add a conditional rule.
+- A rule with an **empty Flow ID** is ignored (the UI shows a red warning).
+
+## Example
+
+| Rule | Condition | Flow ID |
+|---|---|---|
+| 1 | `language equals hi` | Agent-B (Hindi agent) |
+| 2 | `country equals India` | Agent-C (India agent) |
+| Default | — | Agent-A |
+
+A lead with `language = hi` → **Agent-B** (rule 1 matches first).  
+A lead with `language = en` and `country = India` → **Agent-C** (rule 2 matches).  
+All other leads → **Agent-A** (default).
+
+## Test Cases
+
+Use these to confirm the feature works as expected. For each case, set up the rule, push a test lead through the action, then check which Flow ID was used in the lead's call attempt or WhatsApp activity.
+
+| # | Setup | Lead data | Expected Flow ID |
+|---|---|---|---|
+| 1 | Default only — no conditional rules. Default = Agent-A. | Any lead. | Agent-A (default). |
+| 2 | Single rule matches — Rule: `language equals hi` → Agent-B. Default = Agent-A. | Lead with `language = hi`. | Agent-B. |
+| 3 | Single rule does not match (fallback) — same setup as #2. | Lead with `language = en`. | Agent-A (falls back to default). |
+| 4 | First match wins — Rule 1: `language equals hi` → Agent-B. Rule 2: `country equals India` → Agent-C. | Lead matching both rules. | Agent-B (rule 1 is first). |
+| 5 | Reordering changes outcome — same lead as #4, but move Rule 2 above Rule 1. | Lead matching both rules. | Agent-C (now rule 2 is first). |
+| 6 | Catch-all — Rule 1: `language equals hi` → Agent-B. Rule 2 (last): no conditions → Agent-C. Default = Agent-A. | Lead with `language = en`. | Agent-C (catch-all rule, default never reached). |
+| 7 | Empty Flow ID rule is ignored — Rule 1: `language equals hi` → (no agent picked). Default = Agent-A. | Lead with `language = hi`. | Agent-A (rule has no Flow ID, so it is skipped). |
+| 9 | Undo conditional — start from #2 setup, then delete the conditional rule. | Lead with `language = hi`. | Agent-A (back to default). |
+
+## FAQ
+
+**What variables can I use?**  
+Anything on the lead — `language`, `lastDisposition`, `pastDispositions`, metadata fields, learned-data fields, etc.
+
+**What happens if a rule has an empty Flow ID?**  
+The rule is ignored. The UI shows a red warning to flag it.
+
+**How do I undo conditional routing?**  
+Delete all conditional rules. The action reverts to the default Flow ID.

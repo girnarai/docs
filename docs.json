@@ -58,6 +58,7 @@
               "essentials/agents",
               "essentials/create-edit-agent",
               "essentials/add-knowledge-to-agent",
+              "essentials/faq-sets",
               "essentials/test-conversation",
               "essentials/human-call-quality-analysis",
               "essentials/agent-voice-settings"

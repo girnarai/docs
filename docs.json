@@ -61,7 +61,8 @@
               "essentials/faq-sets",
               "essentials/test-conversation",
               "essentials/human-call-quality-analysis",
-              "essentials/agent-voice-settings"
+              "essentials/agent-voice-settings",
+              "essentials/simulation"
             ]
           },
           {

@@ -57,6 +57,7 @@
             "pages": [
               "essentials/agents",
               "essentials/create-edit-agent",
+              "essentials/prompt-builder",
               "essentials/add-knowledge-to-agent",
               "essentials/faq-sets",
               "essentials/test-conversation",

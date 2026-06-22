@@ -1,0 +1,171 @@
+---
+title: "Prompt Builder"
+description: "Structure your agent's conversation flow using stages and rules instead of a single monolithic prompt."
+---
+
+## Overview
+
+Every agent in UserVox has a **prompt** — the instructions that tell the AI how to behave during a call. By default, this is a single block of text you write in a plain-text editor (called **Legacy** mode).
+
+**Prompt Builder** is an alternative, structured mode that lets you split that text into two distinct, purpose-built pieces:
+
+| Concept | What it is | When it's used |
+|:--------|:-----------|:---------------|
+| **Stages** | Ordered steps of the call flow | Sequentially — the AI works through them from top to bottom |
+| **Rules** | Global guidelines that apply all the time | Throughout the entire call, regardless of which stage is active |
+
+This makes long prompts easier to read, edit, and debug — especially for complex scripts with conditional logic.
+
+---
+
+## Enabling Prompt Builder
+
+1. Open your agent and navigate to the **Details** tab.
+2. Scroll to the **Prompt Builder** toggle and switch it on.
+
+![Prompt Builder toggle](/images/prompt-builder-toggle.png)
+
+Once enabled, the raw text editor is replaced by three inner tabs: **Call Flow**, **Rules**, and **Preview**.
+
+> Switching back to Legacy mode restores the raw text editor. Your stages and rules are saved but not used until Builder mode is active again.
+
+---
+
+## Call Flow Tab (Stages)
+
+Stages define the step-by-step progression of a call. They run **top to bottom** — the AI moves from one stage to the next as the conversation progresses.
+
+### Adding a stage
+
+1. Click **Edit** in the Call Flow tab.
+2. Click **Add Stage** — a new card appears at the bottom of the list.
+3. Click the stage title to rename it inline.
+4. Write the **Instruction** for that stage — this is natural language telling the AI what to do, what to say, and how to respond in this part of the call.
+
+![Stage editor](/images/prompt-builder-stage-editor.png)
+
+### Instruction vs. Branch — the key distinction
+
+Each stage has two parts:
+
+**Instruction** — always sent to the AI, every turn, while this stage is active. Write everything the AI needs to know to handle this stage here.
+
+**Branch** — an optional, condition-based block appended *on top of* the instruction only when specific variable conditions are met. Branches do not replace the instruction; they add to it.
+
+```
+Instruction (always shown):
+  "Ask the customer to confirm their EMI payment date..."
+
+Branch (appended when switchGender is set to 'Sir' or 'Mam'):
+  "Gender mismatch detected — don't accept 'Yes' as identity confirmation.
+   First ask: '{{sirOrMam}}, could I please speak with {{hindi_name}}?'"
+```
+
+Use branches when a small but important variation needs to be injected depending on call data — without duplicating the whole instruction.
+
+### Adding a branch
+
+1. In a stage card (edit mode), click **Add Branch**.
+2. Configure one or more **conditions** — each condition has three parts:
+   - **Variable** — the call variable to check (e.g. `switchGender`, `language`)
+   - **Operator** — how to compare it (`equals`, `in`, `exists`, `contains`, etc.)
+   - **Value** — the expected value (e.g. `Sir,Mam`)
+3. Set the **combinator** to **AND** (all conditions must pass) or **OR** (any condition is enough).
+4. Write the **Response** — the text that gets appended to the instruction when this branch matches.
+
+![Branch editor](/images/prompt-builder-branch-editor.png)
+
+> Only the **first matching branch** is used. Branches are checked in order; if none match, nothing extra is appended.
+
+### Reordering and removing stages
+
+- Use the **↑ / ↓** arrow buttons on a stage card to move it up or down.
+- Click the **trash icon** to delete a stage.
+- Click a stage header to collapse/expand it.
+
+### Saving
+
+Click **Save** in the Call Flow tab toolbar to persist your changes. Changes are **not auto-saved** — unsaved edits show a Cancel option next to Save.
+
+---
+
+## Rules Tab
+
+Rules are global guidelines that apply **throughout the entire call**, not tied to any specific stage. Think of rules as the "always-on" layer: persona, tone, compliance requirements, speech formatting, language handling, and so on.
+
+### Adding a rule
+
+1. Click **Edit** in the Rules tab.
+2. Click **Add Rule** — a new card appears.
+3. Rename it by clicking the title inline.
+4. Write the **Content** — everything this rule should enforce during the call.
+
+![Rules editor](/images/prompt-builder-rules-editor.png)
+
+### How rules are compiled
+
+In the final prompt sent to the AI, **stages come first** (under a `# CALL FLOW` heading), then **rules** (under a `# RULES` heading). Rules are always appended after the call flow — they provide the background context and constraints that apply no matter where in the flow the conversation is.
+
+### Tips for organizing rules
+
+- **One topic per rule** — give each rule a focused title like "Speech Formatting" or "Language Control". This makes them easier to find and edit later.
+- **Rules vs. instruction** — if guidance only applies in one specific stage, put it in that stage's instruction. If it should apply everywhere, put it in a rule.
+
+### Saving
+
+Click **Save** in the Rules tab toolbar. Like stages, rules are not auto-saved.
+
+---
+
+## Preview Tab
+
+The Preview tab compiles your stages and rules into the full prompt text that the AI will actually receive, so you can review it before going live.
+
+![Prompt Builder Preview](/images/prompt-builder-preview.png)
+
+### Character count
+
+The compiled prompt length is displayed as a badge (for example, `12,430 chars`) in the top-right corner of the preview card. Use this as an estimate to monitor the approximate number of characters in the final prompt.
+
+### Resolving branch conditions
+
+If your stages have branches, the preview shows you what the compiled prompt would look like for a given set of variable values.
+
+1. Click **Input Variables**.
+2. A modal lists every variable referenced in branch conditions across all stages.
+3. Click a variable chip to select it, then type a sample value.
+4. Click **Apply & Preview** — branches whose conditions match your sample values will have their responses appended to the compiled output.
+
+![Input Variables modal](/images/prompt-builder-input-variables.png)
+
+A green dot next to the Input Variables button means all variables have sample values set. A yellow dot means some are still empty (treated as "not set").
+
+> Preview values are for inspection only — they are never saved or sent during a real call.
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Can I switch back to the raw text editor after using Prompt Builder?">
+    Yes. Toggle the Prompt Builder switch off on the Details tab at any time. Your stages and rules remain saved. The raw text editor (`conversationPrompt`) is shown instead.
+  </Accordion>
+
+  <Accordion title="What happens to my old prompt when I enable Prompt Builder?">
+    Nothing — the existing `conversationPrompt` text is left untouched. In Builder mode the AI uses stages and rules instead. If you switch back to Legacy mode, the old prompt is used again exactly as before.
+  </Accordion>
+
+  <Accordion title="Do stages run in order every call, or does the AI jump around?">
+    Stages run top to bottom and the AI moves forward as the conversation progresses. The AI uses natural language understanding to judge when a stage is complete — it does not skip stages or loop back unless your instructions explicitly tell it to.
+  </Accordion>
+
+  <Accordion title="What operators can I use in branch conditions?">
+    The full list: `exists`, `not_exists`, `equals`, `not_equals`, `contains`, `not_contains`, `starts_with`, `ends_with`, `greater_than`, `less_than`, `greater_than_equals`, `less_than_equals`, `in`, `not_in`.
+
+    `in` and `not_in` accept a comma-separated list of values (e.g. `Sir,Mam`).
+  </Accordion>
+
+  <Accordion title="What variables are available in branch conditions?">
+    Any variable that gets set during the call — lead metadata fields (e.g. `hindi_name`, `emi_amount`), system variables (`currentDate`, `currentGreeting`), and any variables captured or set by tools during the call (e.g. `switchGender`, `language`).
+  </Accordion>
+</AccordionGroup>

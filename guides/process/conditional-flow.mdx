@@ -21,15 +21,32 @@ Below the existing Flow ID dropdown you will see a new section: **Conditional Fl
 
 ## Setting Up a Rule
 
-Each conditional card has three parts:
+Each conditional card has four parts:
 
 | Field | Purpose |
 |---|---|
 | **Description** (optional) | A short label for the rule |
+| **Time window** (optional) | Only evaluate this rule during specific hours and/or days |
 | **Conditions** | The *if* part — variable + operator + value. AND across cards, OR within the same card. |
 | **Then use this Flow ID** | The *then* part — pick an agent or use a `{{variable}}` |
 
 Use the up/down arrows to reorder rules and the trash icon to delete them.
+
+## Time Window
+
+Each rule can optionally be restricted to a time window. When a time window is set, the rule is **skipped entirely** if the current wall-clock time is outside the window — even if the conditions would otherwise match.
+
+Enable it with the **Time window** checkbox on any conditional card.
+
+| Field | Purpose |
+|---|---|
+| **Start** | Earliest time the rule is active (e.g. 09:00 AM) |
+| **End** | Latest time the rule is active (e.g. 05:00 PM) |
+| **Days** | Days of the week the rule applies. Leave all unchecked for every day. |
+
+Times are interpreted in the **Asia/Kolkata** timezone.
+
+> **Note:** Time window and conditions are evaluated together. A rule only fires when the current time is inside the window **and** the conditions match.
 
 ## How the Agent Is Picked
 
@@ -45,6 +62,7 @@ Use the up/down arrows to reorder rules and the trash icon to delete them.
 - The decision is made **at run time**, even for delayed or scheduled actions.
 - **Existing processes are unaffected** until you add a conditional rule.
 - A rule with an **empty Flow ID** is ignored (the UI shows a red warning).
+- A rule with a **time window** is skipped if the action runs outside that window — the next rule is tried instead.
 
 ## Example
 
@@ -73,13 +91,38 @@ Use these to confirm the feature works as expected. For each case, set up the ru
 | 7 | Empty Flow ID rule is ignored — Rule 1: `language equals hi` → (no agent picked). Default = Agent-A. | Lead with `language = hi`. | Agent-A (rule has no Flow ID, so it is skipped). |
 | 9 | Undo conditional — start from #2 setup, then delete the conditional rule. | Lead with `language = hi`. | Agent-A (back to default). |
 
-## FAQ
+## Frequently Asked Questions
 
-**What variables can I use?**  
-Anything on the lead — `language`, `lastDisposition`, `pastDispositions`, metadata fields, learned-data fields, etc.
+<AccordionGroup>
+  <Accordion title="What variables can I use in conditions?">
+    Anything on the lead — `language`, `lastDisposition`, `pastDispositions`, metadata fields, learned-data fields, etc.
+  </Accordion>
 
-**What happens if a rule has an empty Flow ID?**  
-The rule is ignored. The UI shows a red warning to flag it.
+  <Accordion title="What happens if a rule has an empty Flow ID?">
+    The rule is ignored. The UI shows a red warning to flag it.
+  </Accordion>
 
-**How do I undo conditional routing?**  
-Delete all conditional rules. The action reverts to the default Flow ID.
+  <Accordion title="How do I undo conditional routing?">
+    Delete all conditional rules. The action reverts to the default Flow ID.
+  </Accordion>
+
+  <Accordion title="What if the action runs outside the time window?">
+    That rule is skipped and the next rule is evaluated. If no remaining rules match, the default Flow ID is used.
+  </Accordion>
+
+  <Accordion title="Can I combine a time window with conditions?">
+    Yes. Both must be satisfied — the current time must be inside the window and the conditions must match.
+  </Accordion>
+
+  <Accordion title="Can I route by time alone, without any conditions?">
+    Yes. Leave conditions empty and set only a time window. The rule will then match every lead during that window.
+
+    Example — use Agent A during the day and Agent B in the evening:
+
+    | Rule | Time window | Conditions | Flow ID |
+    |---|---|---|---|
+    | 1 | 9:00 AM – 5:00 PM | — | Agent A |
+    | 2 | 5:00 PM – 9:00 PM | — | Agent B |
+    | Default | — | — | Agent A |
+  </Accordion>
+</AccordionGroup>

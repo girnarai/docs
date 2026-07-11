@@ -1,0 +1,55 @@
+---
+title: "Bulk Lead Operations"
+description: "Delete, close-lost, reset, or reschedule many leads at once by identifying them via CSV upload."
+---
+
+## Overview
+
+Bulk Lead Operations lets you act on many leads at once — for example resetting a batch back to the start of a process, or closing out a list as lost — instead of updating leads one at a time. Leads are identified by uploading a CSV, then matched, reviewed, and executed in a 3-step wizard.
+
+---
+
+## Step 1: Open Bulk Operations
+
+From the **Leads** page, click **More → Do Bulk Operation**.
+
+![The Leads page "More" menu, with Do Bulk Operation among the other list actions](/images/leads-more-menu.png)
+
+---
+
+## Step 2: Identify Leads
+
+Upload a CSV or Excel file (up to 10MB) containing an identifier column — **Phone**, **Ref ID**, or **Lead ID** — for each lead you want to act on.
+
+![Step 1: Identify Leads — upload a CSV with Phone, Ref ID, or Lead ID](/images/leads-bulk-operation-step1-identify.png)
+
+Click **Analyze & Upload** to move to the next step.
+
+---
+
+## Step 3: Match & Verify
+
+Uservox matches each row in your file against existing leads and shows the match results before anything changes. Review this list carefully — rows that don't match an existing lead (wrong phone format, typo in a Ref ID) won't be included in the operation.
+
+---
+
+## Step 4: Execute
+
+Choose the operation to run against the matched leads and confirm. This is the step that actually changes lead data, so double-check the matched count and the operation you've selected before confirming.
+
+<Warning>
+Bulk operations act on every matched lead at once and can't be undone from within the wizard. Review the Match & Verify results carefully before executing, especially for destructive operations like delete or close-lost.
+</Warning>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What happens to rows in my CSV that don't match a lead?">
+    They're excluded from the operation. Only rows that successfully match an existing lead (by Phone, Ref ID, or Lead ID) proceed to Execute.
+  </Accordion>
+  <Accordion title="Can I bulk-update leads across multiple processes at once?">
+    Yes — matching is by lead identifier, not by process, so a single upload can include leads from different processes.
+  </Accordion>
+</AccordionGroup>

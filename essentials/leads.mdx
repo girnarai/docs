@@ -1,40 +1,32 @@
 ---
 title: 'Leads'
-description: 'How to insert leads and what operations you can do on them'
+description: 'How leads move through Uservox — adding, searching, exporting, and managing them at scale'
 ---
+
+## Overview
+
+A **lead** is a contact enrolled into a process — it carries contact details, custom metadata, and a running history of every call attempt, disposition, and state transition. This page is a starting point; each linked guide below covers one part of the leads workflow in detail.
 
 ## Adding Leads
 
-You can add leads to Uservox in multiple ways:
+- **[How to Upload Leads File](/guides/leads/how-to-upload-leads-file)** — bulk upload via CSV.
+- **[Upload Test Lead](/essentials/upload-test-lead)** — send a single test lead through a process before a real campaign.
+- **API** — create or update leads programmatically; see [API Integration](/essentials/api-integration).
 
-- Dashboard: Upload CSV or add individual leads
-- API: Create or update leads programmatically
-- Integrations: Sync leads from your CRM
+Minimum recommended fields: name, phone, timezone. Optional: email, company, notes, campaign tags, and any custom metadata your process uses for routing or personalization.
 
-Minimum recommended fields:
+## Finding Leads
 
-- name, phone, timezone
-- optional: email, company, notes, campaign tags
+- **[How to Search in Leads Dashboard](/guides/leads/how-to-search-in-leads-dashboard)** — filter by lead fields, metadata, and state using the boolean AND/OR query builder.
+- **[Lead Queue Prioritization](/guides/leads/lead-queue-prioritization)** — control which leads get called first within a process.
 
-## Operations on Leads
+## Exporting and Bulk Operations
 
-From the Dashboard:
-
-- View and search: Filter by status, outcome, tags
-- Update details: Edit contact info or custom fields
-- Tagging: Organize leads by campaign, source, or segments
-- Assign to Agent/Process: Enroll into a calling workflow
-- Pause/Resume: Temporarily remove from dialing attempts
-- Delete: Remove a lead from the system
-
-From the API:
-
-- Create, update, upsert by external_id
-- Attach metadata fields for routing/qualification
-- Trigger outbound calls or workflows
+- **[How to Download Interested Leads](/guides/leads/how-to-download-interested-leads)** — filter to Interested leads and export to CSV, including full vs. masked phone number export.
+- **[Bulk Lead Operations](/guides/leads/bulk-lead-operations)** — delete, close-lost, reset, or reschedule leads in bulk across a filtered set.
 
 ## Best Practices
 
-- Normalize phone numbers in E.164 format
-- Provide timezone for optimal call windows
-- Use external_id to keep your CRM and Uservox in sync
+- Normalize phone numbers in E.164 format.
+- Provide timezone for optimal call windows.
+- Use a stable external/reference ID to keep your CRM and Uservox in sync.

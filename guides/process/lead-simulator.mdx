@@ -1,0 +1,61 @@
+---
+title: "Lead Simulator"
+description: "Step a sandbox lead through a process node by node, choosing call outcomes at each step, without making a real call or touching real leads."
+---
+
+<Note>
+This is a different feature from [Simulate a Voice Agent](/essentials/simulation), which tests an agent's conversational responses against sample variables in the "Try" tab. The Lead Simulator instead walks a **process** — nodes, conditions, dispositions, and scheduling — one step at a time.
+</Note>
+
+## Overview
+
+The Lead Simulator lets you dry-run a process against a throw-away sandbox lead: pick an outcome for each call step (Connected / Not Connected → a disposition), and watch which node the process moves to next. It's the fastest way to check a process's branching logic — conditions, disposition routing, call windows — without waiting for real calls.
+
+---
+
+## Starting a Session
+
+Open **Simulator** from the app (or a process's **Simulate** action, which pre-fills the Process ID). Fill in:
+
+- **Process ID** (required) — the process to simulate.
+- **Project ID** (optional) — defaults to the process's own project.
+- **Start state** (optional) — defaults to the process's actual initial state.
+- **Lead name** / **Phone** — defaults to a clearly-fake sandbox lead (`Simulator Lead`, `9999999999`).
+- **Metadata** / **learnedData** (JSON, optional) — seed values the process can read, useful for testing condition branches that depend on lead fields.
+- **Clock** (optional) — sets a fixed simulated time for deterministic replay; leave blank to run in real time.
+
+![Simulator new session form, with process ID, sandbox lead defaults, and how-it-works notes](/images/simulator-new-session.png)
+
+<Info>
+The sidebar's **How it works** notes explain the mechanics: the session uses a throw-away sandbox lead (`__sandbox: true`) deleted when you close the session; every `call` action pauses for you to pick an outcome, while non-call actions (like `transform` or `webhook_call`) run in dry-run mode automatically unless a downstream step needs a real value. Sessions are persisted as `ProcessTestRun` records with `mode='SIMULATOR'`.
+</Info>
+
+Click **Start session** to open the workbench.
+
+---
+
+## The Workbench
+
+![Simulator workbench: visited states, current state with outcome picker, lead snapshot, and ledger](/images/simulator-workbench.png)
+
+- **Visited states** (left) — the path taken through the process so far.
+- **Current state** (center) — what node the simulation is on, and what it's about to run. For a call step, choose **Connected** or **Not Connected**, then pick a specific disposition, grouped by outcome type (Success / Neutral / Failure):
+
+![Outcome picker showing process-specific dispositions grouped by Success, Neutral, and Failure](/images/simulator-outcome-picker.png)
+
+  Use **Skip tick** to advance without running the step, or **Fast-forward** to run several steps automatically.
+- **Lead snapshot** (right) — the sandbox lead's current phone, state, and last disposition, with raw metadata/learnedData available to expand.
+- **Ledger** (right) — a chronological log of every job and action the session has run.
+
+After picking an outcome, review the raw payload for the next step and click **Advance** to run it.
+
+---
+
+## Ending a Session
+
+Click **Close session**. You'll be asked to confirm — closing deletes the sandbox lead, so nothing persists beyond the `ProcessTestRun` record of what happened.
+
+## See Also
+
+- [AI Process Assistant](/guides/process/ai-process-assistant) — propose process changes via chat
+- [Simulate a Voice Agent](/essentials/simulation) — test an agent's conversation, not a process's routing

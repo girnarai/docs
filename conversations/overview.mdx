@@ -1,0 +1,66 @@
+---
+title: "Conversations"
+description: "Search, filter, and inspect every call and chat conversation across your project."
+---
+
+## Overview
+
+Every call and chat your agents have is logged as a **conversation** — recording, transcript, extracted variables, tool calls, and tags. The **Conversations** section is where you search and inspect them, independent of any single lead or process.
+
+---
+
+## Conversation Search
+
+Open **Conversations** from the top navigation. The search bar accepts free text (it searches transcript text, lead ID, phone, or call SID) or a structured filter.
+
+![Conversation Search list — call duration, turn count, playback, status, and tags per conversation](/images/conversations-search-list.png)
+
+The **Summary** panel on the right gives project-wide totals for the selected window: Total Conversations, Analyzed Conversations, Average Turns, and Average Duration.
+
+### Filters
+
+Click **Filters** to build a structured query against fields including Lead ID, Call SID, Flow, Disposition, Tags, Tool Call, Duration, Turns, Updated At, Process, and phone.
+
+![Conversation Search filter fields](/images/conversations-filter-fields.png)
+
+### Tags
+
+Click **Tags** to filter by automatically-detected conversation issues — useful for quality review without listening to every call:
+
+![Filter by Tags — Incomplete Call, AI Missed Turn, Short Disconnected Call, Disconnected Call, Voicemail Detected, AI Unresponsive, One Sided Call, High Negative Sentiment, High Positive Sentiment](/images/conversations-tags-filter.png)
+
+### Sampling
+
+The **More** menu includes **Sampling** shortcuts (Best 1%, Worst 1%, Mixed 1%) to quickly pull a representative sample for review, and **Export CSV** to download the current result set.
+
+---
+
+## Conversation Detail
+
+Click into any conversation to open its detail page:
+
+- **Recording & playback** — the call audio, with duration and timestamp.
+- **Overview / Conversation Messages tabs** — the Overview tab shows call metadata; Conversation Messages shows the full turn-by-turn transcript, with a **Translate** option.
+- **Tool Calls Made** — every tool the agent invoked during the call (e.g. a price lookup), with the time offset it was called at.
+
+![Tool Calls Made panel on a conversation detail page](/images/conversations-tool-calls.png)
+
+- **Conversation Variables** — every variable extracted from or used in the call (lead fields, dynamic prompt variables, AI-extracted values like `commentSummary` or `nextCallbackReasoning`).
+- **Token Usage** — model token consumption for the call.
+- **Text Simulator** — replay the conversation against a different agent or model without making a real call.
+
+<Warning>
+Conversation transcripts and variables routinely contain real customer names, phone numbers, and other PII spoken or extracted during the call. Treat conversation detail pages as sensitive — don't screenshot or export them outside your normal data-handling policy.
+</Warning>
+
+---
+
+## Feedback
+
+To rate a conversation and leave notes for quality review, see [Sharing Feedback on Conversations](/conversations/feedback).
+
+## See Also
+
+- [Sharing Feedback on Conversations](/conversations/feedback)
+- [Process Analytics](/essentials/process-analytics) — cohort-level analytics for a process
+- [Get Conversation Stats](/api-reference/get-conversation-stats) — the same aggregate metrics via API (raw conversation search is not exposed externally)

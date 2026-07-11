@@ -5,6 +5,11 @@ description: "Learn how to add and manage knowledge documents for your AI agents
 
 ## Overview
 
+Uservox supports two kinds of agent knowledge, both managed from the same **Knowledge** settings page:
+
+- **Document Knowledge** — PDF files containing product documentation, policies, FAQs, or other unstructured reference material. Covered below.
+- **CSV Lookup** — structured, tabular data (e.g. a product catalog or pricing sheet) your agent can query. See [CSV Lookups](#csv-lookups) below.
+
 Knowledge documents allow you to upload PDF files containing product documentation, policies, FAQs, or any other information that your AI agent should reference during conversations. This helps your agent provide accurate, context-aware responses based on your business's specific knowledge base.
 
 ---
@@ -76,6 +81,23 @@ To update an existing knowledge document:
    - Subtopic
    - Upload a new PDF file to replace the existing one
 5. Click **Save** or **Update Knowledge** to apply your changes.
+
+---
+
+## CSV Lookups
+
+Use a CSV Lookup instead of a document when your agent needs to look up structured, row-based data — a product catalog, pricing table, or dealer list — rather than search unstructured text.
+
+From **Account Settings → Knowledge**, click **Add CSV Lookup**:
+
+![Add CSV Lookup dialog — name, description, upload mode, and file upload](/images/knowledge-csv-lookup-modal.png)
+
+1. Enter a **Name** and optional **Description**.
+2. Choose an **Upload Mode**:
+   - **Single CSV** — one file with all data, matched by column position.
+   - **Multiple CSVs** — several files combined by matching header names, useful when the same lookup is assembled from more than one source file.
+3. Upload the CSV file(s).
+4. Click **Next: Configure Lookups** to map which columns the agent can query and what it should return.
 
 ---
 

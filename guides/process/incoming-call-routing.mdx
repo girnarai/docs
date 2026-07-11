@@ -1,0 +1,59 @@
+---
+title: "Incoming Call Routing"
+description: "Route inbound calls to the right process and flow, including time-window-based overrides."
+---
+
+## Overview
+
+When a customer calls one of your project's numbers, Uservox needs to decide which process — and which flow within that process — should handle the call. Incoming call routing controls that decision, from a single project-wide default down to per-number, time-windowed overrides.
+
+This builds on the number-based routing described in [Setting Up and Monitoring Incoming Calls](/essentials/setup-incoming) — this page covers the **Conditional Flow** routing added under **Default Incoming by Phone Number**.
+
+---
+
+## Where to Configure It
+
+1. Open [**Account Settings**](https://app.uservox.ai/account-settings) → **Project Settings**.
+2. Find **Default Incoming Routing** and **Default Incoming by Phone Number**.
+
+![Advanced Settings card showing Default Incoming Routing and a Conditional Flow ID time-window rule](/images/process-incoming-call-routing-timewindow.png)
+
+---
+
+## Default Incoming Routing
+
+At the top of the card, **Default Process** and **Default Call Flow** set the fallback: any incoming call that doesn't match a more specific rule below is routed here. If you pick a Default Process that has an associated flow, Uservox shows a **Use Suggestion** prompt to fill in the matching Default Call Flow automatically.
+
+---
+
+## Per-Number Routing with Time-Window Conditions
+
+Under **Default Incoming by Phone Number**, click **+ Add Number** to override routing for a specific inbound number. Each number row has:
+
+- **Phone Number**, **Process**, and **Flow** — the base override for that number.
+- **Overrides** — opens a **Conditional Flow ID** editor, letting you route the *same* number to different flows depending on **when** the call comes in.
+
+Inside a conditional, set:
+
+- **Start** / **End** — the time window the rule applies in.
+- **Days** — which days of the week the rule is active (leave empty to apply every day).
+- **Then use this Flow ID** — the agent/flow to use for calls matching this window, selected directly or via a dynamic parameter.
+
+Add multiple conditionals to cover different windows (e.g. business hours vs. after-hours) on the same number; calls outside every conditional window fall back to that number's base Process/Flow.
+
+<Note>
+A conditional isn't active until a Flow ID is set — the editor flags this with **"Flow ID is required for an conditional to take effect."**
+</Note>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What happens if no conditional window matches the call time?">
+    The call falls back to that phone number's base **Process** and **Flow**. If the number itself has no override configured, it falls back further to the project's **Default Process** and **Default Call Flow**.
+  </Accordion>
+  <Accordion title="Can I route the same number differently on weekdays vs. weekends?">
+    Yes — add separate conditionals with different **Days** selections, each pointing at its own Flow ID.
+  </Accordion>
+</AccordionGroup>

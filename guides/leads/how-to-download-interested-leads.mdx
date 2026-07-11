@@ -1,3 +1,77 @@
 ---
-title: "How to download interested leads"
+title: "How to Download Interested Leads"
+description: "Filter the leads list to Interested leads and export them to CSV."
 ---
+
+## Overview
+
+Once a process starts marking leads as **Interested**, you'll often want to pull that list out of Uservox — for a sales handoff, a follow-up campaign, or reporting. This page covers filtering the leads list down to Interested leads and exporting the result to CSV.
+
+---
+
+## Step 1: Filter Leads by Interested State
+
+1. Open **Leads** from the top navigation.
+2. Click inside the search bar (*"Start typing text or choose a filter…"*).
+3. Add a rule: select **State** as the field, set the condition to **equals**, and choose **Interested** as the value.
+
+The leads list updates immediately to show only leads currently in the Interested state.
+
+![Filter builder with State equals Interested applied, showing the filtered leads list](/images/leads-interested-disposition-filter.png)
+
+<Tip>
+If you're looking for a specific disposition rather than the overall lead state — e.g. `Interested_callback` on one particular process — use the **Disposition** field instead of **State**. See [How to Search in Leads Dashboard](/guides/leads/how-to-search-in-leads-dashboard) for the difference between fields and metadata.
+</Tip>
+
+---
+
+## Step 2: Open Export CSV
+
+With the filter applied, click **More** in the top-right of the Leads List, then select **Export CSV**.
+
+![The Leads page "More" menu, with Export CSV, Delete Leads, Add Test Lead, and other bulk actions](/images/leads-more-menu.png)
+
+---
+
+## Step 3: Configure the Export
+
+The **Export Leads to CSV** dialog shows the filters that will be applied to the export and lets you customize what's included:
+
+![Export Leads to CSV dialog showing applied filters, additional fields, selection type, and export options](/images/leads-export-csv-modal.png)
+
+- **Applied Filters** — a read-only summary of the filters currently active on the leads list (your Interested-state filter, plus any date range).
+- **Additional Fields** — a comma-separated list of extra columns to include, e.g. `dealer_code, city, vehicle`. Click **Update** after entering fields to refresh the preview.
+- **Selection Type** — choose what the export covers:
+  - **Current Selection** — leads matching your active filters (the default, and what you want for an Interested-only export).
+  - **Upload ID** — all leads from a specific upload batch.
+  - **Date Range** — leads within a date range, independent of other filters.
+- **Include detailed activity history** — adds the full activity/attempt log per lead. Leave this off for a simple contact list; turn it on if you need call-by-call detail.
+- **Show Full Phone Numbers** — checked by default. Uncheck this if the CSV is going somewhere that shouldn't see unmasked phone numbers.
+
+<Warning>
+**Show Full Phone Numbers** is enabled by default and exports real, unmasked phone numbers. Review who the CSV is for before exporting, and uncheck it if the recipient only needs masked numbers.
+</Warning>
+
+Click **Export CSV** to run the export.
+
+---
+
+## Step 4: Retrieve the File
+
+Depending on the size of the result set, the export either downloads directly or runs as a background job. For larger exports, check **More → View Bulk Jobs** to track progress and download the finished file once it's ready.
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Does the export respect my current filters, or does it export all leads?">
+    It exports based on the **Selection Type** you choose in the dialog. With **Current Selection** (the default), only leads matching your active filters — including the Interested-state filter — are included.
+  </Accordion>
+  <Accordion title="Can I export leads across multiple processes at once?">
+    Yes. The **State** filter applies across all processes in the project. If you only want leads from one specific process, add a **Process ID** rule alongside the State filter.
+  </Accordion>
+  <Accordion title="What's the difference between State and Disposition when filtering for Interested leads?">
+    **State** reflects the lead's current position in the process (e.g. `interested`), while **Disposition** reflects the specific outcome recorded on the last call attempt (e.g. `Interested_callback`), which can vary by process. Use State for a broad Interested-leads view; use Disposition when you need a specific outcome.
+  </Accordion>
+</AccordionGroup>

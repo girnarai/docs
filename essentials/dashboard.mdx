@@ -1,78 +1,62 @@
 ---
 title: "Dashboard"
-description: "The Daily Dashboard in UserVox.ai provides a snapshot of calling activity and outcomes on a day-to-day basis. Unlike Cohort Analytics (which is tied to lead insertion date), the Daily Dashboard tracks real-time daily performance, showing how many calls were made, how many leads showed interest, and how many call minutes (pulses) were consumed. "
+description: "Project-wide conversion funnel, per-process performance, and disposition breakdowns for a selected date range."
 ---
 
-![Screenshotfrom2025 09 2813 29 39 Pn](/images/Screenshotfrom2025-09-2813-29-39.png)
+## Overview
 
-You can download these metrics by clicking the **"Tabular"** icon located above the graph, as shown below:
+The Dashboard is the project-wide view of calling activity: a conversion funnel from attempted to interested, a per-process performance table, and a breakdown of dispositions and outcomes. It has two tabs — **Overview** (this page) and **Lead Journey** (cohort-based analytics for a single process, see below).
 
-![Screenshotfrom2025 10 0412 21 23 Pn](/images/Screenshotfrom2025-10-0412-21-23.png)
+Filter by **process** (or "All processes") and **date range** at the top — every section on the page updates to match.
 
----
-
-## 1. Key Metrics
-
-- **Total Calls (Daily)**\
-  Number of outbound calls attempted on a given day, across all leads (new or old).
-- **Connected Calls**\
-  Number of calls successfully connected (customer picked up).
-- **Interested Calls**\
-  Subset of connected calls where the lead expressed interest.
-- **Lost Calls**\
-  Calls that resulted in disqualification, wrong number, or explicit non-interest.
-- **Not Concluded**\
-  Calls that are pending follow-up, callback scheduled, or where the customer didn’t provide a clear response.
+![Dashboard Overview: Conversion Funnel, Performance Matrix, Disposition Breakdown, Attempt Outcomes, Disposition Type Distribution, and Attempt-wise Summary](/images/dashboard-overview.png)
 
 ---
 
-## 2. Conversion Indicators
+## Conversion Funnel
 
-- **Daily Conversion Rate (Connected → Interested)**\
-  Percentage of connected calls that converted into interest.\
-  Formula = Interested Calls ÷ Connected Calls.
-- **Daily Interest Rate (Total → Interested)**\
-  Percentage of all calls attempted that resulted in an interested lead.\
-  Formula = Interested Calls ÷ Total Calls.
+The top-level funnel for the selected date range and process filter:
 
----
+- **Attempted** — leads dialed at least once.
+- **Connected** — attempts where the customer picked up, shown as a percentage of Attempted.
+- **Interested** — connected leads that expressed interest, shown as a percentage of Attempted.
+- **Incoming** — inbound calls received in the same window (not part of the outbound funnel, shown separately).
 
-## 3. Call Pulses (Usage Metrics)
+The bars below the cards give the same numbers as a quick visual comparison.
 
-- **Pulse Definition:**\
-  Every outbound call is measured in **pulses** for billing and tracking purposes.
-  - **1 pulse = 1 minute**
-  - Calls between 0–59 seconds are counted as **1 pulse**.
-  - Calls of 60–119 seconds are counted as **2 pulses**, and so on.
-- **Daily Pulse Count:**\
-  The dashboard shows the **total number of pulses consumed per day**, giving users visibility into actual call-time utilization.
-- **Pulse Efficiency:**\
-  Average duration per connected call (pulses ÷ connected calls) can be used to benchmark agent efficiency.
+## Performance Matrix
 
----
+A per-process breakdown table: **Attempted**, **Connected**, **Interested**, **Lost**, and **Avg. Attempts** (average call attempts per lead) for every process active in the selected window. Use the row action to drill into a specific process's analytics — see [Process Analytics](/essentials/process-analytics).
 
-## 4. Example Daily Flow
+## Disposition Breakdown
 
-**Day: Sep 27, 2025**
+Dispositions across all processes in the window, grouped into three outcome categories:
 
-- Total Calls: 500
-- Connected Calls: 180
-- Interested Calls: 30
-- Lost Calls: 120
-- Not Concluded: 50
-- Pulses Consumed: 520
+- **Success** — e.g. Retail, Booking Request.
+- **Neutral** — e.g. Inconclusive, No Connect, Test Drive Requested.
+- **Failure** — e.g. Lost - Not Purchased, Wrong Number, Lost to Co-dealer.
 
-➡️ Interpretation:
+Each row shows the count and its share of the applicable total. Exact disposition names are process-specific — these are examples from a live project, not a fixed list.
 
-- 36% connectivity rate (180 ÷ 500).
-- 16.6% of connected leads showed interest (30 ÷ 180).
-- Average call length = 520 pulses ÷ 180 connected ≈ 2.9 minutes.
+## Attempt Outcomes & Disposition Type Distribution
+
+Two donut charts summarizing the same window from different angles:
+
+- **Attempt Outcomes** — the share of individual call attempts that connected vs. didn't, across all attempts (not just first attempts).
+- **Disposition Type Distribution** — the share of dispositions that landed in Success, Neutral, or Failure.
+
+## Attempt-wise Summary
+
+A bar chart breaking down outcomes (Not Connected / Connected / Success) by attempt number (Attempt 1 through Attempt 10, paginated), showing how connect and success rates change as retries increase.
+
+<Tip>
+Every card and table on this page has a **Download Leads** or export option in its header — use it to pull the underlying lead list for any section instead of just the aggregate numbers.
+</Tip>
 
 ---
 
-## 5. Why the Daily Dashboard Matters
+## Lead Journey Tab
 
-- **Real-Time Monitoring** – Gives daily visibility into lead response trends.
-- **Resource Management** – Tracks call volume and minutes spent per day.
-- **Performance Benchmarking** – Allows teams to compare one day’s efficiency and conversion to another, regardless of when leads were inserted.
-- **Billing Transparency** – Daily pulse data ensures clarity on usage-based costs.
+The **Lead Journey** tab requires picking a single process and opens **Cohort View** — leads grouped by insertion date rather than by calendar day, with heatmaps for calling activity and conversion, plus a calling-velocity table. See [Cohort View (Lead Journey)](/guides/process/cohort-view) for the full breakdown.
+
+Use the Dashboard's Overview tab for project-wide, calendar-date performance, and Lead Journey / Cohort View or [Process Analytics](/essentials/process-analytics) when you need to reason about a single process's leads by the day they entered it.

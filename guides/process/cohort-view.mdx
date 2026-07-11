@@ -1,0 +1,49 @@
+---
+title: "Cohort View (Lead Journey)"
+description: "Heatmaps and tables that track calling intensity, outcomes, and speed by lead insertion date, for a single process."
+---
+
+## Overview
+
+Cohort View groups a process's leads by **insertion cohort** — the date each lead entered the process — and tracks how calling activity and outcomes unfold over the days that follow. It answers questions like "how quickly do we reach leads inserted on a given day?" and "how does connect rate change as a cohort ages?"
+
+Reach it from the **Dashboard**'s **Lead Journey** tab (routes to **Cohort View**), or directly at `/cohort/lead-calling`. Pick a **Process** (Cohort View works on one process at a time) and a date range.
+
+<Note>
+This is a different tool from [Process Analytics](/essentials/process-analytics), which summarizes a process with overall funnel/attempt metrics rather than a day-by-day cohort heatmap. Use Cohort View when you need to reason about *when* leads are worked, and Process Analytics for an overall performance summary.
+</Note>
+
+---
+
+## Calling Journey
+
+A heatmap of call attempts by **days since insertion**. Each row is an insertion date (with its lead count); each column (Day 0 through Day 7+) shows how many attempts were made on leads from that cohort on that many days after they entered the process, plus the average attempts per lead for that cell. Darker cells mean more calling activity.
+
+![Calling Journey heatmap — attempts per cohort day since insertion](/images/cohort-view-calling-journey.png)
+
+Toggle **Connected only** to restrict the heatmap to attempts that connected, rather than all attempts.
+
+## Conversion Journey
+
+The same cohort-by-day layout, but tracking **disposition outcomes** instead of raw attempts — how many leads from each cohort reached a given outcome type (filterable by **Type** and outcome, e.g. Success) on each day since insertion.
+
+## Calling Velocity
+
+A table, one row per insertion date, covering how fast and how completely each cohort gets worked:
+
+- **Total Leads** — leads created on that date.
+- **% Called Same Day** — share reached on their insertion day.
+- **% Called** / **% Connected** / **% Meaningfully Connected** — cumulative reach and connect rates for the cohort.
+- **Avg. First Attempt (min)** — average time from lead creation to first call attempt.
+- **Conversions** — count and percentage of the cohort that converted.
+
+![Calling Velocity table — same-day call rate, connect rate, and time-to-first-attempt per cohort](/images/cohort-view-calling-velocity.png)
+
+<Tip>
+A high **Avg. First Attempt** time alongside a low **% Called Same Day** usually points to a queue or capacity problem, not a targeting problem — check calling queue priority and capacity before adjusting the process itself.
+</Tip>
+
+## See Also
+
+- [Dashboard](/essentials/dashboard) — project-wide, calendar-date view
+- [Process Analytics](/essentials/process-analytics) — overall funnel and attempt metrics for a process

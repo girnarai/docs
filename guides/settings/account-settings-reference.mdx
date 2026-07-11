@@ -1,0 +1,63 @@
+---
+title: "Account Settings Reference"
+description: "What's in each section of Account Settings — members, API access, telephony, tools, queue, and alerts."
+---
+
+## Overview
+
+**Account Settings** is the control panel for a project — team access, integrations, telephony, and operational tooling. This page is a reference to sections not covered by their own dedicated guide; see the links below for the sections that already have one.
+
+Already documented elsewhere:
+
+- **Team** (members & invites) — [How to Add a User](/settings/add-user)
+- **Pulses** / **Billing** — [Pulse Usage](/essentials/pulse-usage), [Pulse or Connected Minutes](/essentials/pulses), [Credit System Guide](/essentials/credit-system-guide)
+- **Sheets Integrations** — [Google Sheet Realtime Lead Update](/essentials/how-to-add-a-google-sheet-for-the-realtime-lead-update)
+- **Project Settings** (incoming call routing) — [Incoming Call Routing](/guides/process/incoming-call-routing)
+- **Dashboards** — [Dashboards](/guides/settings/dashboards)
+- **Knowledge** / **FAQ Sets** — [Add Knowledge to Agent](/essentials/add-knowledge-to-agent), [FAQ Sets](/essentials/faq-sets)
+- **Feedback** — [Sharing Feedback on Conversations](/conversations/feedback)
+- **MCP Connection** — [MCP Server Connection](/essentials/mcp-consent)
+
+---
+
+## Team: Project ID & API Key
+
+At the bottom of the **Team** page, below the member list, you'll find your **Project ID** and **API Key** — the credentials used to authenticate [API Integration](/essentials/api-integration) requests. The key is masked by default; use the reveal/copy icons next to it, and **Regenerate API Key** if it's ever compromised.
+
+<Warning>
+Regenerating the API key immediately invalidates the old one. Update any integrations using the old key before regenerating.
+</Warning>
+
+## Telephony Channels
+
+Configure the telephony providers your project can place calls through — currently Exotel, Tata Tele (SmartFlo), and WoocomLabs. Each channel needs a label, status (active/inactive), and provider credentials (API token/key, account SID, subdomain — varies by provider). Channels resolve which provider handles a given outbound call by channel number; edit or delete existing channels, or add a new one with **Add Telephony Channel**.
+
+## Truecaller
+
+Set a Truecaller-branded caller ID label per process, applied before each outbound call so the caller ID appears branded to the recipient on the customer's phone. Toggle **Enable for all processes**, or enable/save individually per process from the list.
+
+## Tool Library
+
+A project-wide catalog of reusable agent tools (e.g. `getPrice`, `getSpecs`, `getDealersList`) — functions your agents can call during a conversation. Each tool shows its origin agent/flow, a description, and which agents currently use it (**Linked agents**). From here you can **Add to agent** (attach an existing tool to another agent), **Share to library**, or **Create with AI** to generate a new tool. The **Tests** tab alongside Tools lets you test a tool's behavior independent of a live call.
+
+## Calling Queue
+
+A live, auto-refreshing (every 5 minutes) view of your project's call queue — **waiting** (calls ready to be called) and **delayed** (calls scheduled for later) — plus your current **Agent Count** (concurrent calling capacity). Use the Agent Calculator to estimate how many agents you need; email `support@heroteck.com` to request a capacity increase.
+
+## Webhook Alerts
+
+Project-wide monitoring for outbound webhook and lead-update callback failures (distinct from a single process's own callback config — see [How to Add a Webhook to a Process](/guides/process/how-to-add-webhook-to-a-process)). Enable **Alerts** to get hourly email digests when webhook calls fail, covering:
+
+- **HTTP Errors** (4xx/5xx or network failures)
+- **Non-JSON Response** (e.g. an HTML error page returned where JSON was expected)
+- **Response Body Match Strings** — flag a *successful* (200) response whose body still contains an error indicator, like `"status":"error"`
+
+Set comma-separated **Alert Recipients** — each gets one digest email per hour that alerts fired.
+
+## Queue Priority
+
+Controls the relative priority processes are dialed in when they compete for the same calling capacity. See [Lead Queue Prioritization](/guides/leads/lead-queue-prioritization) for how prioritization works at the lead level within a process.
+
+## Organization
+
+Project-to-organization settings — an org can span multiple projects (e.g. a parent project that other projects inherit process templates from, toggled via **Set as Parent Project** under Project Settings).

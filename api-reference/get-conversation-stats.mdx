@@ -1,0 +1,82 @@
+---
+title: "Get Conversation Stats"
+api: "POST /conversations/search/dsl/stats"
+description: "Aggregate metrics for conversations matching a filter — counts, averages, and custom breakdowns."
+---
+
+Runs a DSL filter against your project's conversations and returns aggregate metrics — counts and custom breakdowns — without returning individual conversation records or transcript content.
+
+## Body Parameters
+
+<ParamField body="filter" type="object">
+  DSL filter object. Combine with `and`/`or`/`not` combinators, or a single `{ field, op, value }` clause using operators like `eq`, `neq`, `contains`, `in`, `between`, `exists`. The project scope is applied automatically.
+</ParamField>
+
+<ParamField body="searchText" type="string">
+  Free-text search across lead ID, stream ID, call SID, disposition, tags, and transcript content. A 10-digit value matches by phone hash; a 24-char hex string matches lead/conversation ID; a 32-char hex string matches stream ID or call SID.
+</ParamField>
+
+<ParamField body="analytics" type="array">
+  Additional aggregation specs to compute alongside the base stats. Each entry is `{ name, type, field, limit? }`:
+  - `type: "group_by"` — counts grouped by distinct values of `field` (e.g. group by `disposition`), sorted descending, capped at `limit` (default 100).
+  - `type: "timeseries"` — daily counts bucketed by `field` (a date field), respecting `timezoneOffsetMinutes`.
+</ParamField>
+
+<ParamField body="timezoneOffsetMinutes" type="integer" default="0">
+  Timezone offset applied to `timeseries` bucketing.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+<ResponseField name="total" type="integer">Total matching conversations</ResponseField>
+<ResponseField name="analytics" type="object">
+  <Expandable title="Analytics Properties">
+    <ResponseField name="avgTurns" type="number" />
+    <ResponseField name="avgDuration" type="number" />
+    <ResponseField name="analyzedCount" type="integer">Conversations with at least one analyzed field (completion, turn count, rating, or tags)</ResponseField>
+    <ResponseField name="[custom spec name]" type="array">
+      One entry per `analytics` spec you passed in, keyed by its `name`. `group_by` returns `[{ key, count }]`; `timeseries` returns `[{ key, date, count }]`.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+<ResponseField name="source" type="string">`elasticsearch` or `mongo-fallback`</ResponseField>
+
+## Example
+
+<CodeGroup>
+```json Request
+{
+  "filter": { "field": "dispositionType", "op": "eq", "value": "SUCCESS" },
+  "analytics": [
+    { "name": "byDisposition", "type": "group_by", "field": "disposition", "limit": 20 }
+  ]
+}
+```
+
+```json Response
+{
+  "success": true,
+  "total": 1422,
+  "analytics": {
+    "byDisposition": [
+      { "key": "Retail", "count": 765 },
+      { "key": "Booking Request", "count": 657 }
+    ],
+    "avgTurns": 11.5,
+    "avgDuration": 44.7,
+    "analyzedCount": 72493
+  },
+  "source": "elasticsearch"
+}
+```
+</CodeGroup>
+
+## Error Responses
+
+- **400 Bad Request** — missing project scope.
+- **500 Internal Server Error** — `{ "success": false, "message": "Failed to aggregate conversations", "error": "..." }`
+
+## See Also
+
+- [Conversations](/conversations/overview) — browse and search conversations from the dashboard

@@ -1,0 +1,37 @@
+---
+title: "AI Process Assistant"
+description: "Edit a process by describing the change in plain language instead of editing the flow directly."
+---
+
+## Overview
+
+The AI Process Assistant lets you modify a process by describing the change you want, rather than editing nodes, dispositions, and call windows by hand. The assistant proposes a change, you review exactly what it would modify, and you decide whether to apply it.
+
+---
+
+## Opening the Assistant
+
+1. Open a process and click **Edit Process**.
+2. Click **AI Assistant** in the toolbar.
+
+![AI Assistant chat panel open on a process, ready for a change description](/images/ai-process-assistant-chat-panel.png)
+
+Describe the change you want in the message box, for example *"Add a wait step after the intro"*, and send it.
+
+---
+
+## Reviewing a Proposed Change
+
+The assistant responds with a **Process Review** summary — the process title, description, start node, status, and step/disposition counts — plus a validity check before anything is applied.
+
+![Process Review overview after the AI assistant proposes a change](/images/ai-process-assistant-review-overview.png)
+
+Switch to the **Changes** tab to see exactly what's modified, broken down by section (Steps, Dispositions, Call Windows, etc.), each with its own **Apply** action:
+
+![Process Review Changes tab, showing per-section status and individual Apply buttons](/images/ai-process-assistant-review-changes.png)
+
+Nothing is saved until you click **Apply Changes** (or an individual section's **Apply** button). Click **Cancel** to discard the proposal without touching the process.
+
+<Warning>
+AI can make mistakes. Review the proposed changes before applying them, the same way you'd review a manual edit.
+</Warning>

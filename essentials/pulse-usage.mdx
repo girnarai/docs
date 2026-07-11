@@ -1,25 +1,27 @@
 ---
-title: 'Pulse Usage'
-description: 'How to view the pulses users are using'
+title: "Pulse Usage"
+description: "What a pulse is, and where to check how many your workspace has used."
 ---
 
-## Overview
+## What Is a Pulse?
 
-Pulse tracks consumption of AI calling resources by workspace, agent, and campaign.
+A **pulse** measures connected call duration on Uservox. Every connected call (the customer actually picked up) is billed in pulses:
 
-## Viewing Usage
+- **1 pulse = 1 minute of connected talk time**
+- Duration rounds **up** to the next full minute — a 45-second call is 1 pulse, a 70-second call is 2 pulses.
 
-1. Navigate to Billing or Usage in https://app.uservox.ai
-2. Select the date range and scope (workspace/agent/campaign)
-3. Review usage by call minutes, attempts, and AI processing
+Pulses are the primary usage metric for billing and capacity planning — they reflect actual connected talk-time, not total call attempts (unconnected calls consume no pulses).
 
-## Alerts and Limits
+## How to Reach Pulse Usage
 
-- Configure alerts at thresholds (e.g., 80% of plan)
-- Set caps per agent or campaign to control spend
+1. Click your profile in the top-right corner.
+2. Select **Account Settings**.
+3. From the left sidebar, click **Pulses**.
 
-## Recommendations
+![Account Settings profile menu, showing the Pulses entry in the left sidebar](/images/Screenshotfrom2025-10-3100-29-01.png)
 
-- Schedule call windows to optimize connect rates
-- Tune qualification to shorten unsuccessful calls
-- Use disqualification rules to reduce unnecessary retries
+This is currently the only path to pulse usage — it isn't surfaced elsewhere in the main navigation.
+
+<Card title="Full Pulses Guide" href="/essentials/pulses" icon="gauge">
+  See [Pulse or Connected Minutes](/essentials/pulses) for the monthly usage view, the Pulses Dashboard (date-wise and project-wise breakdown), CSV export, and how pulses relate to total attempts and connected calls.
+</Card>

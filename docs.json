@@ -47,9 +47,7 @@
             "pages": [
               "essentials/dashboard",
               "essentials/leads",
-              "essentials/call-quality-analysis",
-              "essentials/pulse-usage",
-              "essentials/credit-system-guide"
+              "essentials/pulse-usage"
             ]
           },
           {
@@ -59,6 +57,7 @@
               "essentials/create-edit-agent",
               "essentials/prompt-builder",
               "essentials/add-knowledge-to-agent",
+              "essentials/mcp-consent",
               "essentials/faq-sets",
               "essentials/test-conversation",
               "essentials/human-call-quality-analysis",
@@ -73,7 +72,8 @@
               "guides/leads/how-to-download-interested-leads",
               "guides/leads/how-to-upload-leads-file",
               "essentials/upload-test-lead",
-              "guides/leads/lead-queue-prioritization"
+              "guides/leads/lead-queue-prioritization",
+              "guides/leads/bulk-lead-operations"
             ]
           },
           {
@@ -81,11 +81,15 @@
             "pages": [
               "essentials/process",
               "essentials/create-edit-process",
+              "guides/process/incoming-call-routing",
               "essentials/call-transfer",
               "essentials/process-analytics",
+              "guides/process/cohort-view",
               "essentials/process-dispositions",
               "guides/process/how-to-add-webhook-to-a-process",
-              "guides/process/conditional-flow"
+              "guides/process/conditional-flow",
+              "guides/process/lead-simulator",
+              "guides/process/ai-process-assistant"
             ]
           },
           {
@@ -95,7 +99,9 @@
               "settings/add-user",
               "essentials/credit-system-guide",
               "essentials/how-to-add-a-google-sheet-for-the-realtime-lead-update",
-              "essentials/setup-incoming"
+              "essentials/setup-incoming",
+              "guides/settings/dashboards",
+              "guides/settings/account-settings-reference"
             ]
           },
           {
@@ -112,20 +118,10 @@
             ]
           },
           {
-            "group": "conversations",
+            "group": "Conversations",
             "pages": [
+              "conversations/overview",
               "conversations/feedback"
-            ]
-          },
-          {
-            "group": "FAQs",
-            "pages": []
-          },
-          {
-            "group": "Role Forge",
-            "pages": [
-              "getting-started",
-              "practice-and-evaluate"
             ]
           }
         ]
@@ -154,6 +150,12 @@
             "pages": [
               "api-reference/activity-payloads",
               "api-reference/get-activity"
+            ]
+          },
+          {
+            "group": "Conversations",
+            "pages": [
+              "api-reference/get-conversation-stats"
             ]
           },
           {

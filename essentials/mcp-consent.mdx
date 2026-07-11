@@ -1,0 +1,29 @@
+---
+title: "MCP Server Connection"
+description: "Connect Claude (or any MCP client) to your Vox workspace, and manage consent for each connection."
+---
+
+## Overview
+
+Uservox exposes an [MCP](https://modelcontextprotocol.io) server for your workspace, so an AI client — claude.ai, Claude Code, Claude Desktop, or the MCP Inspector — can read and act on your leads, processes, and analytics directly. Every client connects through the same URL and approves access on a consent screen the first time.
+
+## Where to Connect
+
+Go to **Account Settings → MCP Connection**. You'll find your workspace's **MCP Server URL** and setup instructions for each client:
+
+![MCP Server Connection settings — server URL, and connect instructions for claude.ai, Claude Code, and Claude Desktop](/images/mcp-server-connection.png)
+
+- **claude.ai (Remote MCP)** — in claude.ai, open **Settings → Connectors → Add custom connector**, paste the server URL, sign in to Vox if needed, then click **Allow** on the consent screen.
+- **Claude Code** — run `claude mcp add --transport http vox <server-url>`; Claude Code opens a browser for the consent screen on first use.
+- **Claude Desktop** — add the provided `mcpServers` JSON block to `claude_desktop_config.json`, restart Claude Desktop, and complete the consent in your browser.
+
+## The Consent Screen
+
+The first time a client connects, Vox shows a consent screen listing the scopes it's requesting. A few things to know:
+
+- **Role-based defaults** — Admin users get full read/write access; other users get read-only by default.
+- **Per-client access** — each client (claude.ai, Claude Code, a specific Claude Desktop install, etc.) gets its own grant. Denying or revoking one doesn't affect the others.
+- **Short-lived tokens** — access tokens last 15 minutes, and refresh tokens rotate on every use.
+- **Sign-in** — uses your existing Vox account (Google or email/password), not a separate credential.
+
+You can revoke a client's access at any time from the same **MCP Connection** settings page.

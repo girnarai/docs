@@ -32,6 +32,15 @@ Regenerating the API key immediately invalidates the old one. Update any integra
 
 Configure the telephony providers your project can place calls through — currently Exotel, Tata Tele (SmartFlo), and WoocomLabs. Each channel needs a label, status (active/inactive), and provider credentials (API token/key, account SID, subdomain — varies by provider). Channels resolve which provider handles a given outbound call by channel number; edit or delete existing channels, or add a new one with **Add Telephony Channel**.
 
+## Phone Number List (Whitelist / Blacklist)
+
+Despite the name, this is not a list of your telephony provider's numbers (see Telephony Channels above) — it manages special handling for **lead phone numbers**:
+
+- **Whitelist** — numbers exempt from DND (Do Not Disturb) checks before calling.
+- **Blacklist** — numbers that will never be called by any process in this project.
+
+Switch between the two with the tab at the top of the page. Each entry shows the phone number and when it was added. Use **Add Number** to add a new entry to either list. Deleting is currently only exposed in the UI for whitelist entries — to remove a blacklist entry, contact support.
+
 ## Truecaller
 
 Set a Truecaller-branded caller ID label per process, applied before each outbound call so the caller ID appears branded to the recipient on the customer's phone. Toggle **Enable for all processes**, or enable/save individually per process from the list.

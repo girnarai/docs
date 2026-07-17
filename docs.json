@@ -80,6 +80,7 @@
             "group": "Process",
             "pages": [
               "essentials/process",
+              "guides/process/process-configuration-guide",
               "essentials/create-edit-process",
               "guides/process/incoming-call-routing",
               "essentials/call-transfer",

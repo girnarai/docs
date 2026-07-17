@@ -12,7 +12,7 @@ Already documented elsewhere:
 - **Team** (members & invites) — [How to Add a User](/settings/add-user)
 - **Pulses** / **Billing** — [Pulse Usage](/essentials/pulse-usage), [Pulse or Connected Minutes](/essentials/pulses), [Credit System Guide](/essentials/credit-system-guide)
 - **Sheets Integrations** — [Google Sheet Realtime Lead Update](/essentials/how-to-add-a-google-sheet-for-the-realtime-lead-update)
-- **Project Settings** (incoming call routing) — [Incoming Call Routing](/guides/process/incoming-call-routing)
+- **Project Settings** — incoming call routing is covered in [Incoming Call Routing](/guides/process/incoming-call-routing); its other toggles are covered below
 - **Dashboards** — [Dashboards](/guides/settings/dashboards)
 - **Knowledge** / **FAQ Sets** — [Add Knowledge to Agent](/essentials/add-knowledge-to-agent), [FAQ Sets](/essentials/faq-sets)
 - **Feedback** — [Sharing Feedback on Conversations](/conversations/feedback)
@@ -27,6 +27,15 @@ At the bottom of the **Team** page, below the member list, you'll find your **Pr
 <Warning>
 Regenerating the API key immediately invalidates the old one. Update any integrations using the old key before regenerating.
 </Warning>
+
+## Project Settings
+
+Beyond [Incoming Call Routing](/guides/process/incoming-call-routing), Project Settings has two more toggles:
+
+- **Require Phone Numbers to be unique for live leads in each Process** — when enabled, blocks a second *live* lead with the same phone number from existing inside one process at the same time. Useful when the same person might get submitted twice (duplicate form submissions, re-uploaded lists) and you don't want them called twice concurrently.
+- **Set as Parent Project** — marks this project as the organization's template source, so other projects in the org can pull process templates from it (see [Create from Template](/guides/process/process-configuration-guide#starting-a-new-process)). Usually set once, by an admin, on a designated "master" project.
+
+If your account has a password rotation policy, Project Settings also shows a read-only **Password Expiry** indicator — how many days remain before rotation is required. It isn't configurable from here; it reflects an org-level security policy set elsewhere.
 
 ## Telephony Channels
 
@@ -69,4 +78,4 @@ Controls the relative priority processes are dialed in when they compete for the
 
 ## Organization
 
-Project-to-organization settings — an org can span multiple projects (e.g. a parent project that other projects inherit process templates from, toggled via **Set as Parent Project** under Project Settings).
+Project-to-organization settings — an org can span multiple projects. See [Project Settings](#project-settings) above for how to mark a project as the template source other projects inherit from.

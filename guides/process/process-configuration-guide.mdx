@@ -1,0 +1,122 @@
+---
+title: "Process Configuration Guide"
+description: "Node actions, Advanced Settings, Version History, starting a new process, and how webhooks, callbacks, and tool calls fit together — with links to where each piece is configured."
+---
+
+## Overview
+
+This page ties together everything involved in configuring a process end-to-end. Some of it already has its own dedicated guide — this page links out to those. The rest (node actions, Advanced Settings, Version History, and the webhook/callback/tool-call distinction) doesn't have a home elsewhere yet, so it's covered here in full.
+
+Already documented elsewhere:
+
+- **Creating and editing a process, dispositions** — [Process](/essentials/process), [Create and Edit Process](/essentials/create-edit-process), [Process Dispositions](/essentials/process-dispositions)
+- **Routing calls to a process** — [Setting Up and Monitoring Incoming Calls](/essentials/setup-incoming), [Incoming Call Routing](/guides/process/incoming-call-routing)
+- **Testing a process's branching logic** — [Lead Simulator](/guides/process/lead-simulator)
+- **Editing a process via AI chat** — [AI Process Assistant](/guides/process/ai-process-assistant)
+- **Routing by lead data at runtime** — [Conditional Flow](/guides/process/conditional-flow)
+- **Adding a Lead Update Callback** — [How to Add a Webhook to a Process](/guides/process/how-to-add-webhook-to-a-process)
+- **Agent-side tools, knowledge, and prompts** — [Creating and Editing an Agent](/essentials/create-edit-agent), [Prompt Builder](/essentials/prompt-builder), [Adding Knowledge to Your Agent](/essentials/add-knowledge-to-agent), [FAQ Sets](/essentials/faq-sets)
+- **Account-level settings** (Tool Library, Webhook Alerts, Telephony, etc.) — [Account Settings Reference](/guides/settings/account-settings-reference)
+
+---
+
+## Webhook, Callback & Tool Call — which one do you mean?
+
+These words get used interchangeably, but they're genuinely different things in the product. Getting this straight first resolves most of the confusion in everything below.
+
+| Term | What it actually is | Where it lives |
+|---|---|---|
+| **Webhook** | Not one single feature — a *mechanism* (calling a URL you provide). It shows up in several different places, each serving a different purpose. | Node Actions ([Webhook Call](#node-actions-reference)), Advanced Settings ([Action/Call Transforms](#advanced-settings-reference)), Agent Tools (Action Type: Webhook — see [Creating and Editing an Agent](/essentials/create-edit-agent)) |
+| **Lead Update Callback** | An automatic notification sent to *your* system whenever a lead or activity updates. | Process → Advanced Settings → Lead Update Callbacks — see [How to Add a Webhook to a Process](/guides/process/how-to-add-webhook-to-a-process) |
+| **Webhook Alerts** | A different, project-wide setting: get emailed when *your own* webhook calls (Lead Update Callbacks or node-action webhooks) start failing. Not something that sends data anywhere itself — it monitors the other two. | Account Settings → Webhook Alerts — see [Account Settings Reference](/guides/settings/account-settings-reference#webhook-alerts) |
+| **Tool call** | A function the AI agent can invoke *during a live call* — search a knowledge base, hit an API, save a variable. | Agent → Tools tab, or a shared library — see [Creating and Editing an Agent](/essentials/create-edit-agent) and [Account Settings Reference](/guides/settings/account-settings-reference#tool-library) |
+
+<Warning>
+"Scheduling a callback" (as in, calling the lead back later) is **not** the same thing as a Lead Update Callback. That's the unrelated [Schedule Call](#node-actions-reference) node action.
+</Warning>
+
+### How to set up and test each
+
+**Lead Update Callback** — Process → Details tab → Advanced Settings → Lead Update Callbacks → **+ Add Callback**. Full setup steps in [How to Add a Webhook to a Process](/guides/process/how-to-add-webhook-to-a-process). The callback editor includes a built-in **Transform & Test** panel — paste a sample payload and run it there before saving, no external tool needed.
+
+**Webhook Call** (node action) — Process → Flow tab → open a node → Actions → **Webhook Call** → set URL, Method, Headers, Body. There's no built-in test button for this one specifically. Two practical ways to verify it: call the target URL yourself first (with curl or any HTTP client) to confirm it accepts what you're about to send, or point the URL at a request-capture tool temporarily and push a lead through to see exactly what was sent. Note that the [Lead Simulator](/guides/process/lead-simulator) *dry-runs* Webhook Call actions by default rather than actually firing them, so it verifies your process's branching logic but not that the webhook itself was delivered correctly.
+
+**Agent Tool Call** — Agent → Tools tab → Add Tool → choose an Action Type. Test it live from the Agent's own **Try** tab — start a conversation and say something that should trigger the tool, then watch it fire.
+
+---
+
+## Starting a New Process
+
+There are three ways to begin, beyond building one field-by-field:
+
+| Method | Where | What happens | When to use it |
+|---|---|---|---|
+| **Duplicate** | Process list → row menu → Duplicate | Clones an existing process's entire configuration (nodes, dispositions, call windows) into a fresh editor. Nothing is saved until you submit. | Building a close variant of a process you already have — same shape, different agent or dispositions |
+| **Create with AI** | Process list → **Create with AI** | Opens a chat assistant that builds a new process from scratch based on your description, starting from a blank draft. This is a separate entry point from the [AI Process Assistant](/guides/process/ai-process-assistant), which edits an *existing* process — same underlying assistant, different starting point. | You're starting from a description rather than an existing process |
+| **Create from Template** | Process list → **Create from Template** | Copies a process from your org's designated parent project into your project, stripping agent references so you assign your own. | Your org has a standard, approved process shape that should be the starting point for new work |
+
+---
+
+## Node Actions Reference
+
+A **Node** in the Flow editor holds one or more **Node Actions**, each with a *Trigger* (when it fires) and one or more *Actions* (what it does). These six cover day-to-day process building:
+
+| Action | Key fields | When to use it |
+|---|---|---|
+| **Make Call** | Flow ID (which agent answers) | The core dialing action — used any time the flow needs to actually call the lead, whether that's first contact or a follow-up after a scheduled delay |
+| **Schedule Call** | Call Type, Window, Window on Connected/Not Connected, Window on Disposition, AI Instruction | Queue a *future* call instead of calling now — e.g. "no answer → try again in 4 hours," or let the AI pick the time from what the customer said |
+| **Webhook Call** | URL, Method, Headers, URL Params, Body | Talk to your own systems mid-flow — push a notification, fetch data, trigger an internal process. See [testing notes above](#how-to-set-up-and-test-each) |
+| **Close Lead** | Delay (days/hrs/min/sec), Status (Lost / Interested), Disposition | Formally end a lead's journey with a final outcome, so it stops being called and reporting reflects the real result |
+| **Send RampWin WhatsApp** | Channel ID, Namespace, API Key, Template Name (+ optional parameters) | Send a templated WhatsApp message through the RampWin vendor integration, when this project's WhatsApp channel is provisioned via RampWin |
+| **Send To Process** | Target Process | Move a lead into a different process entirely — e.g. it qualifies out of "cold outreach" into "warm nurture" |
+
+<Info>
+There are more action types available under the hood (Transform, Freshdesk tickets, Limechat automation, etc.), but they either require writing code or are used rarely. Ask a technical teammate if a scenario needs one of those.
+</Info>
+
+To check a node action's branching logic before it goes live, use the [Lead Simulator](/guides/process/lead-simulator).
+
+---
+
+## Advanced Settings Reference
+
+Process → Details tab → **Advanced Settings** (accordion, below the always-visible Title/Description/Process type fields).
+
+| Setting | What it does | When you'd need it |
+|---|---|---|
+| **Lead Update Callbacks** | Push lead/activity updates to your own URL automatically | Sync disposition changes into an external CRM/dashboard in real time — see [How to Add a Webhook to a Process](/guides/process/how-to-add-webhook-to-a-process) |
+| **Notification Alerts** | Email alerts when leads hit certain outcomes | Notify the sales team the moment a lead is marked "Hot" |
+| **Transform Input Fields** | Translate/reformat metadata fields before use | Incoming data is in one language/format but the script needs another |
+| **Process Metadata** | Fixed key/value data attached to every lead in this process | Tag every lead with a campaign/source identifier |
+| **Action Transforms** | Compute a derived value via webhook/transform, store as a variable | Look up a customer's city from their pincode before the call starts |
+| **Call Transforms** | Same as Action Transforms, but timed `before_call` / `after_call` / `before_callback` | Fetch a fresh account balance right before the call connects |
+| **DND Check** | Skip numbers on the Do Not Disturb registry | Regulatory/compliance requirement before dialing — see also the Whitelist/Blacklist in [Account Settings Reference](/guides/settings/account-settings-reference#phone-number-list-whitelist-blacklist) for exempting or permanently blocking specific numbers |
+| **Stateless** | Skip lead/attempt history lookup | An incoming-only process with no prior lead relationship to track (e.g. a generic support line) |
+| **Immediate Call** | Skip scheduling — dial as soon as a lead enters, bypassing the call queue entirely rather than just scheduling with zero delay | Hot inbound leads that need an instant callback |
+| **New Lead On Terminal** | Start a new lead if someone calls back after their old lead already closed | A returning customer calling back months after being marked Interested/Lost |
+| **Primary/Secondary Process** | Auto-close a lead's other live processes when it enters this one | Avoid the same person being called by two campaigns at once |
+| **Telephony Channel / Numbers** | Which telephony provider this process or number dials through | Running campaigns on more than one telephony provider in the same project |
+| **Call Windows** | Restrict allowed calling hours | Compliance with local calling-time rules; avoid calling customers at inconvenient hours |
+| **Call Transfer** | Route a live call to a human (round robin / random / first match) | Escalate a qualified or upset lead to a live agent |
+
+<Note>
+There's also a separate scripted test-suite builder for process logic (distinct from the Lead Simulator). Ask a technical teammate if you need automated regression tests for a process.
+</Note>
+
+---
+
+## Version History
+
+Process editor → **···** (More) → **History**. Browse past saved versions with a diff view (Steps / Dispositions / Call Windows / Advanced, each marked Modified or Unchanged). **Restore this version** loads the old version's content back into the editor — it does not save automatically, so you still need to click **Save Changes** afterward.
+
+Use this when a recent change broke something and you need to roll back to what was working before, without losing track of exactly what changed.
+
+---
+
+## How Calls Actually Happen
+
+Useful context for debugging "why did it call, or not call" — three distinct paths a call can take:
+
+- **Incoming call** — a caller dials in, and the system works out which process/flow should handle it: if it's a *returning* lead already partway through a journey, it uses that lead's current state's Make Call settings; otherwise it falls back to the process's own first Make Call action; otherwise it falls back to whatever's set for that phone number in Project Settings (see [Incoming Call Routing](/guides/process/incoming-call-routing)). Once resolved, the lead/activity starts being tracked from that call onward.
+- **Outgoing scheduled call** — a **Schedule Call** node action computes a future time and queues it. When that time arrives, the queue hands off to place the actual call, and the result updates the lead once the call ends.
+- **Immediate call** — the **Immediate Call** Advanced Setting genuinely skips the queue rather than just scheduling with no delay: the call is placed the moment the lead enters the process.

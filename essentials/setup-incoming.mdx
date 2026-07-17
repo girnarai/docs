@@ -40,6 +40,12 @@ Calls received on these numbers will automatically follow their assigned flow.
 
 ---
 
+<Note>
+**Default Call Flow** here is a last-resort fallback, not the primary control. Uservox actually prefers, in order: (1) a returning lead's current state in the process, (2) the process's own first Make Call node, and only (3) this Default Call Flow field — which is rarely reached, since almost every process has its own Make Call node. To change which agent answers, edit the process's Make Call node directly. See [Incoming Call Routing](/guides/process/incoming-call-routing#how-the-flow-is-actually-chosen) for the full breakdown.
+</Note>
+
+---
+
 ## Step 2: Save the Configuration
 
 After selecting the desired process and flow mappings, click **Save**.

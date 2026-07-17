@@ -144,6 +144,55 @@ A green dot next to the Input Variables button means all variables have sample v
 
 ---
 
+## Prompt Library
+
+The **Prompt Library** is a project-level catalog of reusable stages and rules. Instead of writing the same persona block or compliance rule in every agent, you save it once in the library and attach it to as many agents as you like.
+
+### Accessing the library
+
+Open any agent → **Prompt Builder** (toggle on) → **Rules** or **Call Flow** tab → click the **Library** button in the toolbar.
+
+![Library modal in agent](/images/prompt-library-agent-modal.png)
+
+Alternatively, navigate to **Prompt Library** from the Account Settings → Prompts — this opens the standalone library management page where you can create, edit, clone, and archive items independent of any specific agent.
+
+![Prompt Library page](/images/prompt-library-page.png)
+
+### Creating a library item
+
+1. Click **New Stage** (or **New Rule**) in the library page.
+2. A picker opens listing all existing stages (or rules) from every agent in the project that uses Prompt Builder mode — grouped by agent name. Use the search bar to filter by title.
+3. **Import** an existing stage to pre-fill the form with its title, instruction, and branches — useful when you want to promote something already working in one agent into a shared item.
+4. Or click **Create New** to start with a blank form.
+5. Fill in the **Title**, **Instruction** (for stages) or **Content** (for rules), and any **Branches** you need.
+6. Click **Save**.
+
+### Attaching a library item to an agent
+
+From the agent's **Call Flow** or **Rules** tab, open the Library panel and click **Attach** on any item. Choose a link type:
+
+| Link type | Behaviour |
+|:----------|:----------|
+| **Copy** | A snapshot is copied into the agent. Future edits to the library item do not affect this agent. |
+| **Reference** | The agent always reflects the latest version of the library item. When you edit the library item, all reference-linked agents update automatically. |
+
+Once attached, the stage or rule appears in the agent's list like any other — you can read and preview it, but the content is managed from the library.
+
+### Editing a library item
+
+1. On the library page, click the **pencil icon** on any item.
+2. Edit the title, instruction/content, or branches.
+3. Click **Save**.
+
+If any agents are linked as **Reference**, they receive the updated content immediately. **Copy**-linked agents are not affected.
+
+### Cloning and archiving
+
+- **Clone** — creates an independent copy of the item in the library (useful for creating a variant without touching the original).
+- **Archive** — removes the item from the catalog. Agents that have already attached it (copy or reference) keep their existing content and are not modified.
+
+---
+
 ## Frequently Asked Questions
 
 <AccordionGroup>
@@ -167,5 +216,13 @@ A green dot next to the Input Variables button means all variables have sample v
 
   <Accordion title="What variables are available in branch conditions?">
     Any variable that gets set during the call — lead metadata fields (e.g. `hindi_name`, `emi_amount`), system variables (`currentDate`, `currentGreeting`), and any variables captured or set by tools during the call (e.g. `switchGender`, `language`).
+  </Accordion>
+
+  <Accordion title="What is the difference between Copy and Reference in the Prompt Library?">
+    **Copy** takes a snapshot of the library item at the moment of attaching. The agent owns its copy independently — future edits to the library item have no effect on it.
+
+    **Reference** keeps a live link. Whenever the shared library item is updated, every agent attached as a reference automatically receives the new content. Use reference links when you want a single source of truth (e.g. a compliance rule that must stay in sync across many agents).
+
+    The original agent whose stage you promoted to the library is not automatically linked back — you would need to detach and re-attach it if you want it to follow future library updates.
   </Accordion>
 </AccordionGroup>

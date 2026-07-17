@@ -26,6 +26,20 @@ At the top of the card, **Default Process** and **Default Call Flow** set the fa
 
 ---
 
+## How the Flow Is Actually Chosen
+
+**Default Call Flow** above (and its per-number equivalent) is the *last* fallback, not the primary source of truth. For every incoming call, Uservox decides the flow in this order:
+
+1. **Returning lead** — if the caller is already partway through a process, it uses that lead's *current state's own* Make Call settings.
+2. **New lead / no active history** — otherwise, it uses the *process's own first Make Call node's* Flow ID — not the Default Call Flow field.
+3. **Only if the process has no Make Call action at all** — it falls back to Default Call Flow (or the per-number Flow) configured above.
+
+In practice, tier 3 is rarely reached — almost every process has at least one Make Call node, so that node's own Flow ID is what actually answers the call. This is also why the **Use Suggestion** prompt exists: Uservox computes tier 2's value and offers to fill Default Call Flow to match it, so the field at least documents reality — but it isn't what's read at call time unless the process truly has no call action.
+
+**To change which agent answers incoming calls, edit the process's Make Call node directly** (see [Process Configuration Guide](/guides/process/process-configuration-guide#node-actions-reference)) — changing Default Call Flow alone won't do it if the process already has a Make Call node with its own Flow ID.
+
+---
+
 ## Per-Number Routing with Time-Window Conditions
 
 Under **Default Incoming by Phone Number**, click **+ Add Number** to override routing for a specific inbound number. Each number row has:
@@ -51,7 +65,7 @@ A conditional isn't active until a Flow ID is set — the editor flags this with
 
 <AccordionGroup>
   <Accordion title="What happens if no conditional window matches the call time?">
-    The call falls back to that phone number's base **Process** and **Flow**. If the number itself has no override configured, it falls back further to the project's **Default Process** and **Default Call Flow**.
+    The call falls back to that phone number's base **Process** and **Flow**. If the number itself has no override configured, it falls back further to the project's **Default Process**. Which agent actually answers within that process still follows the [tiered order above](#how-the-flow-is-actually-chosen) — the process's own Make Call node wins over Default Call Flow unless the process has no call action at all.
   </Accordion>
   <Accordion title="Can I route the same number differently on weekdays vs. weekends?">
     Yes — add separate conditionals with different **Days** selections, each pointing at its own Flow ID.

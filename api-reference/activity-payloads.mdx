@@ -266,14 +266,20 @@ Activity payloads are sent via webhooks when activities are completed. Below are
 
 ## Common Fields
 
-- **action_type**: Type of webhook action (e.g., "create", "update")
+- **action_type**: Type of webhook action — `"create"`, `"update"`, or `"reupdate"` (a resend of an already-sent update; suppress these with the callback's **Don't send reupdates** setting)
 - **activityId**: Unique identifier for the activity
 - **leadId**: Unique identifier for the lead
 - **referenceId**: Your custom reference identifier
+- **phone**: The lead's phone number — omitted when `referenceId` is set (use `leadData.phone` instead in that case)
+- **leadData**: `{ phone, name }` — always present regardless of `referenceId`
 - **timestamp**: Unix timestamp in milliseconds
 - **activity.type**: Type of activity (e.g., "call")
 - **activity.status**: Overall status of the activity
 - **activity.fromState**: Previous state in the process flow
 - **activity.toState**: New state after the activity
+- **activity.result.isUserInitiated**: `true` if this was an incoming (customer-placed) call; the key is absent entirely — not `false` — for outgoing calls.
+- **activity.result.analysis.connectedStatus**: whether the call actually connected — `"connected"`, `"not-connected"`, or `"connected-deferred"` (connected, but the conversation wasn't fully settled yet when evaluated).
 - **leadSummary**: Human-readable summary of the lead's activities
 - **leadDisposition**: Current disposition of the lead
+
+This is one of three payload shapes Uservox can send to a Lead Update Callback — see [Callback Payloads](/api-reference/lead-update-callback-payloads) for the other two (Lead Event, Lead Update Feedback) and for batching/transform/format options that change what's actually sent.

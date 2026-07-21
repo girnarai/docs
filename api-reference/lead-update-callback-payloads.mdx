@@ -1,0 +1,154 @@
+---
+title: "Callback Payloads"
+description: "The different payload shapes Uservox posts to your Lead Update Callback URL, and when each one fires."
+---
+
+## Overview
+
+A [Lead Update Callback](/guides/process/how-to-add-webhook-to-a-process) sends `POST` requests with `Content-Type: application/json` to a URL you configure in Process → Advanced Settings. What's actually in that POST body depends on what triggered it and how the callback is configured:
+
+| Trigger | Payload shape | When it fires |
+|---|---|---|
+| An activity is created or updated | **Activity Update** | A call, WhatsApp message, schedule, or other node-action activity happens — the most common case. See [Activity Payloads](/api-reference/activity-payloads) for full real examples. |
+| Something changes about the lead itself, not tied to one activity | **Lead Event** | Prevalidation failures (DND, voicemail blacklist) and other lead-lifecycle events |
+| An external system's async update to the lead finishes processing | **Lead Update Feedback** | You updated a lead's state/metadata via the API and Uservox processed it in the background — this reports back success or failure |
+
+Independent of which of these fires, if the callback's **Payload Format** is set to **Lead History** instead of **Activity Update**, none of the shapes below apply — see [Lead History Format](#lead-history-format).
+
+---
+
+## Activity Update
+
+Covered in full, with real examples, in [Activity Payloads](/api-reference/activity-payloads). A few fields are always present but easy to miss there because they're absent from those particular examples:
+
+- **leadData** — `{ phone, name }`, always included regardless of whether `referenceId` is set.
+- **phone** — the lead's phone number at the top level; omitted only when `referenceId` is present (in which case `leadData.phone` still carries it).
+- **activity.result.isUserInitiated** — `true` for incoming calls; the key is omitted entirely (not set to `false`) for outgoing calls.
+- **activity.result.analysis.connectedStatus** — whether the call actually connected: `"connected"`, `"not-connected"`, or `"connected-deferred"` (connected, but the conversation wasn't fully settled yet when evaluated). Use this field for connection status.
+- **activity.result.nextState** — the process node the lead moved to after this activity; already visible in the [Activity Payloads](/api-reference/activity-payloads) examples but easy to miss.
+
+These fields sit inside `activity.result` alongside the rest of the shape shown in [Activity Payloads](/api-reference/activity-payloads):
+
+```json
+{
+  "activity": {
+    "result": {
+      "isUserInitiated": true,
+      "nextState": "interested",
+      "analysis": {
+        "success": true,
+        "disposition": "Interested",
+        "dispositionType": "positive",
+        "connectedStatus": "connected",
+        "summary": "string",
+        "timestamp": 1705233415000
+      }
+    }
+  }
+}
+```
+
+`action_type` can also be `"reupdate"` — a resend of an update that was already sent once, controlled by the callback's **Don't send reupdates** setting.
+
+<Note>
+Activity updates can arrive more than once for the same activity — call `duration`/recording details in particular are often not ready on the first `update` and get repeated once populated. Design your integration to be idempotent on `activityId` rather than assuming exactly one POST per activity.
+</Note>
+
+<Warning>
+You may see additional fields inside `activity.result` beyond what's documented here (e.g. raw `callMetadata`/`callInfo` provider payloads). These are internal, not a stable contract, and can change without notice — don't build business logic on anything not listed on this page or [Activity Payloads](/api-reference/activity-payloads).
+</Warning>
+
+---
+
+## Lead Event
+
+Fired for lead-level events not attached to a single activity — most commonly a **prevalidation failure** (e.g. the lead's number is on the DND registry and not whitelisted), but also other lead-lifecycle transitions.
+
+```json
+{
+  "action_type": "update",
+  "leadId": "string",
+  "referenceId": "string",
+  "phone": "string",
+  "leadData": {
+    "phone": "string",
+    "name": "string"
+  },
+  "timestamp": 1705233415000,
+  "leadSummary": "string",
+  "leadDisposition": "string"
+}
+```
+
+There's no `activity` field at all — that's the key difference from an Activity Update payload. A DND rejection, for example, arrives with `leadDisposition: "DND"` and nothing activity-specific.
+
+---
+
+## Lead Update Feedback
+
+Fired after an asynchronous lead update you triggered externally (via the API) finishes processing — confirms whether it succeeded.
+
+```json
+{
+  "action_type": "update",
+  "updateId": "string",
+  "success": true,
+  "error": null,
+  "leadId": "string",
+  "referenceId": "string",
+  "timestamp": 1705233415000,
+  "params": { "...": "whatever fields you asked to update" },
+  "data": { "...": "the lead's metadata, only present on success" }
+}
+```
+
+- **updateId** — the identifier your original update request returned; use it to match this callback to the request that triggered it.
+- **success** / **error** — whether the update applied cleanly.
+- **data** — only populated when `success` is `true`; `null` on failure.
+
+---
+
+## Lead History Format
+
+If the callback's **Payload Format** is set to **Lead History** instead of the default **Activity Update**, none of the shapes above apply — regardless of what triggered the callback, Uservox sends the entire lead document plus every activity on it:
+
+```json
+{
+  "data": {
+    "...": "the full lead document",
+    "activities": [
+      { "...": "every activity on this lead, most recent first" }
+    ]
+  }
+}
+```
+
+Use this when your system needs the complete current picture rather than incremental deltas. See [How to Add a Webhook to a Process](/guides/process/how-to-add-webhook-to-a-process) for where to set the Payload Format.
+
+---
+
+## Batched Delivery
+
+If **Batch API** is enabled on the callback, individual payloads aren't posted one at a time — they're buffered and flushed together as a single request:
+
+```json
+{
+  "updates": [
+    { "...": "payload 1, same shape as it would be sent individually" },
+    { "...": "payload 2" }
+  ]
+}
+```
+
+`updates` is the default **Array Key**; it's whatever you configured on the callback. Each item in the array is exactly the shape it would have been sent as on its own — batching only changes how many arrive per HTTP request, not the shape of each one.
+
+---
+
+## Other Things That Affect What You Receive
+
+- **Transform code** — if configured, your JS transform runs on the payload before it's sent, so what actually arrives may not match the raw shapes above at all. Test it with the callback editor's **Transform & Test** panel before relying on it.
+- **Sensitive-field scrubbing** — internal telephony-provider metadata (raw provider call objects, routing internals) is stripped from `activity.result` before sending. This doesn't affect the lead's own phone number, which is still sent normally in `leadData.phone` / `phone`.
+- **Only send final update** — if enabled, `call` activities are held back until the recording/duration is fully processed, then sent exactly once.
+- **Alert Type / Alert Dispositions** — filter which updates get sent at all (e.g. only successful conclusions, or only specific dispositions).
+
+All of these are configured on the callback itself — see [How to Add a Webhook to a Process](/guides/process/how-to-add-webhook-to-a-process).

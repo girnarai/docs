@@ -150,6 +150,7 @@
             "group": "Activities",
             "pages": [
               "api-reference/activity-payloads",
+              "api-reference/lead-update-callback-payloads",
               "api-reference/get-activity"
             ]
           },

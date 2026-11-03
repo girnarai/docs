@@ -46,6 +46,7 @@
             "group": "Essentials",
             "pages": [
               "essentials/dashboard",
+              "essentials/uservox-analytics",
               "essentials/leads",
               "essentials/pulse-usage"
             ]

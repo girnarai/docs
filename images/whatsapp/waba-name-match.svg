@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 280" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <rect width="960" height="280" rx="16" fill="#F8FAFC"/>
+  <text x="480" y="38" text-anchor="middle" font-size="16" font-weight="700" fill="#0F172A">The same legal name and address everywhere</text>
+
+  <g font-size="13">
+    <g transform="translate(36,64)">
+      <rect width="200" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="16" y="28" font-size="12" font-weight="700" fill="#64748B">GST CERTIFICATE</text>
+      <text x="16" y="58" font-weight="700" fill="#0F172A">Acme Motors Pvt Ltd</text>
+      <text x="16" y="80" fill="#475569">12, MG Road, Pune 411001</text>
+    </g>
+    <g transform="translate(260,64)">
+      <rect width="200" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="16" y="28" font-size="12" font-weight="700" fill="#64748B">META PORTFOLIO</text>
+      <text x="16" y="58" font-weight="700" fill="#0F172A">Acme Motors Pvt Ltd</text>
+      <text x="16" y="80" fill="#475569">12, MG Road, Pune 411001</text>
+    </g>
+    <g transform="translate(484,64)">
+      <rect width="200" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="16" y="28" font-size="12" font-weight="700" fill="#64748B">WEBSITE FOOTER</text>
+      <text x="16" y="58" font-weight="700" fill="#0F172A">Acme Motors Pvt Ltd</text>
+      <text x="16" y="80" fill="#475569">acmemotors.in</text>
+    </g>
+    <g transform="translate(708,64)">
+      <rect width="216" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="16" y="28" font-size="12" font-weight="700" fill="#64748B">WHATSAPP DISPLAY NAME</text>
+      <text x="16" y="58" font-weight="700" fill="#0F172A">Acme Motors</text>
+      <text x="16" y="80" fill="#475569">Brand name that is clearly</text>
+      <text x="16" y="98" fill="#475569">linked to the legal name</text>
+    </g>
+  </g>
+
+  <g transform="translate(36,206)">
+    <rect width="888" height="48" rx="10" fill="#ECFDF5" stroke="#25D366"/>
+    <circle cx="26" cy="24" r="11" fill="#25D366"/>
+    <path d="M20,24 L24,28 L32,19" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="48" y="29" font-size="13" fill="#065F46">Match spelling, suffix (Pvt Ltd, LLP) and address exactly. A mismatch is the most common reason Meta rejects verification.</text>
+  </g>
+</svg>

@@ -124,6 +124,15 @@
               "conversations/overview",
               "conversations/feedback"
             ]
+          },
+          {
+            "group": "WhatsApp",
+            "pages": [
+              "whatsapp/connect-whatsapp",
+              "whatsapp/create-template",
+              "whatsapp/send-test-template",
+              "whatsapp/settings-and-messages"
+            ]
           }
         ]
       },

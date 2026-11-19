@@ -133,6 +133,7 @@
               "whatsapp/prepare-business",
               "whatsapp/connect-whatsapp",
               "whatsapp/display-name-and-blue-tick",
+              "whatsapp/change-display-name",
               "whatsapp/account-status",
               "whatsapp/create-template",
               "whatsapp/send-test-template",

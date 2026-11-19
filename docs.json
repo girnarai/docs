@@ -91,6 +91,7 @@
               "guides/process/how-to-add-webhook-to-a-process",
               "guides/process/conditional-flow",
               "guides/process/lead-simulator",
+              "guides/process/test-process-on-phone-number",
               "guides/process/ai-process-assistant"
             ]
           },

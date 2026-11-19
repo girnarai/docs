@@ -1,0 +1,105 @@
+---
+title: "Import templates from another WhatsApp account"
+description: "Bring the templates you used with a previous provider or another WhatsApp Business Account to your Uservox number, and send them to WhatsApp for approval in one go."
+---
+
+## Overview
+
+WhatsApp templates belong to one **WhatsApp Business Account (WABA)**. They don't move with your business or your phone number. If you connected a new WABA to Uservox, the templates you had with your previous provider stay on your old account, and your **Templates** page starts empty, even after **Refresh from WhatsApp**.
+
+**Import templates** copies them across. Uservox reads the templates from your old account and sends the ones you choose to WhatsApp for approval on your current number. Nothing on your old account changes.
+
+You'll find it under [**WhatsApp → Templates**](https://app.uservox.ai/whatsapp/templates) → **Import templates**.
+
+<Note>
+Only a **project admin** can import templates. Your WhatsApp Business Account must already be connected. See [Connect your WhatsApp Business Account](/whatsapp/connect-whatsapp).
+</Note>
+
+---
+
+## Before you start
+
+- **Find out who owns your old account.** If your business owns it, you can sign in with Facebook and pick it. If your previous provider owns it, ask them for an export of your templates instead.
+- **Use a Facebook account with admin access** to your business on Meta, the same kind of account you used to connect WhatsApp.
+- **Allow popups** for app.uservox.ai. The Facebook sign-in opens in a popup.
+
+---
+
+## Import from your old account (sign in with Facebook)
+
+1. Open **WhatsApp → Templates** and click **Import templates**.
+2. Keep **From another account** selected and click **Continue with Facebook**.
+3. In the Facebook window, sign in and tick the WhatsApp account that has your templates. Then confirm.
+4. Uservox lists the WhatsApp accounts you can access, with their phone numbers and how many templates each has. Pick the account that has your templates.
+5. Click **Show templates**.
+
+The account your Uservox number is on is shown greyed out. You can't import from it, because its templates are already on your number.
+
+<Tip>
+If the list is empty, your old account probably belongs to your previous provider's business. Use [Import from an export](#import-from-an-export) instead.
+</Tip>
+
+---
+
+## Import from an export
+
+Use this when your previous provider owns the old account, or when you already have your templates as a file.
+
+1. Ask your previous provider for an **export of your WhatsApp templates in JSON**. Most providers can produce one. It is the same data Meta returns for an account's message templates.
+2. Open **WhatsApp → Templates**, click **Import templates**, then **Paste or upload an export**.
+3. Paste the JSON into the box, or upload the file.
+4. Click **Show templates**.
+
+Uservox accepts Meta's format (`{ "data": [ … ] }`), 360dialog's format (`{ "waba_templates": [ … ] }`), and a plain list of templates.
+
+---
+
+## Choose templates and import
+
+Uservox shows every template it found, with its name, language, category, its status on the old account, and the start of the message.
+
+- **Approved** templates are selected for you.
+- Templates that were rejected, paused or disabled on the old account are not selected. You can tick them if you want to try again.
+- Templates **already on your number** (same name and language) are skipped.
+- Some templates can't be imported and are marked with the reason. See [What can't be imported](#what-cant-be-imported).
+
+Tick the templates you want and click **Import N templates**. Uservox submits each one to WhatsApp and then shows a result for each:
+
+| Result | Meaning |
+| :--- | :--- |
+| **Pending** | Sent to WhatsApp for review. |
+| **Approved** | WhatsApp approved it straight away. |
+| **Failed** | WhatsApp refused it. The reason is shown, for example a name that was deleted less than 30 days ago. |
+| **Skipped** | Already on your number, or it can't be imported. |
+
+The imported templates then appear on the **Templates** page. Their statuses update on their own as WhatsApp reviews them. See [Approval and status](/whatsapp/create-template#approval-and-status).
+
+<Warning>
+WhatsApp accepts up to **100 new templates an hour** per account. If you have more, import them in batches.
+</Warning>
+
+---
+
+## What can't be imported
+
+| Template has | Why | What to do |
+| :--- | :--- | :--- |
+| An **image, video or document header** | WhatsApp needs a sample file for the header, and the old account's sample can't be reused. | Create it again with [Create template](/whatsapp/create-template). |
+| A **WhatsApp Flow button** | The flow belongs to the old account. | Create the flow on your current account, then create the template again. |
+
+---
+
+## Good to know
+
+- **Every template is reviewed again.** Approval on the old account doesn't carry over. Utility templates are often approved within minutes; marketing templates can take longer, and WhatsApp may change a template's category.
+- **Names stay the same**, so processes that send a template by name keep working once it is approved.
+- **Your Facebook login is used only to read your templates.** Uservox doesn't save it, and you can remove Uservox's access at any time in Facebook under **Settings & privacy → Settings → Business integrations**.
+- **Your business sending limit still applies.** A newly connected number usually starts at 250 customers a day until your business is verified. See [Check your number's status with Meta](/whatsapp/account-status).
+
+---
+
+## Related
+
+- [Create and manage WhatsApp templates](/whatsapp/create-template)
+- [Send a test template](/whatsapp/send-test-template)
+- [Connect your WhatsApp Business Account](/whatsapp/connect-whatsapp)

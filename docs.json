@@ -136,6 +136,7 @@
               "whatsapp/change-display-name",
               "whatsapp/account-status",
               "whatsapp/create-template",
+              "whatsapp/import-templates",
               "whatsapp/send-test-template",
               "whatsapp/settings-and-messages"
             ]

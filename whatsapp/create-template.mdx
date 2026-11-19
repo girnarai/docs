@@ -88,6 +88,30 @@ After you delete a template, **WhatsApp blocks its name for 30 days**. Use a dif
 
 ---
 
+## Create templates from Claude (MCP)
+
+If you've connected Claude or another AI client to Uservox through the [MCP server](/essentials/mcp-consent), you can create and manage templates by asking in plain language instead of filling in the form. For example:
+
+```text
+Create a Utility template called service_reminder in English for my project.
+Body: "Hi {{1}}, your vehicle is due for service on {{2}}. Reply YES to book a slot."
+Add a quick reply button "Yes". Use Priya and 25 Nov as sample values.
+```
+
+Claude submits the template to Meta with the same rules as the form: lowercase name, one template per language, and a sample value for every `{{n}}`. The template appears under **WhatsApp → Templates** as **Pending** and goes through the same [approval](#approval-and-status).
+
+You can also ask Claude to:
+
+- **List templates** and their status, category and quality, e.g. "Which of my WhatsApp templates are approved?"
+- **Refresh from WhatsApp**, e.g. "Sync my WhatsApp templates and tell me why any were rejected."
+- **Delete a template**. The name is blocked for 30 days, the same as when you delete it here.
+
+<Note>
+Creating, refreshing and deleting templates need **write access**, which project admins get by default when they approve the MCP connection. Read-only connections can only list templates.
+</Note>
+
+---
+
 ## Next step
 
 [Send a test template](/whatsapp/send-test-template) to your own phone to see exactly how it looks.

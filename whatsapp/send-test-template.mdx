@@ -55,3 +55,21 @@ Every test message appears under [**WhatsApp → Messages**](https://app.uservox
 | Only approved templates can be sent | Wait for Meta to approve the template. See [template status](/whatsapp/create-template#approval-and-status). |
 | Not supported yet | Test messages don't support templates with an image, video or document header, or with a website button that contains a value. |
 | An error from WhatsApp | The message shows WhatsApp's reason, for example a number that isn't on WhatsApp. |
+
+---
+
+## Send a test from Claude (MCP)
+
+If you've connected Claude or another AI client to Uservox through the [MCP server](/essentials/mcp-consent), you can send a test by asking in plain language. For example:
+
+```text
+Send the service_reminder template in English to 919876543210 with Priya and 25 Nov as the values.
+```
+
+Claude sends the approved template from your project's connected WhatsApp number, filling the values in order: the header `{{1}}` if there is one, then the body `{{1}}`, `{{2}}`…. Like the form, it refuses to send if any value is missing. Unlike the form, it can also fill a **Visit website** button that contains a value, or an offer code.
+
+The message shows up under [**WhatsApp → Messages**](https://app.uservox.ai/whatsapp/messages), and you can ask Claude for its delivery status too, e.g. "Was the test to 919876543210 delivered?"
+
+<Note>
+Sending a test needs **write access**, which project admins get by default when they approve the MCP connection. The message is billed like any other.
+</Note>

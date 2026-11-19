@@ -132,6 +132,7 @@
             "pages": [
               "whatsapp/prepare-business",
               "whatsapp/connect-whatsapp",
+              "whatsapp/display-name-and-blue-tick",
               "whatsapp/create-template",
               "whatsapp/send-test-template",
               "whatsapp/settings-and-messages"

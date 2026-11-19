@@ -1,0 +1,85 @@
+---
+title: "Submit Conversation Feedback"
+api: "POST /conversations/feedback"
+description: "Submit written feedback and 1–10 quality ratings on a Uservox conversation through the API. It goes to the same review queue as feedback given from the dashboard."
+---
+
+Submits feedback on one of your project's conversations. API feedback goes to the same review queue as feedback given with **Give Feedback** in the dashboard ([Sharing Feedback on Conversations](/conversations/feedback)). The Uservox team reviews it and records a response, which you can read back with [List Conversation Feedback](/api-reference/list-conversation-feedback).
+
+The `conversationId` is in an activity's `result.conversationId`, from [Get Activity](/api-reference/get-activity) or from your [activity webhooks](/api-reference/activity-payloads). It is also the ID at the end of a conversation's dashboard URL (`app.uservox.ai/conversation/<id>`).
+
+## Body Parameters
+
+<ParamField body="conversationId" type="string" required>
+  ID of the conversation. It must belong to the project of your API token.
+</ParamField>
+
+<ParamField body="detailedFeedback" type="string" required>
+  What went well or wrong on the call. At least 15 words, at most 10,000 characters.
+</ParamField>
+
+<ParamField body="ratings" type="object">
+  Optional ratings. Each one is an integer from 1 (poor) to 10 (good). Leave out any you don't want to rate.
+
+  <Expandable title="Rating keys">
+    <ParamField body="speechRecognition" type="integer">Speech recognition accuracy</ParamField>
+    <ParamField body="backgroundNoise" type="integer">Background noise handling</ParamField>
+    <ParamField body="responseTime" type="integer">Response time. 1 means a long lag, 10 means almost none.</ParamField>
+    <ParamField body="humanLike" type="integer">How human-like the conversation felt</ParamField>
+    <ParamField body="interruptionHandling" type="integer">Interruption handling</ParamField>
+    <ParamField body="languageHandling" type="integer">Language handling</ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="submittedBy" type="string" default="API">
+  Optional name of the person or system giving the feedback, shown to reviewers.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+<ResponseField name="data" type="object">
+  The created feedback, in the shape described in [List Conversation Feedback](/api-reference/list-conversation-feedback#response). New feedback has `status: "open"` and `response: null`.
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://crm.uservox.ai/api/v1/conversations/feedback \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "conversationId": "6a1f0c2e9b3d4e5f6a7b8c9d",
+    "detailedFeedback": "The agent talked over the customer twice and did not pick up the callback time they asked for, so the follow-up was scheduled for the wrong day.",
+    "ratings": { "interruptionHandling": 3, "responseTime": 7 },
+    "submittedBy": "QA team"
+  }'
+```
+
+```json Response
+{
+  "success": true,
+  "data": {
+    "id": "6a3c81d0f2a94b0012e4a7b1",
+    "conversationId": "6a1f0c2e9b3d4e5f6a7b8c9d",
+    "leadId": "6a1f0b8d9b3d4e5f6a7b8c11",
+    "detailedFeedback": "The agent talked over the customer twice and did not pick up the callback time they asked for, so the follow-up was scheduled for the wrong day.",
+    "ratings": { "interruptionHandling": 3, "responseTime": 7 },
+    "status": "open",
+    "source": "api",
+    "submittedBy": null,
+    "response": null,
+    "createdAt": "2026-11-19T09:12:44.103Z",
+    "updatedAt": "2026-11-19T09:12:44.103Z"
+  }
+}
+```
+</CodeGroup>
+
+## Error Responses
+
+- **400 Bad Request**: `conversationId` is missing or not a valid ID, `detailedFeedback` is under 15 words, or a rating is not a whole number from 1 to 10 or has an unknown key.
+- **401 Unauthorized**: the API token is missing or invalid.
+- **404 Not Found**: no conversation with this ID in your project.
+- **500 Internal Server Error**: `{ "success": false, "error": "Failed to submit feedback" }`

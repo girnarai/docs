@@ -1,0 +1,111 @@
+---
+title: "List Conversation Feedback"
+api: "GET /conversations/feedback"
+description: "List feedback on your Uservox conversations, from the API and the dashboard, with its review status and the Uservox team's response. Filters and pagination."
+---
+
+Lists feedback on your project's conversations, newest first. The list includes feedback given through [Submit Conversation Feedback](/api-reference/submit-conversation-feedback) and with **Give Feedback** in the dashboard. Use it to check whether feedback has been reviewed and to read the response.
+
+## Query Parameters
+
+<ParamField query="conversationId" type="string">
+  Only return feedback on this conversation.
+</ParamField>
+
+<ParamField query="status" type="string">
+  Only return feedback with this status. One of `open`, `addressed`, `addressed_backend`, `model_issue`, `acknowledged`, `acknowledged_unfixable`. See [Status values](#status-values).
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  Page number, starting at 1.
+</ParamField>
+
+<ParamField query="limit" type="integer" default="50">
+  Results per page, at most 200.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+<ResponseField name="total" type="integer">Number of matching feedback entries across all pages</ResponseField>
+<ResponseField name="page" type="integer" />
+<ResponseField name="limit" type="integer" />
+<ResponseField name="data" type="array">
+  <Expandable title="Feedback properties">
+    <ResponseField name="id" type="string">Feedback ID</ResponseField>
+    <ResponseField name="conversationId" type="string" />
+    <ResponseField name="leadId" type="string">Lead the conversation belongs to, or `null`</ResponseField>
+    <ResponseField name="detailedFeedback" type="string" />
+    <ResponseField name="ratings" type="object">The ratings that were given, keyed as in [Submit Conversation Feedback](/api-reference/submit-conversation-feedback#body-parameters)</ResponseField>
+    <ResponseField name="status" type="string">`open` until reviewed, then the response type</ResponseField>
+    <ResponseField name="source" type="string">`api` or `dashboard`</ResponseField>
+    <ResponseField name="submittedBy" type="string">Name of the dashboard user who gave the feedback. `null` for API feedback.</ResponseField>
+    <ResponseField name="response" type="object">
+      The Uservox team's response, or `null` while the feedback is open.
+
+      <Expandable title="Response properties">
+        <ResponseField name="type" type="string">Same value as `status`</ResponseField>
+        <ResponseField name="note" type="string">Reviewer's note, or `null`</ResponseField>
+        <ResponseField name="simulatedConversationLink" type="string">For `addressed`: a link to a simulated conversation that shows the fix</ResponseField>
+        <ResponseField name="respondedAt" type="string">ISO 8601 timestamp</ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="createdAt" type="string">ISO 8601 timestamp</ResponseField>
+    <ResponseField name="updatedAt" type="string">ISO 8601 timestamp</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Status values
+
+| Status | Meaning |
+|--------|---------|
+| `open` | Not reviewed yet |
+| `addressed` | Fixed. `simulatedConversationLink` shows the fix. |
+| `addressed_backend` | Fixed in the backend |
+| `model_issue` | Caused by the underlying AI model |
+| `acknowledged` | Noted |
+| `acknowledged_unfixable` | Noted. Everything possible has been done, but it cannot be fully fixed. |
+
+## Example
+
+<CodeGroup>
+```bash cURL
+curl "https://crm.uservox.ai/api/v1/conversations/feedback?status=addressed&limit=20" \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
+```
+
+```json Response
+{
+  "success": true,
+  "data": [
+    {
+      "id": "6a3c81d0f2a94b0012e4a7b1",
+      "conversationId": "6a1f0c2e9b3d4e5f6a7b8c9d",
+      "leadId": "6a1f0b8d9b3d4e5f6a7b8c11",
+      "detailedFeedback": "The agent talked over the customer twice and did not pick up the callback time they asked for, so the follow-up was scheduled for the wrong day.",
+      "ratings": { "interruptionHandling": 3, "responseTime": 7 },
+      "status": "addressed",
+      "source": "api",
+      "submittedBy": null,
+      "response": {
+        "type": "addressed",
+        "note": "Barge-in sensitivity tuned and callback-time capture fixed in the prompt.",
+        "simulatedConversationLink": "https://app.uservox.ai/simulated-conversation/6a3d02aa1c4e5f0012ab3c4d",
+        "respondedAt": "2026-11-20T06:40:02.517Z"
+      },
+      "createdAt": "2026-11-19T09:12:44.103Z",
+      "updatedAt": "2026-11-20T06:40:02.517Z"
+    }
+  ],
+  "total": 1,
+  "page": 1,
+  "limit": 20
+}
+```
+</CodeGroup>
+
+## Error Responses
+
+- **400 Bad Request**: `status` is not one of the values above.
+- **401 Unauthorized**: the API token is missing or invalid.
+- **500 Internal Server Error**: `{ "success": false, "error": "Failed to list feedback" }`

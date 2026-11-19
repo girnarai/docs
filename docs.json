@@ -173,7 +173,9 @@
           {
             "group": "Conversations",
             "pages": [
-              "api-reference/get-conversation-stats"
+              "api-reference/get-conversation-stats",
+              "api-reference/submit-conversation-feedback",
+              "api-reference/list-conversation-feedback"
             ]
           },
           {

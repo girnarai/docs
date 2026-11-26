@@ -1,185 +1,141 @@
 ---
-title: "Test Conversation"
-description: "Turn real conversations into Test Conversations, run tests, review results, and compare versions."
+title: "Test Conversations"
+description: "Turn real calls into repeatable tests for your agent, run them after every prompt change, and do it all from Claude through MCP."
 ---
 
-The Test Conversation feature allows you to turn real conversations into repeatable tests. This guide walks you through the steps to create, run, and analyze test conversations.
+A **test case** replays a real conversation against your agent as it is configured right now, then checks the result against goals you write in plain English, such as "Customer's name is captured" or "Agent confirms the booking". Each run gets a pass or fail for every goal, with the reason.
 
-This is one part of an agent's **Agent Test Suite** (`/agent/:id/tests`), which also lets you group individual tests into **Collections** for running several tests together:
+Use test cases to:
 
-![Agent Test Suite — Collections and Created Tests, with Create Collection and Create from Conversations actions](/images/agent-test-suite-panel.png)
+- Lock in a fix: when a call goes wrong, make it a test, change the prompt, and re-run until it passes.
+- Catch regressions: re-run your saved tests after every prompt change to make sure nothing that worked before broke.
 
-Use **Create from Conversations** for the single-conversation flow documented below. Use **Create Collection** once you have multiple Created Tests you want to bundle and run as a set.
+Each agent can have up to **100 test cases**.
 
----
-
-## 1. Start from the Conversation page
-
-- Open the conversation you want to test: `/conversation/:id`
-- In the **Conversation Messages** header (top-right), click the three-dots button
-- What you'll see:
-  - If a test already exists: **Go to Test Conversation** (opens in new tab)
-  - If no test exists: **Turn Into Test Conversation**
-
-![Conversation Messages](/images/con-turn-test.png)
-
-> **Tip**: The menu briefly shows "Checking..." while verifying test existence
+<Note>
+A run uses the agent's **live** configuration. To test a prompt change, save the change, then run the tests. This page covers testing an agent's conversation. To dry-run a process's routing and dispositions, see the [Lead Simulator](/guides/process/lead-simulator). To talk to an agent yourself, see [Simulate and Test a Voice Agent](/essentials/simulation).
+</Note>
 
 ---
 
-## 2. Create a Test Conversation (first time)
+## 1. Create a test from a conversation
 
-When you click **Turn Into Test Conversation**, a setup window appears:
-![Create Test Conversation](/images/test-conv-create.png)
+1. Open the conversation you want to test (`/conversation/:id`).
+2. In the **Conversation Messages** header, open the three-dots menu and click **Test Conversations**.
+3. The **Test Cases** window lists the tests already made from this conversation. Click **Create New Test Case**.
+4. In **Create Test From Conversation**, add one or more goals: what should this conversation accomplish?
+5. Click **Create Test**. The new test case opens in a new tab.
 
-1. **Review/Edit messages** - Adjust wording or add checks if needed
-![Edit Messages](/images/test-conv-turn-edit.png)
-2. **Add goals** - Define success criteria:
-   - "Customer's name is captured"
-   - "Offer is explained clearly"
-3. **Confirm AI settings** (optional) - Model/provider/temperature
-4. Click **Create Test**
+{/* Screenshot: Test Cases window with "Create New Test Case" */}
 
-**What happens next**:
-- Test space is created
-- New tab opens to the Test Conversation dashboard (`/test-conversation/:id`)
+<Tip>
+Write each goal as one thing you can check from the transcript: "Agent asks for the preferred visit date", not "Agent handles the call well". Specific goals give clear pass/fail reasons.
+</Tip>
 
 ---
 
-## 3. Test Conversation dashboard
+## 2. Run a test and read the results
 
-Your control center for testing and learning:
-![Test Conversation Dashboard](/images/test-conv-dashboard.png)
+The test case page (`/test-case/:id`) shows the agent it belongs to, a **View Source Conversation** link, the test's goals and its results.
 
-### A) Version controls
-![Version Controls](/images/test-conv-version-controls.png)
-- **Choose Version**: Select which conversation version to test
-- **Create New Version**: Duplicate existing or rebuild from original
-- **Compare Versions**: View 2-3 versions side-by-side
-- **View Results**: Access saved test runs
+{/* Screenshot: test case page, goals panel and Test Results */}
 
-### B) Goals view
-![Goals View](/images/test-conv-goal-view.png)
-- **What Should This Conversation Achieve?** - Expand to see goals
-- **Edit Goals**: Refine success criteria anytime
+1. Click **Run Test**. The conversation is replayed against the agent's current configuration, which can take a minute or two.
+2. The run appears at the top of **Test Results**, marked **PASSED** or **FAILED**. Runs are listed newest first.
+3. Expand a run to see:
+   - **Conversation Goals**: pass or fail for each goal, with the reason
+   - **Replayed Conversation**: the full transcript of this run
 
-### C) Test controls
-![Test Controls](/images/test-conv-run-controls.png)
-- **Auto-play toggle**: ON = automatic advancement, OFF = manual Continue button
-- **Start Test**: Begin simulation
-- **Stop Test**: End early (saves gathered results)
-- **Connection Status**: System readiness indicator
+Replays aren't always word-for-word the same, because the model's answers and live tool results can change between runs. If a goal passes and fails on different runs with no change to the agent, make the goal more specific or fix the part of the prompt it depends on.
 
-### D) Conversation view
-- Messages appear as the test runs
-- Auto-play shows reminder when enabled
+Goals are under **What Should This Conversation Achieve?** To change them or the test's title, click **Edit Goals**, make your changes, and save. The new goals apply to future runs.
 
 ---
 
-## 4. Run a test
+## 3. Run many tests at once with collections
 
-1. Select version
-2. Toggle Auto-play ON/OFF
-3. Click **Start Test**
-4. Watch conversation:
-   - Auto-play OFF: Click **Continue** at your pace
-   - Auto-play ON: Advances automatically
-5. Click **Stop Test** anytime to end early
+The **Agent Test Suite** collects all of an agent's tests. To open it, go to **Agents**, open the agent's menu, and click **Test Suite** (`/agent/:id/tests`).
 
-**Completion**: Toast appears - "Test completed! Results saved successfully"
+![Agent Test Suite: Collections and Created Tests, with Create Collection and Create from Conversations actions](/images/agent-test-suite-panel.png)
 
-![Test in Progress](/images/test-conv-run-progress.png)
-*Test conversation running with Auto-play enabled*
+A **collection** is a named set of tests you run together, for example "Booking flow" or "Objection handling".
 
----
+- **Create Collection**: pick tests that already exist and group them.
+- **Create from Conversations**: pick several conversations, add goals that apply to all of them, and Uservox creates a test for each conversation and a collection with all of them in one step.
 
-## 5. Create new versions
-![Create New Version](/images/test-conv-create-new-version.png)
-After initial setup, create variants:
+In the **Collections** table, click the run button in the **Run** column to run every test in a collection. When it finishes, click **Show** in the **Result** column to see each test's result.
 
-- **Duplicate existing version**: Copies all messages/goals
-- **Create from conversation**: Start from original messages
-  - Edit message content
-  - Adjust goals
-  - Confirm AI settings
+<Note>
+**Create from Conversations** checks the 100-test limit before it starts. If the conversations you picked would take the agent over 100 tests, nothing is created and you're told how many you can add.
+</Note>
 
 ---
 
-## 6. Compare versions
-![Compare Versions](/images/test-conv-compare-versions.png)
-1. Click **Compare Versions**
-2. Choose 2-3 versions
-3. Select different versions per column
-4. Click **Compare**
+## 4. Improve an agent with tests
 
-**Split view shows**:
-- Full conversation flow per version
-- Synchronized scrolling
+A loop that works well:
 
-![Version Comparison](/images/test-conv-compare-versions-view.png)
-*Side-by-side comparison of conversation versions*
+1. **Find a bad call.** Look for conversations where the agent got something wrong: a wrong disposition, a skipped step, a wrong answer.
+2. **Make it a test.** Write goals that describe what the agent should have done.
+3. **Run it.** It should fail, which confirms the test catches the problem.
+4. **Fix the prompt.** Change the part of the agent's prompt that caused it.
+5. **Re-run the test** until it passes, then **run your collection** to make sure the fix didn't break other calls.
+
+Keep the tests. Every bug you fix becomes a test that guards against it coming back.
 
 ---
 
-## 7. Edit goals
+## Do it through MCP
 
-Refine success criteria anytime:
-![Edit Goals Interface](/images/test-conv-edit-goals.png)
-1. Review messages (jump to specific steps)
-2. Adjust per-message checks
-3. Confirm AI model settings (optional)
-4. **Add New Goal**: Specify data to capture
-5. Click **Save Changes**
+If you've connected Claude (or another MCP client) to your workspace, as described in [MCP Server Connection](/essentials/mcp-consent), you can run the whole loop by asking in plain language. Claude can find the bad calls, write the tests, edit the prompt and re-run everything.
 
-> **Note**: Changes apply immediately to future tests
+Creating and running tests needs the **Modify agents and processes** (`write:agents`) scope and the **project admin** role on the agent's project. Project admins get the scope by default when they approve the connection. Users without it can still list tests and read past results.
 
----
+### Example prompts
 
-## 8. View test results
-![View Results](/images/test-conv-view-results.png)
-1. Click **View Results**
-2. Select 1-3 runs
-3. Click **Show**
-![Test Results View](/images/test-conv-results.png)
-- **Results include**:
-  - Version label and run number
-  - Pass-rate badge (e.g., "82% pass rate")
-  - Progress bar
-  - Summary (when available)
-  - Goals table (Goal | Pass/Fail | Explanation)
-  - Message checks table
-  - AI model details (expandable)
+> Find yesterday's conversations for my "Service Booking" agent where the customer asked for a pickup and the agent didn't offer one. Make a test case from the worst one, with the goal "Agent offers doorstep pickup when the customer asks", and run it.
 
----
+> Run all the tests for my "Service Booking" agent and tell me which ones fail and why.
 
-## 9. Common messages
+> The pickup test is failing. Read the agent's prompt, suggest the smallest change that fixes it, and show me the edit before you make it.
 
-- **Creating Test...**: After initiating test creation
-- **Test completed!**: Run finished successfully
-- **Choose at least 2 versions**: Comparison requirement
-- **Select different versions**: Comparison constraint
-- **Failed to load results**: Temporary issue
-- **Auto-play is on**: Turn advancement reminder
+> Copy the test cases from my Hindi agent to my English agent, then run them there.
 
----
+### Tools
 
-## 10. Best practices
+| Tool | Use it to |
+| :-- | :-- |
+| `conversations_search` / `conversations_get_transcript` | Find bad calls and read them |
+| `add_test_case` | Create a test from a conversation and its goals |
+| `run_test_case` | Create a test and run it once, in one step |
+| `run_tests` | Run **every** test for an agent and get pass/fail, reasons and tool calls for each |
+| `list_test_cases` | List an agent's tests with each one's latest result |
+| `get_test_case_runs` | Read past runs of a test (or of every test made from a conversation) without running it again |
+| `copy_tests` | Copy tests to another agent, or re-use their goals on a different conversation |
+| `agents_get` / `agents_edit_prompt` | Read the agent's prompt and change part of it |
 
-- **Define clear goals** - Enables pass/fail results with explanations
-- **Use Auto-play** - For uninterrupted testing
-- **Review after each run** - Learn what worked/didn't
-- **Compare versions** - Spot impact of conversation tweaks
-- **Iterate and improve** - Saved results remain available
+To create a test, give `add_test_case` the conversation's ID and your goals:
 
----
+```json
+{
+  "conversationId": "<conversation id>",
+  "expectations": [
+    "Agent offers doorstep pickup when the customer asks",
+    "Agent confirms the pickup date and time"
+  ],
+  "title": "Pickup request"
+}
+```
 
-## Summary
+`run_test_case` takes the same input. It creates the test and runs it straight away.
 
-With Test Conversations, you can:
+<Warning>
+Tests run against the agent's **live** prompt, so a prompt edit made through MCP goes live for real calls as soon as it's saved, before you've run the tests. Ask Claude to show you each edit before making it (`agents_edit_prompt` supports a dry run), run the tests right after, and undo the edit if they fail.
+</Warning>
 
-- Turn real conversations into repeatable tests
-- Measure performance against defined goals
-- Compare different conversation versions
-- Continuously improve based on clear metrics
+### Things to know
 
-Start testing today to optimize your conversation flows!
+- `run_tests` runs every test for the agent, one after another, and waits for all of them. With many tests this takes a while. To check a single fix, use `get_test_case_runs` on the test you care about after running it, or ask Claude to run only the relevant tests.
+- MCP has no tool for collections. Collections are created and run in the dashboard.
+- The 100-test limit per agent applies to MCP too. `copy_tests` copies as many as fit and reports the rest as not copied.
+- If Uservox manages the prompts for your project, the prompt tools aren't available to you, but you can still create and run tests.

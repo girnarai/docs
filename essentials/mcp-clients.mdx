@@ -1,0 +1,131 @@
+---
+title: "Connect your AI client"
+description: "Add the Uservox MCP server to Claude, ChatGPT, Codex, Cursor, or VS Code — one click where the client supports it."
+---
+
+## One-click install
+
+Uservox runs a remote [MCP](https://modelcontextprotocol.io) server at `https://mcp.uservox.ai/mcp`. It uses OAuth with PKCE and dynamic client registration, so there is no API key to copy — each client signs you in and asks for consent the first time.
+
+<CardGroup cols={2}>
+  <Card title="Add to Cursor" icon="arrow-pointer" href="cursor://anysphere.cursor-deeplink/mcp/install?name=uservox&config=eyJ1cmwiOiJodHRwczovL21jcC51c2Vydm94LmFpL21jcCJ9">
+    Opens Cursor and adds the server. Approve access on the consent screen.
+  </Card>
+  <Card title="Add to VS Code" icon="code" href="vscode:mcp/install?%7B%22name%22%3A%22uservox%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.uservox.ai%2Fmcp%22%7D">
+    Adds the server to VS Code and GitHub Copilot.
+  </Card>
+</CardGroup>
+
+If a browser blocks the custom link, use the raw links below, or add the server manually with the [JSON config](#any-other-client).
+
+## Claude Code
+
+```bash
+claude mcp add --transport http uservox https://mcp.uservox.ai/mcp
+```
+
+Run `/mcp` inside the session and approve the consent screen in the browser tab that opens.
+
+Or install it as a plugin, which registers the same server for you:
+
+```text
+/plugin marketplace add girnarai/uservox-mcp
+/plugin install uservox-mcp@uservox
+```
+
+
+## Codex CLI
+
+Add the server to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.uservox]
+url = "https://mcp.uservox.ai/mcp"
+```
+
+Then sign in once:
+
+```bash
+codex mcp login uservox
+```
+
+## claude.ai and Claude Desktop
+
+In claude.ai open **Settings → Connectors → Add custom connector**, paste `https://mcp.uservox.ai/mcp`, then click **Allow** on the consent screen.
+
+For Claude Desktop, add the block below to `claude_desktop_config.json` and restart the app:
+
+```json
+{
+  "mcpServers": {
+    "uservox": {
+      "type": "http",
+      "url": "https://mcp.uservox.ai/mcp"
+    }
+  }
+}
+```
+
+## ChatGPT
+
+In ChatGPT open **Settings → Connectors → Advanced → Developer mode**, then **Add custom connector** and paste the same URL.
+
+## VS Code (Insiders and web)
+
+[Add to VS Code Insiders](vscode-insiders:mcp/install?%7B%22name%22%3A%22uservox%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.uservox.ai%2Fmcp%22%7D) · [Add via vscode.dev](https://vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522uservox%2522%252C%2522type%2522%253A%2522http%2522%252C%2522url%2522%253A%2522https%253A%252F%252Fmcp.uservox.ai%252Fmcp%2522%257D)
+
+## Any other client
+
+Any MCP client that speaks Streamable HTTP works with the same URL. Raw install links:
+
+```text
+cursor://anysphere.cursor-deeplink/mcp/install?name=uservox&config=eyJ1cmwiOiJodHRwczovL21jcC51c2Vydm94LmFpL21jcCJ9
+```
+
+```text
+vscode:mcp/install?%7B%22name%22%3A%22uservox%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.uservox.ai%2Fmcp%22%7D
+```
+
+Or paste this into the client's MCP config file:
+
+```json
+{
+  "mcpServers": {
+    "uservox": {
+      "type": "http",
+      "url": "https://mcp.uservox.ai/mcp"
+    }
+  }
+}
+```
+
+## Check the connection
+
+Ask the client *"who am I on Uservox?"* — the `whoami` tool returns your workspace, tier, project access, and granted scopes without touching any data.
+
+From a terminal, the server's auth challenge confirms it is reachable:
+
+```bash
+curl -sI https://mcp.uservox.ai/mcp | head -3
+```
+
+```text
+HTTP/2 401
+www-authenticate: Bearer realm="vox-mcp", error="missing_bearer",
+  resource_metadata="https://mcp.uservox.ai/.well-known/oauth-protected-resource/mcp"
+```
+
+## What you can do once connected
+
+- **Leads** — find, search, count, update, reset, or reschedule leads, and run an action across many at once.
+- **Calls** — list conversations, read transcripts, summaries, and recordings by link.
+- **Analytics** — funnel, cohort, and lead-flow reports for a date range.
+- **Agents and processes** — read and edit prompts, variables, decisions, FAQ sets, and process steps.
+- **WhatsApp** — list and create templates, inspect chats, set button routes.
+- **Testing** — create and run agent test cases, and start simulated calls.
+
+Tools are only listed when your token can call them: a read-only token never sees admin or billing tools.
+
+## Permissions and consent
+
+Which scopes a client asks for, what each one allows, and how to revoke a client are covered in [MCP Server Connection](/essentials/mcp-consent).

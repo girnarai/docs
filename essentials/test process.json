@@ -1,0 +1,1362 @@
+{
+  "_id": "6907a53e0188ee467211387c",
+  "title": "Autocom Process with 10 Steps with Prior Summary and Scheduling",
+  "description": "Follow-up flow for Autocom with 10 attempts",
+  "projectId": "685a4d8a9abc2b0fa75b9410",
+  "fromNumber": "08047362947",
+  "activeStatus": 1,
+  "isActive": true,
+  "start": "schedule_first_call",
+  "nodes": [
+    {
+      "title": "Schedule First Call",
+      "description": "Schedule the first contact call",
+      "nodeId": "schedule_first_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule first contact call",
+          "subText": "Schedule call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "first_contact",
+                "window": "ONE_MINUTE"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee467211387f"
+            }
+          ],
+          "nextNode": "make_first_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee4672113880"
+            }
+          ],
+          "_id": "6907a53e0188ee467211387e"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_first_call"
+      ],
+      "_id": "6907a53e0188ee467211387d"
+    },
+    {
+      "title": "Make First Call",
+      "description": "Make the first contact call",
+      "nodeId": "make_first_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make first call",
+          "subText": "Initial contact with the lead",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee4672113883"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_second_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee4672113884"
+            }
+          ],
+          "_id": "6907a53e0188ee4672113882"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_second_call"
+      ],
+      "_id": "6907a53e0188ee4672113881"
+    },
+    {
+      "title": "Schedule Second Call",
+      "description": "Schedule the second contact call",
+      "nodeId": "schedule_second_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule second contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee4672113887"
+            }
+          ],
+          "nextNode": "make_second_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee4672113888"
+            }
+          ],
+          "_id": "6907a53e0188ee4672113886"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_second_call"
+      ],
+      "_id": "6907a53e0188ee4672113885"
+    },
+    {
+      "title": "Make Second Call",
+      "description": "Make the second contact call",
+      "nodeId": "make_second_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make second call",
+          "subText": "Initial contact with the lead",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee467211388b"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_third_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee467211388c"
+            }
+          ],
+          "_id": "6907a53e0188ee467211388a"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_third_call"
+      ],
+      "_id": "6907a53e0188ee4672113889"
+    },
+    {
+      "title": "Schedule Third Call",
+      "description": "Schedule the third contact call",
+      "nodeId": "schedule_third_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule third contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee467211388f"
+            }
+          ],
+          "nextNode": "make_third_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee4672113890"
+            }
+          ],
+          "_id": "6907a53e0188ee467211388e"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_third_call"
+      ],
+      "_id": "6907a53e0188ee467211388d"
+    },
+    {
+      "title": "Make Third Call",
+      "description": "Make the third contact call",
+      "nodeId": "make_third_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make third call",
+          "subText": "Third attempt to contact",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee4672113893"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_fourth_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee4672113894"
+            }
+          ],
+          "_id": "6907a53e0188ee4672113892"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_fourth_call"
+      ],
+      "_id": "6907a53e0188ee4672113891"
+    },
+    {
+      "title": "Schedule Fourth Call",
+      "description": "Schedule the fourth contact call",
+      "nodeId": "schedule_fourth_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule fourth contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee4672113897"
+            }
+          ],
+          "nextNode": "make_fourth_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee4672113898"
+            }
+          ],
+          "_id": "6907a53e0188ee4672113896"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_fourth_call"
+      ],
+      "_id": "6907a53e0188ee4672113895"
+    },
+    {
+      "title": "Make Fourth Call",
+      "description": "Make the fourth contact call",
+      "nodeId": "make_fourth_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make fourth call",
+          "subText": "Fourth attempt to contact",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee467211389b"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_fifth_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee467211389c"
+            }
+          ],
+          "_id": "6907a53e0188ee467211389a"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_fifth_call"
+      ],
+      "_id": "6907a53e0188ee4672113899"
+    },
+    {
+      "title": "Schedule Fifth Call",
+      "description": "Schedule the fifth contact call",
+      "nodeId": "schedule_fifth_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule fifth contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee467211389f"
+            }
+          ],
+          "nextNode": "make_fifth_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138a0"
+            }
+          ],
+          "_id": "6907a53e0188ee467211389e"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_fifth_call"
+      ],
+      "_id": "6907a53e0188ee467211389d"
+    },
+    {
+      "title": "Make Fifth Call",
+      "description": "Make the fifth contact call",
+      "nodeId": "make_fifth_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make fifth call",
+          "subText": "Fifth attempt to contact",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee46721138a3"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_sixth_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138a4"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138a2"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_sixth_call"
+      ],
+      "_id": "6907a53e0188ee46721138a1"
+    },
+    {
+      "title": "Schedule Sixth Call",
+      "description": "Schedule the sixth contact call",
+      "nodeId": "schedule_sixth_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule sixth contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee46721138a7"
+            }
+          ],
+          "nextNode": "make_sixth_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138a8"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138a6"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_sixth_call"
+      ],
+      "_id": "6907a53e0188ee46721138a5"
+    },
+    {
+      "title": "Make Sixth Call",
+      "description": "Make the sixth contact call",
+      "nodeId": "make_sixth_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make sixth call",
+          "subText": "Sixth attempt to contact",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee46721138ab"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_seventh_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138ac"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138aa"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_seventh_call"
+      ],
+      "_id": "6907a53e0188ee46721138a9"
+    },
+    {
+      "title": "Schedule Seventh Call",
+      "description": "Schedule the seventh contact call",
+      "nodeId": "schedule_seventh_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule seventh contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee46721138af"
+            }
+          ],
+          "nextNode": "make_seventh_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138b0"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138ae"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_seventh_call"
+      ],
+      "_id": "6907a53e0188ee46721138ad"
+    },
+    {
+      "title": "Make Seventh Call",
+      "description": "Make the seventh contact call",
+      "nodeId": "make_seventh_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make seventh call",
+          "subText": "Seventh attempt to contact",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee46721138b3"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_eighth_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138b4"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138b2"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_eighth_call"
+      ],
+      "_id": "6907a53e0188ee46721138b1"
+    },
+    {
+      "title": "Schedule Eighth Call",
+      "description": "Schedule the eighth contact call",
+      "nodeId": "schedule_eighth_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule eighth contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee46721138b7"
+            }
+          ],
+          "nextNode": "make_eighth_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138b8"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138b6"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_eighth_call"
+      ],
+      "_id": "6907a53e0188ee46721138b5"
+    },
+    {
+      "title": "Make Eighth Call",
+      "description": "Make the eighth contact call",
+      "nodeId": "make_eighth_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make eighth call",
+          "subText": "Eighth attempt to contact",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee46721138bb"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_ninth_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138bc"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138ba"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_ninth_call"
+      ],
+      "_id": "6907a53e0188ee46721138b9"
+    },
+    {
+      "title": "Schedule Ninth Call",
+      "description": "Schedule the ninth contact call",
+      "nodeId": "schedule_ninth_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule ninth contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee46721138bf"
+            }
+          ],
+          "nextNode": "make_ninth_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138c0"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138be"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_ninth_call"
+      ],
+      "_id": "6907a53e0188ee46721138bd"
+    },
+    {
+      "title": "Make Ninth Call",
+      "description": "Make the ninth contact call",
+      "nodeId": "make_ninth_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make ninth call",
+          "subText": "Initial contact with the lead",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee46721138c3"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "schedule_final_call"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138c4"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138c2"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "interested",
+        "lost",
+        "schedule_final_call"
+      ],
+      "_id": "6907a53e0188ee46721138c1"
+    },
+    {
+      "title": "Schedule Final Call",
+      "description": "Schedule the final contact call",
+      "nodeId": "schedule_final_call",
+      "nodeType": "schedule",
+      "nodeActions": [
+        {
+          "text": "Schedule final contact call",
+          "subText": "Schedule follow-up call in next available window",
+          "actions": [
+            {
+              "actionId": "schedule_call",
+              "params": {
+                "callType": "second_contact",
+                "window": "NEXT_CALLING_WINDOW"
+              },
+              "set": {
+                "scheduledTime": "scheduledTime"
+              },
+              "_id": "6907a53e0188ee46721138c7"
+            }
+          ],
+          "nextNode": "make_final_call",
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138c8"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138c6"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [
+        "make_final_call"
+      ],
+      "_id": "6907a53e0188ee46721138c5"
+    },
+    {
+      "title": "Make Final Call",
+      "description": "Make the final contact call",
+      "nodeId": "make_final_call",
+      "nodeType": "action",
+      "nodeActions": [
+        {
+          "text": "Make final call",
+          "subText": "Final attempt to contact",
+          "actions": [
+            {
+              "actionId": "make_call",
+              "params": {
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "set": {
+                "disposition": "disposition",
+                "dispositionType": "dispositionType"
+              },
+              "_id": "6907a53e0188ee46721138cb"
+            }
+          ],
+          "dispositionNext": [],
+          "evalNext": {
+            "successNext": "interested",
+            "failureNext": "lost",
+            "inconclusiveNext": "lost"
+          },
+          "trigger": [
+            {
+              "triggerType": "AT_TIME",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a53e0188ee46721138cc"
+            }
+          ],
+          "_id": "6907a53e0188ee46721138ca"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "next": "",
+      "allowedTransitions": [
+        "interested",
+        "lost"
+      ],
+      "_id": "6907a53e0188ee46721138c9"
+    },
+    {
+      "title": "Interested",
+      "description": "Lead is interested",
+      "nodeId": "interested",
+      "nodeType": "end",
+      "nodeActions": [
+        {
+          "text": "New Action",
+          "subText": "Action description",
+          "actions": [
+            {
+              "actionId": "send_cd_whatsapp",
+              "params": {
+                "event_name": "uservox-commercification",
+                "event_type": "transactional",
+                "channel_type": "WA_INFOBIP",
+                "flowId": "68cd1196505919a7bd01281c"
+              },
+              "_id": "6907a6080188ee4672114e43"
+            }
+          ],
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "IMMEDIATE",
+              "eventTypes": [],
+              "conditions": [],
+              "checkActions": [],
+              "_id": "6907a6080188ee4672114e44"
+            }
+          ],
+          "_id": "6907a6080188ee4672114e42"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [],
+      "_id": "6907a53e0188ee46721138cd"
+    },
+    {
+      "title": "Lost",
+      "description": "Lead is lost",
+      "nodeId": "lost",
+      "nodeType": "end",
+      "nodeActions": [
+        {
+          "text": "Send WA: Lost Low Interest",
+          "subText": "Rampwin template lost_low_interest_updated",
+          "actions": [
+            {
+              "actionId": "webhook_call",
+              "params": {
+                "url": "https://api.rampwin.com/api/messages/send?dontShowInChatList=false",
+                "headers": {
+                  "X-API-Key": "Vs8kJLzGFeSQmZ6nXZdtGTrojAa0Qro5",
+                  "Content-Type": "application/json"
+                },
+                "body": {
+                  "channel_id": "690c4cd74662b1116fd45cdd",
+                  "phone_number": "{{phone_number}}",
+                  "hide_from_chat": "false",
+                  "template": "{                     \"namespace\": \"f5c06f1a_852e_464d_bf93_e4a154e259c5\",                     \"name\": \"lost_low_interest_updated\",                     \"language\": {                       \"policy\": \"deterministic\",                       \"code\": \"en\"                     },                     \"category\": \"MARKETING\"                   }"
+                }
+              },
+              "_id": "693ab449ea4faef6d234cad0"
+            }
+          ],
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "CONDITION",
+              "eventTypes": [],
+              "conditions": [
+                {
+                  "orRules": [
+                    {
+                      "variable": "lastDisposition",
+                      "operator": "equals",
+                      "value": "lost_low_interest",
+                      "valueRange": [],
+                      "_id": "693ab449ea4faef6d234cad3"
+                    }
+                  ],
+                  "_id": "693ab449ea4faef6d234cad2"
+                }
+              ],
+              "checkActions": [],
+              "_id": "693ab449ea4faef6d234cad1"
+            }
+          ],
+          "_id": "693ab449ea4faef6d234cacf"
+        },
+        {
+          "text": "Send WA: Lost Not Connected",
+          "subText": "Rampwin dynamic webhook",
+          "actions": [
+            {
+              "actionId": "webhook_call",
+              "params": {
+                "url": "https://api.rampwin.com/api/webhooks/dynamic-webhook/6917208590e87e0ee082eff5",
+                "headers": {
+                  "Content-Type": "application/json"
+                },
+                "body": {
+                  "event_name": "lost_not_connected",
+                  "customer_name": "{{customer_name}}",
+                  "customer_phone": "{{phone_number}}",
+                  "rm_name": "{{rm_name}}",
+                  "rm_number": "{{rm_number}}",
+                  "product_name": "{{product_name}}",
+                  "lead_id": "{{lead_id}}"
+                }
+              },
+              "_id": "693ab449ea4faef6d234cad5"
+            }
+          ],
+          "dispositionNext": [],
+          "trigger": [
+            {
+              "triggerType": "CONDITION",
+              "eventTypes": [],
+              "conditions": [
+                {
+                  "orRules": [
+                    {
+                      "variable": "pastDispositions",
+                      "operator": "contains",
+                      "value": "Last_Call_Not_connected",
+                      "valueRange": [],
+                      "_id": "693ab449ea4faef6d234cad8"
+                    },
+                    {
+                      "variable": "pastDispositions",
+                      "operator": "contains",
+                      "value": "VOICEMAIL",
+                      "valueRange": [],
+                      "_id": "693ab449ea4faef6d234cad9"
+                    }
+                  ],
+                  "_id": "693ab449ea4faef6d234cad7"
+                },
+                {
+                  "orRules": [
+                    {
+                      "variable": "pastDispositions",
+                      "operator": "not_contains",
+                      "value": "Interested_Call_back_Scheduled",
+                      "valueRange": [],
+                      "_id": "693ad4a9ea4faef6d242cf04"
+                    }
+                  ],
+                  "_id": "693ad4a9ea4faef6d242cf03"
+                },
+                {
+                  "orRules": [
+                    {
+                      "variable": "pastDispositions",
+                      "operator": "not_contains",
+                      "value": "lost_low_interest",
+                      "valueRange": [],
+                      "_id": "693ad4a9ea4faef6d242cf06"
+                    }
+                  ],
+                  "_id": "693ad4a9ea4faef6d242cf05"
+                },
+                {
+                  "orRules": [
+                    {
+                      "variable": "pastDispositions",
+                      "operator": "not_contains",
+                      "value": "Call_Later",
+                      "valueRange": [],
+                      "_id": "693ad4a9ea4faef6d242cf08"
+                    }
+                  ],
+                  "_id": "693ad4a9ea4faef6d242cf07"
+                },
+                {
+                  "orRules": [
+                    {
+                      "variable": "pastDispositions",
+                      "operator": "not_contains",
+                      "value": "Visit_Completed",
+                      "valueRange": [],
+                      "_id": "693ad4a9ea4faef6d242cf0a"
+                    }
+                  ],
+                  "_id": "693ad4a9ea4faef6d242cf09"
+                },
+                {
+                  "orRules": [
+                    {
+                      "variable": "pastDispositions",
+                      "operator": "not_contains",
+                      "value": "Lost_shouldnotbecontacted",
+                      "valueRange": [],
+                      "_id": "693ad4a9ea4faef6d242cf0c"
+                    }
+                  ],
+                  "_id": "693ad4a9ea4faef6d242cf0b"
+                }
+              ],
+              "checkActions": [],
+              "_id": "693ab449ea4faef6d234cad6"
+            }
+          ],
+          "_id": "693ab449ea4faef6d234cad4"
+        }
+      ],
+      "conditionals": [],
+      "loop": [],
+      "allowedTransitions": [],
+      "_id": "6907a53e0188ee46721138ce"
+    }
+  ],
+  "callWindows": [
+    {
+      "allowed": true,
+      "start": "1000",
+      "end": "1945",
+      "timezone": "Asia/Calcutta",
+      "_id": "6907a6840188ee467211501c"
+    }
+  ],
+  "dispositions": [
+    {
+      "disposition": "Visit_Scheduled_Hot",
+      "dispositionType": "success",
+      "prompt": "Set this when the user agrees to visit a particular dealership and not just a dealership location within 8 days for a test ride or booking/dealer callback for at least one of the discussed models (their initial choice or the pitched model), and a date or time has been confirmed for test ride/dealer visit/dealer callback. The user has to agree to visit a particular dealer for this. Set this disposition when user says they are planning to buy on a later date or around festivals like Holi, Diwali, Durga Pooja, etc where these festivals are within 8 days away. Also mark this if they agree for a dealer visit around festivals like Holi, Diwali, Durga Pooja etc and the festival is within 8 days awayDo not mark if you merely suggested for a test ride/ booking dealer/dealer callback, the user must explicitly agree for it. Mark if the user explicitly provides a date or time for test ride/ booking dealer or explicitly agrees for a dealer callback/visit/booking at a time suggested by you. and the date or day should be within the 8 days time frame . dont mark when the user agrees to visit a dealership within 8 days for a test ride or booking/dealer callback but does not give date or time . do not mark if the customer isplanning to buy whitin 8 days and agreed for a test drive but didnt give date / time .",
+      "_id": "6907a7900188ee4672115d63"
+    },
+    {
+      "disposition": "Lost_shouldnotbecontacted",
+      "dispositionType": "failure",
+      "prompt": "set this when user explicitly states they are no longer interested in buying a bike. does not want to be contacted again . set this when user says we have dialed a wrong number Also set if user has already bought a bike already or if the user has already booked the bike. , do not mark if user says he has cancelled his plan . do not mark just because user said a simple no or nahi try to get reason before marking .",
+      "_id": "6907a7900188ee4672115d64"
+    },
+    {
+      "disposition": "Visit_Completed",
+      "dispositionType": "failure",
+      "prompt": "customer confirmed that he/she has completed the dealership visit and does not want to schedule any more visits",
+      "_id": "6907a7900188ee4672115d65"
+    },
+    {
+      "disposition": "Call_Later",
+      "dispositionType": "neutral",
+      "prompt": "Set this for the following cases:\n\n-Set this when the user states they are busy or cannot talk now and explicitly agrees for the AI agent to call them back at a later time.\n\n-Set this if the conversation ended abruptly or no conclusion can be drawn. Set this if the conversation ends abruptly (e.g., call drop, call put on hold) before any clear interest or specific next step (like booking a visit or requesting expert help) was agreed upon.\n\n\n- Do not set this if the agent arranged for a callback from the dealership for test ride/booking",
+      "_id": "6907a7900188ee4672115d66"
+    },
+    {
+      "disposition": "Last_Call_Not_connected",
+      "dispositionType": "neutral",
+      "prompt": "Set this for the following cases:\n\n-Set this if the call connection failed\n\n-Set this if Call could not be connected at all.\n\n-Set this if Phone is ringing but user did not pick up the call\n\n-Set this when the call is answered by a pre-recorded voicemail or answering machine message instead of a live person.",
+      "_id": "6907a7900188ee4672115d67"
+    },
+    {
+      "disposition": "Interested_Call_back_Scheduled",
+      "dispositionType": "neutral",
+      "prompt": "Set this for the following cases: -Set this when user is only collecting information and not interested in buying now or the dealer name is not confirmed. they are just researching or exploring options. -Set this when the user shows interest in a bike but does not commit to a test ride or visit at this time, stating they need more time to think, decide, or plan (e.g., \"I'll let you know\"). -Set this disposition when user says they are planning to buy on a later date or around festivals like Holi, Diwali, Durga Pooja, etc where these festivals are more than 8 days away. Also mark this if they agree for a dealer visit around festivals like Holi, Diwali, Durga Pooja etc and the festival is more than 8 days away - Do not set this if the agent arranged for a callback from the dealership for test ride/booking , also set this when user is taking within the 8 days  but no date and time was given and call has been disconnected .set this when the user is planning within 8 days and didnt provide date and time for dealership visit / testdrive",
+      "_id": "6907a7900188ee4672115d68"
+    },
+    {
+      "disposition": "lost_low_interest",
+      "dispositionType": "neutral",
+      "prompt": "set this when user says he was just looking out no plan to buy, he was just browssing .\nalso set this when user says submitted by mistake .\nalso set this when user says cancelled his plan to buy .\ndo not mark just because user said a simple no or nahi try to get reason before marking .",
+      "_id": "690d99f432bf038208ff12ce"
+    }
+  ],
+  "actions": [
+    {
+      "actionId": "schedule_call",
+      "actionType": "schedule",
+      "params": {
+        "callType": {
+          "type": "string",
+          "required": true
+        },
+        "window": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "returns": {
+        "scheduledTime": "date"
+      },
+      "_id": "6907a53e0188ee46721138e9"
+    },
+    {
+      "actionId": "make_call",
+      "actionType": "call",
+      "params": {
+        "flowId": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "returns": {
+        "disposition": "string",
+        "dispositionType": "string",
+        "callDuration": "number",
+        "recordingUrl": "string"
+      },
+      "_id": "6907a53e0188ee46721138ea"
+    },
+    {
+      "actionId": "send_whatsapp",
+      "actionType": "whatsapp",
+      "params": {
+        "template": {
+          "type": "string",
+          "required": false
+        },
+        "text": {
+          "type": "string",
+          "required": false
+        },
+        "variables": {
+          "type": "object",
+          "required": false
+        }
+      },
+      "returns": {
+        "status": "string",
+        "messageId": "string",
+        "deliveredAt": "date",
+        "readAt": "date"
+      },
+      "_id": "6907a53e0188ee46721138eb"
+    },
+    {
+      "actionId": "webhook_call",
+      "actionType": "webhook",
+      "params": {
+        "url": {
+          "type": "string",
+          "required": true
+        },
+        "method": {
+          "type": "string",
+          "required": false
+        },
+        "headers": {
+          "type": "object",
+          "required": false
+        },
+        "urlParams": {
+          "type": "object",
+          "required": false
+        },
+        "body": {
+          "type": "object",
+          "required": false
+        }
+      },
+      "returns": {
+        "status": "string"
+      },
+      "_id": "6907a53e0188ee46721138ec"
+    },
+    {
+      "actionId": "transform",
+      "actionType": "transform",
+      "params": {
+        "code": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "_id": "6907a53e0188ee46721138ed"
+    }
+  ],
+  "callbacks": [
+    {
+      "url": "https://apiautocom.girnarsoft.com/api/v1/call-result",
+      "authKey": "x-api-key",
+      "authValue": "uyYfsZxvF4rdVTnvr8q5lD1lmp0ecoFl",
+      "alertDispositions": [],
+      "_id": "693028eb3f999d12bfef0fbd"
+    }
+  ],
+  "version": 1,
+  "systemPrompt": "You are Neha, a female empathetic neuro rehabilitation support assistant from India, working for HCAH.",
+  "toHindiFields": [],
+  "translateFields": [
+    {
+      "key": "make",
+      "translateType": "translate",
+      "variables": [],
+      "language": "hi",
+      "_id": "693028eb3f999d12bfef0fba"
+    },
+    {
+      "key": "model",
+      "translateType": "translate",
+      "variables": [],
+      "language": "hi",
+      "_id": "693028eb3f999d12bfef0fbb"
+    },
+    {
+      "key": "modelPricing",
+      "translateType": "customllm",
+      "variables": [],
+      "instruction": "Given a numerical value such as 290000, convert it into English words (e.g., \"Two lakh ninety thousand\").",
+      "targetKey": "modelPricing_in_words",
+      "_id": "693028eb3f999d12bfef0fbc"
+    }
+  ],
+  "transforms": [
+    {
+      "actionId": "webhook_transform",
+      "params": {
+        "url": "https://knowledge.uservox.ai/api/csv-service/bikedekho_dealer/bikedekho_dealer_city?make={{make}}&city={{city}}",
+        "method": "GET",
+        "code": "return JSON.stringify(args.response)",
+        "variables": [
+          "response"
+        ]
+      },
+      "setVariable": "cityDealers",
+      "_id": "693028eb3f999d12bfef0fb9"
+    }
+  ],
+  "emailAlerts": [],
+  "transfer": [],
+  "createdAt": "2025-11-02T18:38:54.027Z",
+  "updatedAt": "2025-12-11T14:26:49.583Z",
+  "__v": 1,
+  "numberPool": [
+    "08047361049",
+    "08047362974"
+  ]
+}

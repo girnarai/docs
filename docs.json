@@ -48,6 +48,7 @@
               "essentials/dashboard",
               "essentials/uservox-analytics",
               "essentials/leads",
+              "essentials/process-tests",
               "essentials/whatsapp-events",
               "essentials/call-quality-analysis",
               "essentials/pulse-usage"

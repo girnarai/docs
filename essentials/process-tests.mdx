@@ -1,0 +1,89 @@
+---
+title: 'Process Tests'
+description: 'Quick, repeatable checks for a single process step or full flow'
+---
+
+## What this is
+
+Process Tests let you run a process in **dry-run** mode (no real calls, no real webhooks/WhatsApp sent) and confirm the process behaves as expected.
+
+## Templates (in the UI)
+
+- **Simulated call flow**: Attach a fake call result → tick → apply result → emit an event.
+- **Simple tick**: Run one deterministic tick (useful to see what actions a step would run).
+- **Emit event**: Fire an event (e.g. CONNECTED) and see event-based actions.
+- **Step test (recommended)**: Start at a specific step and check one action.
+
+## Step types (meaning)
+
+- **Freeze time (SET_NOW)**: Locks time so results are repeatable.
+- **Run tick (PROCESS_TICK)**: Runs one orchestration pass and records what actions/jobs would happen.
+- **Attach call outcome (ATTACH_TEST_CONVERSATION)**: Provide a fake call result (status + disposition).
+- **Apply call result (APPLY_CALL_RESULT)**: Moves the process based on the attached call result.
+- **Emit event (EMIT_EVENT)**: Triggers event-based actions for the current step.
+
+## Example: test the “lost” step webhook_call
+
+Your process file [docs/essentials/test%20process.json](docs/essentials/test%20process.json) has a **Lost** end step with a conditional webhook:
+- Action: `webhook_call` (type: `webhook`)
+- Trigger condition: `lastDisposition == lost_low_interest`
+
+### UI way
+
+1. Open the process → **Steps** → find **Lost** → click **Test** on `webhook_call`.
+2. In Process Tests:
+   - **Start at step**: `lost`
+   - **Last disposition**: `lost_low_interest`
+   - In the **Run tick** step: **Expected action** = `webhook_call`
+3. Click **Run**.
+
+Expected result: the run PASSes and the run ledger contains an `action` entry with `actionType=webhook` and `actionId=webhook_call` (suppressed in dry-run).
+
+### API way (curl)
+
+1) Create a suite (once):
+
+- `POST /api/v1/process-tests/suites`
+
+2) Create the test case:
+
+- `POST /api/v1/process-tests/cases`
+
+Payload shape (fill your IDs from the UI; do not paste real secrets/keys):
+
+```json
+{
+  "title": "Lost step → webhook_call (lost_low_interest)",
+  "description": "Start at lost; ensure webhook_call runs when lastDisposition matches.",
+  "projectId": "<yourProjectId>",
+  "processId": "<yourProcessId>",
+  "suiteId": "<yourSuiteId>",
+  "enabled": true,
+  "tags": ["step-test", "lost"],
+  "leadSeed": {
+    "name": "Process Test Lead",
+    "phone": "9999999999",
+    "currentState": "lost",
+    "lastDisposition": "lost_low_interest",
+    "pastDispositions": []
+  },
+  "steps": [
+    { "stepId": "set_now", "type": "SET_NOW", "label": "Freeze time", "input": { "nowMs": 1760000000000 } },
+    {
+      "stepId": "tick", "type": "PROCESS_TICK", "label": "Run tick",
+      "expectations": [
+        {
+          "type": "ACTIONS_CONTAIN",
+          "description": "webhook_call should be executed (dry-run ledger)",
+          "actionMatch": { "kind": "action", "actionType": "webhook", "actionId": "webhook_call", "state": "lost" }
+        }
+      ]
+    }
+  ]
+}
+```
+
+3) Run it:
+
+- `POST /api/v1/process-tests/runs` with `{ "testCaseId": "<savedTestCaseId>", "runConfig": { "deterministic": true, "nowMs": 1760000000000 } }`
+

@@ -62,6 +62,7 @@
               "essentials/prompt-builder",
               "essentials/add-knowledge-to-agent",
               "essentials/mcp-consent",
+              "essentials/mcp-clients",
               "essentials/faq-sets",
               "essentials/test-conversation",
               "essentials/human-call-quality-analysis",
